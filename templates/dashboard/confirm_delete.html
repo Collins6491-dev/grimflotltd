@@ -1,0 +1,19 @@
+{% extends "dashboard/base.html" %}
+
+{% block dashboard_content %}
+<section class="dashboard-panel dashboard-panel--form">
+    <h2>Delete {{ object_label }}</h2>
+    <p>This permanently removes <strong>{{ object }}</strong>{% if object_label == "service" %} from the public services catalogue{% endif %}. This action cannot be undone.</p>
+    {% if related_projects %}<p class="muted-copy">It is currently linked to {{ related_projects }} project(s). Those projects will remain; their service link will be removed.</p>{% endif %}
+    {% if related_products %}<p class="muted-copy">This category contains {{ related_products }} product(s). Reassign those products before deleting the category.</p>{% endif %}
+    {% if deletion_blocked %}
+        <a class="button button--quiet" href="{% url cancel_url %}">Back to categories</a>
+    {% else %}
+        <form method="post" class="hero-editor__actions">
+            {% csrf_token %}
+            <button class="button button--danger" type="submit">Delete {{ object_label }}</button>
+            <a class="button button--quiet" href="{% url cancel_url %}">Cancel</a>
+        </form>
+    {% endif %}
+</section>
+{% endblock %}

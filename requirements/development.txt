@@ -1,0 +1,5 @@
+-r base.txt
+
+# Deliberately lightweight local quality tooling.
+coverage>=7.6,<8.0
+ruff>=0.8,<1.0

@@ -1,0 +1,71 @@
+{% extends "dashboard/base.html" %}
+
+{% block dashboard_content %}
+
+<div class="dashboard-settings">
+
+    {% for key, form in forms.items %}
+
+        <section class="dashboard-panel dashboard-panel--form">
+
+            <form
+                method="post"
+                enctype="multipart/form-data"
+                class="form-shell"
+            >
+                {% csrf_token %}
+
+                <input
+                    type="hidden"
+                    name="section"
+                    value="{{ key }}"
+                >
+
+                <h2>{{ key|title }}</h2>
+
+                {% if key == "homepage" %}
+                    <div class="homepage-image-previews" aria-label="Current homepage card images">
+                        {% if form.instance.energy_image %}
+                            <figure><img src="{{ form.instance.energy_image.url }}" alt="{{ form.instance.energy_image_alt }}"><figcaption>Energy card</figcaption></figure>
+                        {% endif %}
+                        {% if form.instance.smart_image %}
+                            <figure><img src="{{ form.instance.smart_image.url }}" alt="{{ form.instance.smart_image_alt }}"><figcaption>Smart technology card</figcaption></figure>
+                        {% endif %}
+                        {% if form.instance.security_image %}
+                            <figure><img src="{{ form.instance.security_image.url }}" alt="{{ form.instance.security_image_alt }}"><figcaption>Security card</figcaption></figure>
+                        {% endif %}
+                        {% if form.instance.electrical_image %}
+                            <figure><img src="{{ form.instance.electrical_image.url }}" alt="{{ form.instance.electrical_image_alt }}"><figcaption>Electrical services card</figcaption></figure>
+                        {% endif %}
+                        {% if form.instance.difference_image %}
+                            <figure><img src="{{ form.instance.difference_image.url }}" alt="{{ form.instance.difference_image_alt }}"><figcaption>GRIMFLOT Difference feature</figcaption></figure>
+                        {% endif %}
+                    </div>
+                {% endif %}
+
+                {% include "includes/form_fields.html" with form=form %}
+
+                <button
+                    class="button button--solid"
+                    type="submit"
+                >
+                    Save {{ key }}
+                </button>
+
+            </form>
+
+        </section>
+
+    {% empty %}
+
+        <section class="dashboard-panel">
+            <p class="muted-copy">
+                No settings sections are available.
+            </p>
+        </section>
+
+    {% endfor %}
+
+</div>
+
+{% endblock %}   

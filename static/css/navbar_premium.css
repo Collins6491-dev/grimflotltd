@@ -1,0 +1,436 @@
+/*
+ * GRIMFLOT LTD — premium responsive navigation
+ * Replace static/css/navbar_premium.css with this file.
+ * Works with the existing Django base.html navigation markup and site.js menu states.
+ */
+:root {
+    --grimflot-navy: #102f67;
+    --grimflot-midnight: #07101f;
+    --grimflot-red: #d71920;
+    --grimflot-red-deep: #ac1018;
+    --grimflot-white: #ffffff;
+    --grimflot-line: rgba(16, 47, 103, .12);
+}
+
+.site-header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    isolation: isolate;
+    width: 100%;
+    background: var(--grimflot-white);
+    box-shadow: 0 12px 34px rgba(7, 16, 31, .08);
+}
+
+/* Utility bar */
+.utility-bar {
+    color: rgba(255,255,255,.84);
+    background: var(--grimflot-midnight);
+    border-bottom: 1px solid rgba(255,255,255,.1);
+}
+.utility-bar__inner {
+    min-height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+}
+.utility-bar__tagline {
+    margin: 0;
+    color: rgba(255,255,255,.68);
+    font-size: 11px;
+    line-height: 1.5;
+    letter-spacing: .045em;
+}
+.utility-bar__actions {
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 18px;
+}
+.utility-link,
+.utility-bar__social a {
+    color: rgba(255,255,255,.86);
+    font-size: 11px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: color .2s ease;
+}
+.utility-link:hover,
+.utility-bar__social a:hover { color: #ff777c; }
+.utility-bar__social {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    font-size: 10px;
+}
+.utility-bar__social > span {
+    color: rgba(255,255,255,.5);
+    font-size: 10px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+}
+
+/* Search */
+.site-search {
+    width: clamp(175px, 19vw, 235px);
+    min-height: 34px;
+    display: flex;
+    align-items: center;
+    padding: 0 5px 0 12px;
+    background: rgba(255,255,255,.075);
+    border: 1px solid rgba(255,255,255,.17);
+    border-radius: 8px;
+    transition: background .2s ease, border-color .2s ease, box-shadow .2s ease;
+}
+.site-search:focus-within {
+    background: rgba(255,255,255,.12);
+    border-color: rgba(255,255,255,.48);
+    box-shadow: 0 0 0 3px rgba(255,255,255,.06);
+}
+.site-search input {
+    width: 100%;
+    min-width: 0;
+    padding: 7px 0;
+    color: #fff;
+    background: transparent;
+    border: 0;
+    outline: 0;
+    font: inherit;
+    font-size: 11px;
+}
+.site-search input::placeholder { color: rgba(255,255,255,.57); }
+.site-search button {
+    width: 30px;
+    height: 30px;
+    flex: 0 0 30px;
+    display: grid;
+    place-items: center;
+    color: #fff;
+    background: transparent;
+    border: 0;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.site-search button:hover { color: #ff777c; }
+
+/* Main navigation */
+.primary-nav {
+    background: rgba(255,255,255,.97);
+    border-bottom: 3px solid var(--grimflot-red);
+}
+.primary-nav__inner {
+    min-height: 84px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: clamp(18px, 2.5vw, 38px);
+}
+.wordmark {
+    min-width: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 11px;
+    flex: 0 1 auto;
+    color: var(--grimflot-navy);
+    text-decoration: none;
+}
+.wordmark__logo {
+    display: block;
+    width: auto;
+    max-width: 62px;
+    max-height: 54px;
+    object-fit: contain;
+}
+.wordmark__monogram {
+    width: 43px;
+    height: 43px;
+    flex: 0 0 43px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    background: linear-gradient(145deg, var(--grimflot-red), var(--grimflot-red-deep));
+    border-radius: 11px 11px 11px 3px;
+    box-shadow: 0 7px 16px rgba(215,25,32,.2);
+    font-size: 25px;
+    font-weight: 850;
+    letter-spacing: -.07em;
+}
+.wordmark__name {
+    color: var(--grimflot-navy);
+    font-size: clamp(16px, 1.3vw, 20px);
+    font-weight: 850;
+    letter-spacing: -.045em;
+    line-height: 1.1;
+}
+.primary-menu {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: clamp(13px, 1.7vw, 25px);
+}
+.primary-menu > a {
+    position: relative;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    color: #26354d;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .005em;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: color .2s ease;
+}
+.primary-menu > a::after {
+    position: absolute;
+    right: 0;
+    bottom: 3px;
+    left: 0;
+    height: 2px;
+    content: "";
+    background: var(--grimflot-red);
+    border-radius: 2px;
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform .22s ease;
+}
+.primary-menu > a:hover,
+.primary-menu > a:focus-visible { color: var(--grimflot-red); }
+.primary-menu > a:hover::after,
+.primary-menu > a:focus-visible::after { transform: scaleX(1); }
+.primary-menu__utilities {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-left: 2px;
+    padding-left: 13px;
+    border-left: 1px solid #e2e7ee;
+}
+.nav-icon {
+    position: relative;
+    width: 41px;
+    height: 41px;
+    flex: 0 0 41px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--grimflot-navy);
+    background: #f5f7fa;
+    border: 1px solid #e4e9f0;
+    border-radius: 50%;
+    text-decoration: none;
+    transition: color .2s ease, background .2s ease, border-color .2s ease, transform .2s ease;
+}
+.nav-icon:hover {
+    color: var(--grimflot-red);
+    background: #fff1f1;
+    border-color: rgba(215,25,32,.24);
+    transform: translateY(-2px);
+}
+.nav-icon:focus-visible,
+.menu-toggle:focus-visible { outline: 3px solid rgba(215,25,32,.45); outline-offset: 3px; }
+.nav-icon__svg { display: block; width: 21px; height: 21px; flex: 0 0 auto; }
+.primary-menu__utilities .nav-icon--cart { position: relative; overflow: visible; }
+.primary-menu__utilities .nav-icon--cart .nav-icon__badge {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    bottom: auto;
+    left: auto;
+    min-width: 19px;
+    height: 19px;
+    padding: 0 4px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    background: var(--grimflot-red);
+    border: 2px solid #fff;
+    border-radius: 999px;
+    font-size: 10px;
+    font-weight: 800;
+    line-height: 1;
+    transform: none;
+    z-index: 2;
+}
+
+/* Toggle is hidden on desktop, visible on mobile/tablet. */
+.menu-toggle {
+    display: none;
+    appearance: none;
+    -webkit-appearance: none;
+    padding: 0;
+    color: var(--grimflot-navy);
+    background: #fff;
+    border: 1px solid rgba(16,47,103,.18);
+    border-radius: 12px;
+    box-shadow: 0 5px 16px rgba(7,16,31,.08);
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+}
+.menu-toggle > span:not(.visually-hidden) {
+    display: block;
+    width: 20px;
+    height: 2px;
+    flex: 0 0 2px;
+    background: currentColor;
+    border-radius: 999px;
+    transition: transform .22s ease, opacity .18s ease, width .18s ease;
+}
+.menu-toggle[aria-expanded="true"] > span:nth-of-type(2) { transform: translateY(7px) rotate(45deg); }
+.menu-toggle[aria-expanded="true"] > span:nth-of-type(3) { opacity: 0; width: 12px; }
+.menu-toggle[aria-expanded="true"] > span:nth-of-type(4) { transform: translateY(-7px) rotate(-45deg); }
+
+@media (max-width: 1100px) {
+    .utility-bar__inner { gap: 14px; }
+    .utility-bar__actions { gap: 12px; }
+    .primary-nav__inner { gap: 16px; }
+    .primary-menu { gap: 12px; }
+    .primary-menu > a { font-size: 11px; }
+    .wordmark__name { font-size: 17px; }
+}
+
+/* 900px gives the menu enough room before it becomes crowded. */
+@media (max-width: 900px) {
+    .utility-bar__inner { min-height: 40px; }
+    .utility-bar__tagline { max-width: 48%; font-size: 10px; }
+    .utility-bar__actions { gap: 0; }
+    .utility-bar__actions > .utility-link,
+    .utility-bar__social { display: none; }
+    .site-search { width: min(48vw, 250px); min-height: 33px; }
+    .primary-nav__inner {
+        position: relative;
+        min-height: 74px;
+        gap: 12px;
+    }
+    .wordmark { gap: 9px; }
+    .wordmark__logo { max-width: 48px; max-height: 45px; }
+    .wordmark__monogram { width: 38px; height: 38px; flex-basis: 38px; font-size: 22px; }
+    .wordmark__name { max-width: 190px; font-size: 16px; }
+    .menu-toggle {
+        width: 46px;
+        height: 46px;
+        flex: 0 0 46px;
+        margin-left: auto;
+        display: inline-flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+        position: relative;
+        z-index: 1003;
+    }
+    .primary-menu {
+        position: absolute;
+        top: calc(100% + 10px);
+        right: 0;
+        z-index: 1002;
+        width: min(80%, 390px);
+        max-height: calc(100dvh - 145px);
+        display: none;
+        flex-direction: column;
+        align-items: stretch;
+        justify-content: flex-start;
+        gap: 3px;
+        padding: 16px;
+        overflow-x: hidden;
+        overflow-y: auto;
+        color: #fff;
+        background: linear-gradient(145deg, rgba(7,16,31,.97), rgba(16,47,103,.94));
+        border: 1px solid rgba(255,255,255,.17);
+        border-radius: 18px;
+        box-shadow: 0 24px 70px rgba(7,16,31,.32), inset 0 1px 0 rgba(255,255,255,.08);
+        -webkit-backdrop-filter: blur(22px) saturate(135%);
+        backdrop-filter: blur(22px) saturate(135%);
+        transform-origin: top right;
+    }
+    .primary-menu.is-open,
+    .primary-menu[data-open="true"] {
+        display: flex;
+        animation: grimflot-menu-in .2s ease both;
+    }
+    .primary-menu > a {
+        min-height: 46px;
+        display: flex;
+        padding: 0 12px;
+        color: rgba(255,255,255,.9);
+        font-size: 14px;
+        border-radius: 9px;
+        white-space: normal;
+    }
+    .primary-menu > a::after { display: none; }
+    .primary-menu > a:hover,
+    .primary-menu > a:focus-visible {
+        color: #fff;
+        background: rgba(255,255,255,.09);
+    }
+    .primary-menu__utilities {
+        justify-content: flex-start;
+        gap: 10px;
+        margin: 10px 0 0;
+        padding: 14px 8px 2px;
+        border-top: 1px solid rgba(255,255,255,.17);
+        border-left: 0;
+    }
+    .nav-icon {
+        color: #fff;
+        background: rgba(255,255,255,.1);
+        border-color: rgba(255,255,255,.2);
+    }
+    .nav-icon:hover { color: #fff; background: rgba(215,25,32,.8); border-color: rgba(255,255,255,.25); }
+    .primary-menu__utilities .nav-icon--cart .nav-icon__badge { border-color: var(--grimflot-navy); }
+}
+
+@keyframes grimflot-menu-in {
+    from { opacity: 0; transform: translateY(-6px) scale(.985); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@media (max-width: 420px) {
+    .utility-bar__tagline { max-width: 44%; font-size: 9px; }
+    .site-search { width: 46vw; padding-left: 9px; }
+    .wordmark__name { max-width: 135px; font-size: 14px; }
+    .primary-menu { width: 80%; padding: 14px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .utility-link,
+    .utility-bar__social a,
+    .site-search,
+    .nav-icon,
+    .primary-menu > a,
+    .primary-menu > a::after,
+    .menu-toggle > span:not(.visually-hidden),
+    .primary-menu.is-open { animation: none; transition: none; }
+}
+
+/* Remove unwanted bottom borders and divider lines from navigation */
+.navbar,
+.navbar *,
+.navbar__inner,
+.navbar__menu,
+.navbar__links,
+.navbar__links a,
+.navbar__menu a,
+.navbar__item,
+.nav-links,
+.nav-links a,
+nav,
+nav a {
+    border-bottom: none !important;
+    box-shadow: none;
+}
+
+/* Keep the mobile menu items free of bottom borders */
+@media (max-width: 768px) {
+    .navbar__menu a,
+    .navbar__links a,
+    .nav-links a,
+    nav a {
+        border-bottom: none !important;
+    }
+}

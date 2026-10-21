@@ -1,0 +1,886 @@
+/* =========================================================
+   GRIMFLOT LTD — PROJECTS, GALLERY & CASE STUDIES
+   File: static/css/pages/projects.css
+
+   Pages:
+   1. Project listing
+   2. Image gallery
+   3. Project detail
+   ========================================================= */
+
+
+/* ---------------------------------------------------------
+   1. DESIGN TOKENS
+   --------------------------------------------------------- */
+
+:root {
+    --projects-ink: #101820;
+    --projects-navy: #10283f;
+    --projects-navy-deep: #081522;
+    --projects-red: #d62839;
+    --projects-paper: #ffffff;
+    --projects-mist: #f3f5f7;
+    --projects-border: #e1e6eb;
+    --projects-muted: #65717e;
+
+    --projects-radius-sm: 10px;
+    --projects-radius-md: 18px;
+    --projects-radius-lg: 26px;
+
+    --projects-shadow:
+        0 18px 50px rgba(12, 29, 45, 0.08);
+
+    --projects-transition:
+        260ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+
+/* ---------------------------------------------------------
+   2. SHARED PAGE HERO
+   --------------------------------------------------------- */
+
+.page-hero--ink {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+
+    padding: clamp(100px, 13vw, 175px) 0
+             clamp(85px, 10vw, 135px);
+
+    color: var(--projects-paper);
+
+    background:
+        radial-gradient(
+            circle at 85% 15%,
+            rgba(214, 40, 57, 0.13),
+            transparent 30%
+        ),
+        linear-gradient(
+            135deg,
+            var(--projects-navy-deep),
+            var(--projects-navy) 65%,
+            #142d43
+        );
+}
+
+.page-hero--ink::after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+
+    width: 340px;
+    height: 340px;
+
+    right: -160px;
+    bottom: -210px;
+
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 50%;
+
+    box-shadow:
+        0 0 0 45px rgba(255, 255, 255, 0.025),
+        0 0 0 90px rgba(255, 255, 255, 0.02);
+}
+
+.page-hero--ink .site-container {
+    position: relative;
+    z-index: 1;
+    max-width: 1440px;
+    margin-inline: auto;
+    padding-inline: clamp(22px, 6vw, 90px);
+}
+
+.page-hero--ink .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+
+    margin: 0 0 24px;
+
+    color: #ff8b96;
+
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+}
+
+.page-hero--ink .eyebrow::before {
+    content: "";
+    width: 28px;
+    height: 2px;
+    background: var(--projects-red);
+}
+
+.page-hero--ink h1 {
+    max-width: 950px;
+    margin: 0;
+
+    color: #fff;
+
+    font-size: clamp(2.6rem, 6.5vw, 6rem);
+    font-weight: 650;
+    line-height: 0.99;
+    letter-spacing: -0.065em;
+
+    text-wrap: balance;
+}
+
+.page-hero--ink > .site-container > p:not(.eyebrow) {
+    max-width: 680px;
+    margin: 28px 0 0;
+
+    color: rgba(255, 255, 255, 0.73);
+
+    font-size: clamp(1rem, 1.4vw, 1.15rem);
+    line-height: 1.85;
+}
+
+
+/* ---------------------------------------------------------
+   3. SHARED CONTENT SECTIONS
+   --------------------------------------------------------- */
+
+.content-section--white,
+.content-section--mist {
+    padding: clamp(65px, 9vw, 120px) 0;
+}
+
+.content-section--white {
+    background: var(--projects-paper);
+}
+
+.content-section--mist {
+    background: var(--projects-mist);
+}
+
+.content-section--white > .site-container,
+.content-section--mist > .site-container {
+    width: min(100% - 44px, 1320px);
+    margin-inline: auto;
+}
+
+
+/* ---------------------------------------------------------
+   4. PROJECT LISTING
+   --------------------------------------------------------- */
+
+.project-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(26px, 4vw, 54px);
+    align-items: start;
+}
+
+.project-card {
+    min-width: 0;
+    overflow: hidden;
+
+    background: #fff;
+
+    border: 1px solid var(--projects-border);
+    border-radius: var(--projects-radius-lg);
+
+    box-shadow: 0 5px 20px rgba(12, 29, 45, 0.025);
+
+    transition:
+        transform var(--projects-transition),
+        box-shadow var(--projects-transition),
+        border-color var(--projects-transition);
+}
+
+.project-card:hover {
+    transform: translateY(-7px);
+
+    border-color: rgba(16, 40, 63, 0.15);
+
+    box-shadow: var(--projects-shadow);
+}
+
+.project-card > img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 10;
+
+    object-fit: cover;
+
+    background: var(--projects-mist);
+
+    transition: transform 600ms ease;
+}
+
+.project-card:hover > img {
+    transform: scale(1.025);
+}
+
+/*
+   The image wrapper is deliberately not required.
+   The card content remains correctly styled when
+   a project does not have a cover image.
+*/
+
+.project-card > div {
+    padding: clamp(24px, 3vw, 38px);
+}
+
+.project-card .eyebrow {
+    margin: 0 0 14px;
+
+    color: var(--projects-red);
+
+    font-size: 0.72rem;
+    font-weight: 750;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+}
+
+.project-card h2 {
+    margin: 0;
+
+    color: var(--projects-ink);
+
+    font-size: clamp(1.45rem, 2.4vw, 2.1rem);
+    font-weight: 650;
+    line-height: 1.2;
+    letter-spacing: -0.045em;
+}
+
+.project-card h2 a {
+    color: inherit;
+    text-decoration: none;
+
+    transition: color var(--projects-transition);
+}
+
+.project-card h2 a:hover {
+    color: var(--projects-red);
+}
+
+.project-card h2 a:focus-visible {
+    outline: 2px solid var(--projects-red);
+    outline-offset: 5px;
+    border-radius: 3px;
+}
+
+.project-card > div > p:not(.eyebrow) {
+    margin: 18px 0 0;
+
+    color: var(--projects-muted);
+
+    font-size: 0.97rem;
+    line-height: 1.85;
+}
+
+
+/* ---------------------------------------------------------
+   5. RELATED SERVICE TAGS
+   --------------------------------------------------------- */
+
+.tag-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 9px;
+
+    margin: 24px 0 0;
+    padding: 0;
+
+    list-style: none;
+}
+
+.tag-list li {
+    display: inline-flex;
+    align-items: center;
+
+    padding: 9px 13px;
+
+    color: var(--projects-navy);
+
+    background: #f1f4f7;
+    border: 1px solid #e5eaf0;
+    border-radius: 999px;
+
+    font-size: 0.75rem;
+    font-weight: 650;
+    line-height: 1.35;
+}
+
+
+/* ---------------------------------------------------------
+   6. IMAGE GALLERY
+   --------------------------------------------------------- */
+
+.image-gallery {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(18px, 2.5vw, 32px);
+
+    align-items: start;
+}
+
+.image-gallery figure {
+    position: relative;
+    min-width: 0;
+    margin: 0;
+
+    overflow: hidden;
+
+    background: #fff;
+
+    border: 1px solid var(--projects-border);
+    border-radius: var(--projects-radius-md);
+
+    box-shadow: 0 6px 22px rgba(12, 29, 45, 0.045);
+
+    transition:
+        transform var(--projects-transition),
+        box-shadow var(--projects-transition);
+}
+
+.image-gallery figure:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--projects-shadow);
+}
+
+.image-gallery figure img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+
+    object-fit: cover;
+
+    background: var(--projects-mist);
+
+    transition:
+        transform 650ms cubic-bezier(0.2, 0.7, 0.2, 1),
+        filter var(--projects-transition);
+}
+
+.image-gallery figure:hover img {
+    transform: scale(1.045);
+    filter: saturate(1.05);
+}
+
+.image-gallery figcaption {
+    padding: 18px 20px 20px;
+
+    color: var(--projects-muted);
+
+    font-size: 0.85rem;
+    line-height: 1.75;
+}
+
+.image-gallery figcaption a {
+    color: var(--projects-navy);
+
+    font-weight: 700;
+    text-decoration-color: rgba(16, 40, 63, 0.3);
+    text-underline-offset: 4px;
+
+    transition:
+        color var(--projects-transition),
+        text-decoration-color var(--projects-transition);
+}
+
+.image-gallery figcaption a:hover {
+    color: var(--projects-red);
+    text-decoration-color: var(--projects-red);
+}
+
+.image-gallery figcaption a:focus-visible {
+    outline: 2px solid var(--projects-red);
+    outline-offset: 4px;
+}
+
+
+/* ---------------------------------------------------------
+   7. PROJECT DETAIL HERO
+   --------------------------------------------------------- */
+
+.detail-hero {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+
+    display: flex;
+    align-items: flex-end;
+
+    min-height: 470px;
+    min-height: clamp(470px, 62vw, 760px);
+
+    padding: clamp(90px, 12vw, 155px) 0 85px;
+
+    color: #fff;
+
+    background:
+        radial-gradient(
+            circle at 85% 15%,
+            rgba(214, 40, 57, 0.14),
+            transparent 35%
+        ),
+        linear-gradient(
+            135deg,
+            var(--projects-navy-deep),
+            var(--projects-navy)
+        );
+}
+
+.detail-hero--image {
+    background: var(--projects-navy-deep);
+}
+
+.detail-hero--image::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    inset: 0;
+
+    background: linear-gradient(
+        90deg,
+        rgba(5, 14, 24, 0.94) 0%,
+        rgba(5, 14, 24, 0.77) 42%,
+        rgba(5, 14, 24, 0.35) 100%
+    );
+}
+
+.detail-hero > img {
+    position: absolute;
+    z-index: -2;
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+    object-position: center;
+}
+
+.detail-hero > .site-container {
+    width: min(100% - 44px, 1320px);
+    margin-inline: auto;
+}
+
+.detail-hero .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+
+    margin: 0 0 24px;
+
+    color: #ff929c;
+
+    font-size: 0.75rem;
+    font-weight: 750;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+}
+
+.detail-hero .eyebrow::before {
+    content: "";
+    width: 28px;
+    height: 2px;
+    background: var(--projects-red);
+}
+
+.detail-hero h1 {
+    max-width: 1000px;
+    margin: 0;
+
+    color: #fff;
+
+    font-size: clamp(2.7rem, 7vw, 6.5rem);
+    font-weight: 650;
+    line-height: 0.98;
+    letter-spacing: -0.065em;
+
+    text-wrap: balance;
+}
+
+.detail-hero > .site-container > p:not(.eyebrow) {
+    max-width: 730px;
+    margin: 28px 0 0;
+
+    color: rgba(255, 255, 255, 0.82);
+
+    font-size: clamp(1rem, 1.5vw, 1.2rem);
+    line-height: 1.9;
+}
+
+
+/* ---------------------------------------------------------
+   8. EDITORIAL PROJECT CONTEXT
+   --------------------------------------------------------- */
+
+.editorial-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+    gap: clamp(40px, 8vw, 125px);
+
+    align-items: start;
+}
+
+.editorial-grid > div:first-child {
+    position: relative;
+}
+
+.editorial-grid > div:first-child::after {
+    content: "";
+    display: block;
+
+    width: 54px;
+    height: 3px;
+
+    margin-top: 27px;
+
+    background: var(--projects-red);
+}
+
+.editorial-grid .eyebrow {
+    margin: 0 0 20px;
+
+    color: var(--projects-red);
+
+    font-size: 0.73rem;
+    font-weight: 750;
+    letter-spacing: 0.17em;
+    text-transform: uppercase;
+}
+
+.editorial-grid h2 {
+    margin: 0;
+
+    color: var(--projects-ink);
+
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    font-weight: 650;
+    line-height: 1.08;
+    letter-spacing: -0.055em;
+
+    text-wrap: balance;
+}
+
+
+/* ---------------------------------------------------------
+   9. PROJECT NARRATIVE
+   --------------------------------------------------------- */
+
+.rich-copy {
+    min-width: 0;
+
+    color: #4d5965;
+
+    font-size: clamp(0.98rem, 1.25vw, 1.08rem);
+    line-height: 2;
+    overflow-wrap: anywhere;
+}
+
+.rich-copy > :first-child {
+    margin-top: 0;
+}
+
+.rich-copy > :last-child {
+    margin-bottom: 0;
+}
+
+.rich-copy p {
+    margin: 0 0 24px;
+}
+
+.rich-copy h2,
+.rich-copy h3,
+.rich-copy h4 {
+    margin: 38px 0 16px;
+
+    color: var(--projects-ink);
+
+    font-weight: 650;
+    line-height: 1.25;
+    letter-spacing: -0.035em;
+}
+
+.rich-copy h2 {
+    font-size: 1.8rem;
+}
+
+.rich-copy h3 {
+    font-size: 1.45rem;
+}
+
+.rich-copy h4 {
+    font-size: 1.15rem;
+}
+
+.rich-copy ul,
+.rich-copy ol {
+    margin: 20px 0 28px;
+    padding-left: 25px;
+}
+
+.rich-copy li {
+    margin-bottom: 10px;
+    padding-left: 5px;
+}
+
+.rich-copy li::marker {
+    color: var(--projects-red);
+}
+
+.rich-copy blockquote {
+    margin: 32px 0;
+    padding: 10px 0 10px 24px;
+
+    color: var(--projects-navy);
+
+    border-left: 3px solid var(--projects-red);
+
+    font-size: 1.1rem;
+    font-weight: 550;
+}
+
+.rich-copy .tag-list {
+    margin-top: 32px;
+}
+
+
+/* ---------------------------------------------------------
+   10. EMPTY STATES
+   --------------------------------------------------------- */
+
+.empty-state {
+    grid-column: 1 / -1;
+
+    padding: clamp(35px, 7vw, 75px);
+
+    text-align: center;
+
+    background: var(--projects-mist);
+    border: 1px solid var(--projects-border);
+    border-radius: var(--projects-radius-lg);
+}
+
+.empty-state h2 {
+    max-width: 650px;
+    margin: 0 auto;
+
+    color: var(--projects-ink);
+
+    font-size: clamp(1.5rem, 3vw, 2.25rem);
+    font-weight: 650;
+    line-height: 1.2;
+    letter-spacing: -0.04em;
+}
+
+.empty-state p {
+    max-width: 540px;
+    margin: 18px auto 0;
+
+    color: var(--projects-muted);
+
+    font-size: 0.95rem;
+    line-height: 1.8;
+}
+
+
+/* ---------------------------------------------------------
+   11. KEYBOARD ACCESSIBILITY
+   --------------------------------------------------------- */
+
+.image-gallery a:focus-visible,
+.project-card a:focus-visible {
+    outline: 2px solid var(--projects-red);
+    outline-offset: 4px;
+}
+
+
+/* ---------------------------------------------------------
+   12. TABLET
+   --------------------------------------------------------- */
+
+@media (max-width: 1000px) {
+    .image-gallery {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .editorial-grid {
+        grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+        gap: 45px;
+    }
+
+    .detail-hero {
+        min-height: 550px;
+    }
+}
+
+
+/* ---------------------------------------------------------
+   13. MOBILE
+   --------------------------------------------------------- */
+
+@media (max-width: 700px) {
+    .page-hero--ink {
+        padding: 105px 0 80px;
+    }
+
+    .page-hero--ink .site-container {
+        padding-inline: 22px;
+    }
+
+    .page-hero--ink h1 {
+        font-size: clamp(2.55rem, 11vw, 4rem);
+        line-height: 1.02;
+        letter-spacing: -0.06em;
+    }
+
+    .page-hero--ink > .site-container > p:not(.eyebrow) {
+        margin-top: 22px;
+        font-size: 0.98rem;
+        line-height: 1.8;
+    }
+
+    .content-section--white,
+    .content-section--mist {
+        padding: 65px 0;
+    }
+
+    .content-section--white > .site-container,
+    .content-section--mist > .site-container {
+        width: calc(100% - 36px);
+    }
+
+    .project-grid {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 25px;
+    }
+
+    .project-card {
+        border-radius: 19px;
+    }
+
+    .project-card > img {
+        aspect-ratio: 5 / 4;
+    }
+
+    .project-card > div {
+        padding: 25px 22px 28px;
+    }
+
+    .project-card h2 {
+        font-size: 1.7rem;
+    }
+
+    .image-gallery {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 24px;
+    }
+
+    .image-gallery figure {
+        border-radius: 16px;
+    }
+
+    .image-gallery figure img {
+        aspect-ratio: 5 / 4;
+    }
+
+    .image-gallery figcaption {
+        padding: 16px 18px 19px;
+    }
+
+    .detail-hero {
+        min-height: 520px;
+        padding: 110px 0 65px;
+    }
+
+    .detail-hero > .site-container {
+        width: calc(100% - 36px);
+    }
+
+    .detail-hero h1 {
+        font-size: clamp(2.65rem, 12vw, 4.5rem);
+        line-height: 1.02;
+    }
+
+    .detail-hero > .site-container > p:not(.eyebrow) {
+        margin-top: 22px;
+        font-size: 1rem;
+        line-height: 1.8;
+    }
+
+    .detail-hero--image::before {
+        background: linear-gradient(
+            0deg,
+            rgba(5, 14, 24, 0.96) 0%,
+            rgba(5, 14, 24, 0.76) 52%,
+            rgba(5, 14, 24, 0.28) 100%
+        );
+    }
+
+    .editorial-grid {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 36px;
+    }
+
+    .editorial-grid h2 {
+        max-width: 600px;
+        font-size: clamp(2rem, 9vw, 3rem);
+    }
+
+    .rich-copy {
+        font-size: 1rem;
+        line-height: 1.9;
+    }
+
+    .empty-state {
+        padding: 40px 22px;
+    }
+}
+
+
+/* ---------------------------------------------------------
+   14. SMALL MOBILE
+   --------------------------------------------------------- */
+
+@media (max-width: 380px) {
+    .page-hero--ink h1 {
+        font-size: 2.35rem;
+    }
+
+    .project-card > div {
+        padding: 22px 18px;
+    }
+
+    .detail-hero h1 {
+        font-size: 2.5rem;
+    }
+
+    .tag-list {
+        gap: 7px;
+    }
+
+    .tag-list li {
+        padding: 8px 10px;
+        font-size: 0.7rem;
+    }
+}
+
+
+/* ---------------------------------------------------------
+   15. REDUCED MOTION
+   --------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+    .project-card,
+    .project-card > img,
+    .image-gallery figure,
+    .image-gallery figure img,
+    .project-card h2 a,
+    .image-gallery figcaption a {
+        transition: none !important;
+        animation: none !important;
+    }
+
+    .project-card:hover,
+    .image-gallery figure:hover,
+    .project-card:hover > img,
+    .image-gallery figure:hover img {
+        transform: none;
+    }
+}

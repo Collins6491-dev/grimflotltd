@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% load static %}
+{% block body_class %}public-page{% endblock %}
+{% block page_styles %}<link rel="stylesheet" href="{% static 'css/pages/public.css' %}">{% endblock %}
+{% block content %}<section class="page-hero page-hero--ink">
+    <div class="site-container">
+        <p class="eyebrow">GRIMFLOT LTD / Information</p>
+        <h1>{{ page_title }}</h1>
+        <p>{{ intro }}</p>
+    </div>
+</section>
+<section class="content-section content-section--white">
+    <div class="site-container narrow-content policy-copy">{% for heading, content in sections %}<section>
+            <h2>{{ heading }}</h2>
+            <p>{{ content }}</p>
+        </section>{% endfor %}<p class="muted-copy">This page provides the current website information and should be
+            reviewed with qualified legal advice before public launch.</p>
+    </div>
+</section>{% endblock %}

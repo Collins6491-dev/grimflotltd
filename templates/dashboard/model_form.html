@@ -1,0 +1,289 @@
+{% extends "dashboard/base.html" %}
+{% load static %}
+
+{% block extra_head %}
+    {{ block.super }}
+    <style>
+        .hero-editor {
+            display: grid;
+            gap: 24px;
+        }
+
+        .hero-editor__intro {
+            color: #5e6876;
+            line-height: 1.7;
+            margin: 0;
+        }
+
+        .hero-image-field {
+            display: grid;
+            gap: 12px;
+            padding: 20px;
+            border: 1px solid #cdd4d8;
+            border-radius: 12px;
+            background: #f8f9fa;
+        }
+
+        .hero-image-field h3 {
+            margin: 0;
+            color: #071a3a;
+        }
+
+        .hero-image-field p {
+            margin: 0;
+            color: #5e6876;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .hero-image-field input[type="file"] {
+            display: block;
+            width: 100%;
+            max-width: 100%;
+            padding: 12px;
+            border: 1px dashed #aeb8c3;
+            border-radius: 8px;
+            background: #fff;
+        }
+
+        .hero-image-preview {
+            display: block;
+            width: 100%;
+            max-width: 760px;
+            aspect-ratio: 16 / 7;
+            object-fit: cover;
+            object-position: center;
+            border-radius: 10px;
+            background: #e8ebef;
+        }
+
+        .hero-image-preview--mobile {
+            max-width: 280px;
+            aspect-ratio: 4 / 5;
+        }
+
+        .hero-image-preview[hidden] {
+            display: none;
+        }
+
+        .hero-editor__actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            align-items: center;
+        }
+
+        @media (max-width: 640px) {
+            .hero-image-field {
+                padding: 14px;
+            }
+
+            .hero-image-preview {
+                aspect-ratio: 4 / 3;
+            }
+
+            .hero-image-preview--mobile {
+                max-width: 220px;
+                aspect-ratio: 4 / 5;
+            }
+        }
+    </style>
+{% endblock %}
+
+{% block dashboard_content %}
+
+<section class="dashboard-panel dashboard-panel--form hero-editor">
+
+    <div>
+        <h2>{{ heading }}</h2>
+
+        <p class="hero-editor__intro">
+            Manage the content and imagery displayed in the GRIMFLOT LTD
+            homepage hero slider. Upload images you own or have permission
+            to use. You can download suitable photographs from Pexels
+            and upload them here.
+        </p>
+    </div>
+
+    <form
+        method="post"
+        enctype="multipart/form-data"
+        class="form-shell"
+        data-hero-editor
+    >
+        {% csrf_token %}
+
+        {% if page_title == "Product editor" %}
+            <p class="hero-editor__intro">
+                {% if product %}SKU: <strong>{{ product.sku }}</strong>.{% else %}An SKU will be generated automatically when this product is saved.{% endif %}
+            </p>
+        {% endif %}
+
+        {% if form.non_field_errors %}
+            <div role="alert">
+                {{ form.non_field_errors }}
+            </div>
+        {% endif %}
+
+        {% if form.instance.pk %}
+            <div class="hero-image-field">
+                <h3>Current slide</h3>
+
+                <p>
+                    Update the wording, buttons, images, or publishing
+                    settings below. Leave an image unchanged if you
+                    don't want to replace it.
+                </p>
+            </div>
+        {% endif %}
+
+        <div class="hero-image-field">
+            <h3>Desktop hero image</h3>
+
+            <p>
+                Recommended: a high-quality landscape photograph.
+                A wide image works best for desktop and laptop screens.
+            </p>
+
+            {% if form.instance.pk and form.instance.background_image %}
+                <img
+                    class="hero-image-preview"
+                    data-image-preview="background_image"
+                    src="{{ form.instance.background_image.url }}"
+                    alt="{{ form.instance.image_alt|default:form.instance.title }}"
+                >
+            {% else %}
+                <img
+                    class="hero-image-preview"
+                    data-image-preview="background_image"
+                    alt="Desktop hero image preview"
+                    hidden
+                >
+                <p data-empty-preview="background_image">
+                    No desktop image has been saved yet.
+                </p>
+            {% endif %}
+        </div>
+
+        <div class="hero-image-field">
+            <h3>Mobile hero image</h3>
+
+            <p>
+                Optional: upload a portrait-oriented image for mobile
+                screens. If you leave this empty, the desktop image
+                can be used instead.
+            </p>
+
+            {% if form.instance.pk and form.instance.mobile_image %}
+                <img
+                    class="hero-image-preview hero-image-preview--mobile"
+                    data-image-preview="mobile_image"
+                    src="{{ form.instance.mobile_image.url }}"
+                    alt="Current mobile hero image"
+                >
+            {% else %}
+                <img
+                    class="hero-image-preview hero-image-preview--mobile"
+                    data-image-preview="mobile_image"
+                    alt="Mobile hero image preview"
+                    hidden
+                >
+                <p data-empty-preview="mobile_image">
+                    No separate mobile image has been saved.
+                </p>
+            {% endif %}
+        </div>
+
+        {% include "includes/form_fields.html" with form=form %}
+
+        {% if secondary_form %}
+            <h3>Inventory</h3>
+            {% include "includes/form_fields.html" with form=secondary_form %}
+        {% endif %}
+
+        <div class="hero-editor__actions">
+            <button class="button button--solid" type="submit">
+                Save changes
+            </button>
+
+            <a
+                class="button button--quiet"
+                href="{% url 'dashboard:editorial-list' 'hero-slides' %}"
+            >
+                Back to hero slides
+            </a>
+        </div>
+    </form>
+
+</section>
+
+{% endblock %}
+
+{% block extra_scripts %}
+    {{ block.super }}
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const editor = document.querySelector("[data-hero-editor]");
+
+            if (!editor) return;
+
+            const fileFields = {
+                background_image: editor.querySelector(
+                    'input[type="file"][name="background_image"]'
+                ),
+                mobile_image: editor.querySelector(
+                    'input[type="file"][name="mobile_image"]'
+                )
+            };
+
+            Object.entries(fileFields).forEach(function ([fieldName, input]) {
+                if (!input) return;
+
+                input.addEventListener("change", function () {
+                    const file = input.files && input.files[0];
+
+                    if (!file) return;
+
+                    if (!file.type.startsWith("image/")) {
+                        alert("Please select an image file.");
+                        input.value = "";
+                        return;
+                    }
+
+                    const preview = editor.querySelector(
+                        '[data-image-preview="' + fieldName + '"]'
+                    );
+
+                    const emptyMessage = editor.querySelector(
+                        '[data-empty-preview="' + fieldName + '"]'
+                    );
+
+                    if (!preview) return;
+
+                    if (preview.dataset.objectUrl) {
+                        URL.revokeObjectURL(preview.dataset.objectUrl);
+                    }
+
+                    const objectUrl = URL.createObjectURL(file);
+
+                    preview.dataset.objectUrl = objectUrl;
+                    preview.src = objectUrl;
+                    preview.hidden = false;
+
+                    if (emptyMessage) {
+                        emptyMessage.hidden = true;
+                    }
+                });
+            });
+
+            window.addEventListener("pagehide", function () {
+                editor.querySelectorAll("[data-object-url]").forEach(
+                    function (preview) {
+                        URL.revokeObjectURL(preview.dataset.objectUrl);
+                    }
+                );
+            });
+        });
+    </script>
+{% endblock %}

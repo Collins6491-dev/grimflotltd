@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block page_styles %}
+<link rel="stylesheet" href="{% static 'css/pages/projects.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<!-- Projects Hero -->
+<section class="page-hero page-hero--ink">
+    <div class="site-container">
+        <p class="eyebrow">Selected work</p>
+
+        <h1>Case studies with the context left in.</h1>
+
+        <p>
+            Projects are published only with client-safe, approved information.
+            Explore the intent, systems, and practical setting behind the work.
+        </p>
+    </div>
+</section>
+
+<!-- Projects Listing -->
+<section class="content-section content-section--white">
+    <div class="site-container project-grid">
+
+        {% for project in projects %}
+
+        <article class="project-card">
+
+            {% if project.cover_image %}
+            <img
+                src="{{ project.cover_image.url }}"
+                alt="{{ project.title }}"
+                loading="lazy"
+            >
+            {% endif %}
+
+            <div>
+                <p class="eyebrow">
+                    {% if project.location_label %}
+                        {{ project.location_label }}
+                    {% else %}
+                        Case study
+                    {% endif %}
+                </p>
+
+                <h2>
+                    <a href="{% url 'projects:detail' project.slug %}">
+                        {{ project.title }}
+                    </a>
+                </h2>
+                <p>{{ project.excerpt }}</p>
+
+                {% with related_services=project.related_services.all %}
+                    {% if related_services %}
+                    <ul class="tag-list">
+                        {% for service in related_services %}
+                        <li>{{ service.title }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                {% endwith %}
+            </div>
+
+        </article>
+
+        {% empty %}
+
+        <div class="empty-state">
+            <h2>Case studies will be published when approved.</h2>
+
+            <p>We do not publish unverified project claims.</p>
+        </div>
+
+        {% endfor %}
+
+    </div>
+</section>
+
+{% endblock %}

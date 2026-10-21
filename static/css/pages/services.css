@@ -1,0 +1,438 @@
+/* =========================================
+   GRIMFLOT LTD — PREMIUM SERVICES PAGE
+   Brand: Navy, Red, White
+========================================= */
+
+.service-list-page .page-hero {
+    padding-block: clamp(54px, 8vw, 100px);
+}
+
+/* Services section */
+.service-list-page .content-section {
+    padding-block: clamp(48px, 7vw, 92px);
+}
+
+/* Responsive services grid */
+.service-list-page .entity-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 28px;
+    align-items: stretch;
+}
+
+/* Individual service card */
+.service-list-page .entity-card {
+    position: relative;
+    isolation: isolate;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    padding: 30px;
+    overflow: hidden;
+
+    background: #fff;
+    border: 1px solid rgba(16, 47, 103, 0.10);
+    border-radius: 18px;
+
+    box-shadow:
+        0 8px 24px rgba(7, 16, 31, 0.04),
+        0 2px 5px rgba(7, 16, 31, 0.02);
+
+    transition:
+        transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1),
+        box-shadow 0.4s ease,
+        border-color 0.4s ease;
+}
+
+/* Animated red accent */
+.service-list-page .entity-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+
+    background: linear-gradient(
+        90deg,
+        #d71920,
+        #ff5358,
+        #102f67
+    );
+
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
+    z-index: -1;
+}
+
+/* Subtle background glow */
+.service-list-page .entity-card::after {
+    content: "";
+    position: absolute;
+    top: -80px;
+    right: -80px;
+
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+
+    background: rgba(215, 25, 32, 0.045);
+    filter: blur(45px);
+
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+    z-index: -1;
+}
+
+/* Card hover interaction */
+@media (hover: hover) and (pointer: fine) {
+    .service-list-page .entity-card:hover {
+        transform: translateY(-8px);
+
+        border-color: rgba(215, 25, 32, 0.25);
+
+        box-shadow:
+            0 24px 50px rgba(7, 16, 31, 0.10),
+            0 0 24px rgba(215, 25, 32, 0.07);
+    }
+
+    .service-list-page .entity-card:hover::before {
+        transform: scaleX(1);
+    }
+
+    .service-list-page .entity-card:hover::after {
+        opacity: 1;
+    }
+}
+
+/* Service headings */
+.service-list-page .entity-card h2,
+.service-list-page .entity-card h3 {
+    color: #101c35;
+    line-height: 1.35;
+    letter-spacing: -0.025em;
+    margin-bottom: 14px;
+
+    transition: color 0.3s ease;
+}
+
+.service-list-page .entity-card:hover h2,
+.service-list-page .entity-card:hover h3 {
+    color: #102f67;
+}
+
+/* Service descriptions */
+.service-list-page .entity-card p {
+    color: #697386;
+    line-height: 1.8;
+    font-size: 0.96rem;
+    margin-bottom: 20px;
+}
+
+/* Service links */
+.service-list-page .entity-card a {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    width: fit-content;
+    margin-top: auto;
+    padding-top: 10px;
+
+    color: #d71920;
+    font-weight: 750;
+    text-decoration: none;
+
+    transition:
+        color 0.3s ease,
+        gap 0.3s ease;
+}
+
+.service-list-page .entity-card a::after {
+    content: "→";
+    display: inline-block;
+    transition: transform 0.3s ease;
+}
+
+.service-list-page .entity-card a:hover {
+    color: #102f67;
+    gap: 12px;
+}
+
+.service-list-page .entity-card a:hover::after {
+    transform: translateX(3px);
+}
+
+/* Keyboard accessibility */
+.service-list-page .entity-card a:focus-visible {
+    outline: 3px solid rgba(215, 25, 32, 0.45);
+    outline-offset: 5px;
+    border-radius: 3px;
+}
+
+/* Tablet */
+@media (max-width: 860px) {
+    .service-list-page .entity-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 22px;
+    }
+
+    .service-list-page .entity-card {
+        padding: 26px;
+    }
+}
+
+/* Mobile */
+@media (max-width: 560px) {
+    .service-list-page .content-section {
+        padding-block: 42px;
+    }
+
+    .service-list-page .entity-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .service-list-page .entity-card {
+        padding: 24px;
+        border-radius: 15px;
+    }
+}
+
+/* Respect reduced-motion preferences */
+@media (prefers-reduced-motion: reduce) {
+    .service-list-page .entity-card,
+    .service-list-page .entity-card::before,
+    .service-list-page .entity-card::after,
+    .service-list-page .entity-card h2,
+    .service-list-page .entity-card h3,
+    .service-list-page .entity-card a,
+    .service-list-page .entity-card a::after {
+        transition: none !important;
+        animation: none !important;
+    }
+
+    .service-list-page .entity-card:hover {
+        transform: none;
+    }
+}
+
+/* ==========================================
+   GRIMFLOT LTD — SERVICES CARD ENHANCEMENTS
+========================================== */
+
+/* Section introduction */
+.service-list-page .services-intro {
+    max-width: 720px;
+    margin: 0 auto 44px;
+    text-align: center;
+}
+
+.service-list-page .services-intro .eyebrow {
+    justify-content: center;
+    margin-bottom: 16px;
+}
+
+.service-list-page .services-intro h2 {
+    margin: 0;
+    color: var(--services-ink);
+    font-size: clamp(2rem, 4vw, 3.25rem);
+    line-height: 1.1;
+    letter-spacing: -0.055em;
+}
+
+.service-list-page .services-intro > p:last-child {
+    max-width: 570px;
+    margin: 18px auto 0;
+    color: var(--services-muted);
+    line-height: 1.8;
+}
+
+/* Service image container */
+.service-list-page .service-card__visual {
+    position: relative;
+    display: block;
+    isolation: isolate;
+    overflow: hidden;
+    aspect-ratio: 1.4 / 1;
+    background: var(--services-blue);
+    text-decoration: none;
+}
+
+/* Actual service image */
+.service-list-page .service-card__visual > img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    aspect-ratio: auto;
+    object-fit: cover;
+    object-position: center;
+
+    transition:
+        transform 700ms cubic-bezier(0.22, 1, 0.36, 1),
+        filter 500ms ease;
+}
+
+/* Fallback when no image is available */
+.service-list-page .service-card__visual > .entity-card__index {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: flex-end;
+    min-height: 0;
+    padding: 28px;
+}
+
+/* Image overlay */
+.service-list-page .service-card__image-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+
+    background: linear-gradient(
+        180deg,
+        rgba(7, 16, 31, 0.05) 15%,
+        rgba(7, 16, 31, 0.12) 45%,
+        rgba(7, 16, 31, 0.78) 100%
+    );
+
+    transition: opacity 350ms ease;
+}
+
+/* Service number */
+.service-list-page .service-card__number {
+    position: absolute;
+    z-index: 2;
+    left: 22px;
+    bottom: 20px;
+
+    color: #fff;
+    font-size: 0.8rem;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+}
+
+/* Image arrow */
+.service-list-page .service-card__visual-arrow {
+    position: absolute;
+    z-index: 2;
+    top: 18px;
+    right: 18px;
+
+    display: grid;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+
+    border: 1px solid rgba(255, 255, 255, 0.45);
+    border-radius: 50%;
+    background: rgba(7, 16, 31, 0.22);
+    color: #fff;
+    font-size: 1.2rem;
+
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+
+    transition:
+        background 350ms ease,
+        border-color 350ms ease,
+        transform 350ms ease;
+}
+
+/* Card content */
+.service-list-page .service-card__content {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 27px 26px 30px;
+}
+
+.service-list-page .service-card__content .eyebrow {
+    margin-bottom: 13px;
+}
+
+.service-list-page .service-card__content h2 {
+    margin: 0;
+    font-size: clamp(1.3rem, 2vw, 1.65rem);
+    line-height: 1.25;
+    letter-spacing: -0.04em;
+}
+
+.service-list-page .service-card__content h2 a {
+    color: var(--services-ink);
+    text-decoration: none;
+    transition: color 300ms ease;
+}
+
+.service-list-page .service-card__content > p:not(.eyebrow) {
+    margin: 15px 0 24px;
+    color: var(--services-muted);
+    font-size: 0.94rem;
+    line-height: 1.8;
+}
+
+/* Card hover */
+@media (hover: hover) and (pointer: fine) {
+    .service-list-page .entity-card--image:hover
+    .service-card__visual > img {
+        transform: scale(1.07);
+        filter: saturate(1.12);
+    }
+
+    .service-list-page .entity-card--image:hover
+    .service-card__visual-arrow {
+        transform: rotate(45deg);
+        border-color: var(--services-red);
+        background: var(--services-red);
+    }
+
+    .service-list-page .entity-card--image:hover
+    .service-card__content h2 a {
+        color: var(--services-red);
+    }
+}
+
+/* Keyboard accessibility */
+.service-list-page .service-card__visual:focus-visible {
+    outline: 3px solid var(--services-red);
+    outline-offset: 4px;
+}
+
+/* Mobile adjustments */
+@media (max-width: 640px) {
+    .service-list-page .services-intro {
+        margin-bottom: 30px;
+        text-align: left;
+    }
+
+    .service-list-page .services-intro .eyebrow {
+        justify-content: flex-start;
+    }
+
+    .service-list-page .service-card__visual {
+        aspect-ratio: 1.5 / 1;
+    }
+
+    .service-list-page .service-card__content {
+        padding: 24px 22px 26px;
+    }
+}
+
+/* Respect reduced-motion settings */
+@media (prefers-reduced-motion: reduce) {
+    .service-list-page .service-card__visual > img,
+    .service-list-page .service-card__visual-arrow,
+    .service-list-page .service-card__content h2 a {
+        transition: none !important;
+    }
+
+    .service-list-page .entity-card--image:hover
+    .service-card__visual > img {
+        transform: none;
+        filter: none;
+    }
+}

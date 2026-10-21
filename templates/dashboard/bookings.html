@@ -1,0 +1,96 @@
+{% extends "dashboard/base.html" %}
+
+{% block dashboard_content %}
+
+<section class="dashboard-panel">
+
+    <div class="operations-list">
+
+        {% for booking in bookings %}
+
+            <article class="operation-card">
+
+                <div class="operation-card__details">
+
+                    <p class="eyebrow">
+                        Requested {{ booking.requested_for|date:"j M Y, H:i" }}
+                    </p>
+
+                    <h2>{{ booking.name }}</h2>
+
+                    <p>
+                        {{ booking.email }}
+                        ·
+                        {{ booking.phone }}
+                    </p>
+
+                    <p>
+                        <strong>{{ booking.service_interest }}</strong>
+
+                        {% if booking.property_type %}
+                            · {{ booking.property_type }}
+                        {% endif %}
+                    </p>
+
+                    {% if booking.notes %}
+                        <p>{{ booking.notes }}</p>
+                    {% endif %}
+
+                </div>
+
+                <form
+                    method="post"
+                    class="compact-form"
+                >
+                    {% csrf_token %}
+
+                    <input
+                        type="hidden"
+                        name="booking_id"
+                        value="{{ booking.pk }}"
+                    >
+
+                    <label for="booking-{{ booking.pk }}">
+                        Status
+                    </label>
+
+                    <select
+                        id="booking-{{ booking.pk }}"
+                        name="status"
+                    >
+                        {% for value, label in booking.STATUS_CHOICES %}
+
+                            <option
+                                value="{{ value }}"
+                                {% if booking.status == value %}selected{% endif %}
+                            >
+                                {{ label }}
+                            </option>
+
+                        {% endfor %}
+                    </select>
+
+                    <button
+                        class="button button--quiet button--small"
+                        type="submit"
+                    >
+                        Save
+                    </button>
+
+                </form>
+
+            </article>
+
+        {% empty %}
+
+            <p class="muted-copy">
+                No consultation requests yet.
+            </p>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+{% endblock %}

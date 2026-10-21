@@ -1,0 +1,31 @@
+/* Shared Django form presentation. Page styles may adjust layout, not controls. */
+.form-shell {
+    display: grid;
+    gap: 20px;
+    padding: clamp(24px, 4vw, 42px);
+    border: 1px solid rgba(16, 47, 103, .12);
+    background: #fff;
+    box-shadow: 0 18px 52px rgba(7, 16, 31, .07);
+}
+
+.field { display: grid; gap: 7px; }
+.field > label { color: #171c27; font-size: .9rem; font-weight: 700; }
+.field small { color: #697386; font-size: .8rem; line-height: 1.55; }
+.field--error input, .field--error select, .field--error textarea { border-color: #c92633; }
+.field-error, .form-errors { margin: 0; color: #b42318; font-size: .84rem; line-height: 1.55; }
+.form-errors { padding: 12px 14px; border-left: 3px solid #d71920; background: #fff4f4; }
+
+.password-control { position: relative; display: block; }
+.password-control input { padding-right: 52px; }
+.password-control__toggle {
+    position: absolute; top: 50%; right: 8px; display: grid; width: 36px; height: 36px;
+    place-items: center; padding: 0; color: #102f67; background: transparent; border: 0;
+    border-radius: 5px; transform: translateY(-50%);
+}
+.password-control__toggle svg { width: 19px; height: 19px; fill: none; stroke: currentColor; stroke-width: 1.8; }
+.password-control__toggle:hover { color: #d71920; background: #fff1f1; }
+.password-control__toggle:focus-visible { outline: 2px solid #d71920; outline-offset: 2px; }
+.button.is-loading { pointer-events: none; opacity: .8; }
+.button-spinner { width: 15px; height: 15px; border: 2px solid currentColor; border-right-color: transparent; border-radius: 50%; animation: button-spin .65s linear infinite; }
+@keyframes button-spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .button-spinner { animation: none; } }

@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block page_styles %}
+<link rel="stylesheet" href="{% static 'css/pages/accounts/login.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="staff-login">
+
+    <!-- LEFT: GRIMFLOT LTD BRAND EXPERIENCE -->
+    <aside class="staff-login__visual">
+
+        <div class="staff-login__visual-overlay"></div>
+
+        <a href="/" class="staff-login__brand" aria-label="GRIMFLOT LTD homepage">
+            <img
+                src="{% static 'images/logo.png' %}"
+                alt="GRIMFLOT LTD"
+                class="staff-login__logo"
+            >
+        </a>
+
+        <div class="staff-login__intro">
+            <span class="staff-login__eyebrow">
+                BUILDING SMART HOMES
+            </span>
+
+            <h1>
+                Smarter living.<br>
+                Reliable power.<br>
+                <span>Better security.</span>
+            </h1>
+
+            <p>
+                Intelligent home automation, solar energy systems,
+                electrical solutions and advanced security technology
+                designed for modern living.
+            </p>
+
+            <div class="staff-login__services">
+                <span>Solar & Inverter Systems</span>
+                <span>Smart Home Automation</span>
+                <span>Electrical & Security Solutions</span>
+            </div>
+        </div>
+
+        <div class="staff-login__visual-footer">
+            <span>GRIMFLOT LTD</span>
+            <span>POWERING SMARTER SPACES</span>
+        </div>
+
+    </aside>
+
+
+    <!-- RIGHT: STAFF AUTHENTICATION -->
+    <div class="staff-login__panel">
+        <div class="staff-login__form-wrap">
+
+            <a href="/" class="staff-login__mobile-brand">
+                <img
+                    src="{% static 'images/logo.png' %}"
+                    alt="GRIMFLOT LTD"
+                >
+            </a>
+
+            <div class="staff-login__heading">
+                <span class="staff-login__eyebrow">
+                    STAFF PORTAL
+                </span>
+
+                <h2>Welcome back<span>.</span></h2>
+
+                <p>
+                    Sign in with your authorised staff account
+                    to access the operations dashboard.
+                </p>
+            </div>
+
+            <!-- Django messages appear above the form fields -->
+            {% if messages %}
+                <div class="staff-messages" aria-label="Notifications">
+                    {% for message in messages %}
+                        <div
+                            class="staff-message staff-message--{{ message.tags|default:'info' }}"
+                            role="{% if 'error' in message.tags %}alert{% else %}status{% endif %}"
+                        >
+                            <span
+                                class="staff-message__indicator"
+                                aria-hidden="true"
+                            ></span>
+
+                            <p>{{ message }}</p>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <form method="post" class="staff-login__form">
+                {% csrf_token %}
+
+                {% include "includes/form_fields.html" with form=form %}
+
+                <input
+                    type="hidden"
+                    name="next"
+                    value="{{ next_url }}"
+                >
+
+                <button class="staff-login__submit" type="submit">
+                    <span>Sign in to dashboard</span>
+                    <span aria-hidden="true">&rarr;</span>
+                </button>
+            </form>
+
+            <div class="staff-login__security">
+                <span aria-hidden="true">&#9670;</span>
+                <p>Secure staff access. Authorised personnel only.</p>
+            </div>
+
+            <a href="/" class="staff-login__back">
+                &larr; Back to GRIMFLOT LTD
+            </a>
+
+        </div>
+    </div>
+
+</section>
+{% endblock %}

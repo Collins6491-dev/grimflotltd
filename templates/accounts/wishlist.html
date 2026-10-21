@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+{% load static %}
+{% block page_styles %}<link rel="stylesheet" href="{% static 'css/pages/accounts/wishlist.css' %}">{% endblock %}
+
+{% block content %}
+
+<!-- Wishlist Header -->
+<section class="page-hero page-hero--compact page-hero--ink">
+    <div class="site-container">
+        <p class="eyebrow">Customer account</p>
+
+        <h1>Saved products</h1>
+
+        <p>
+            Keep product options close while you plan the broader system.
+        </p>
+    </div>
+</section>
+
+<!-- Saved Products -->
+<section class="content-section content-section--white">
+    <div class="site-container product-grid">
+
+        {% for item in items %}
+
+        <article class="product-card">
+
+            <a
+                class="product-card__media"
+                href="{{ item.product.get_absolute_url }}"
+            >
+                {% if item.product.primary_image %}
+                <img
+                    src="{{ item.product.primary_image.image.url }}"
+                    alt="{{ item.product.primary_image.alt_text }}"
+                    loading="lazy"
+                >
+                {% else %}
+                <span
+                    class="product-card__placeholder"
+                    aria-hidden="true"
+                >
+                    G
+                </span>
+                {% endif %}
+            </a>
+
+            <div class="product-card__content">
+
+                <p class="product-card__category">
+                    {{ item.product.category.name }}
+                </p>
+
+                <h2>
+                    <a href="{{ item.product.get_absolute_url }}">
+                        {{ item.product.name }}
+                    </a>
+                </h2>
+
+                <p class="product-card__price">
+                    {{ item.product.currency }} {{ item.product.price }}
+                </p>
+
+                <form
+                    method="post"
+                    action="{% url 'accounts:toggle-wishlist' item.product.slug %}"
+                >
+                    {% csrf_token %}
+
+                    <input
+                        type="hidden"
+                        name="next"
+                        value="{{ request.path }}"
+                    >
+
+                    <button class="text-button" type="submit">
+                        Remove saved product
+                    </button>
+                </form>
+
+            </div>
+        </article>
+
+        {% empty %}
+
+        <div class="empty-state">
+            <h2>No saved products.</h2>
+
+            <p>
+                Save equipment from a product page to build a shortlist.
+            </p>
+
+            <a
+                class="button button--solid"
+                href="{% url 'catalogue:product-list' %}"
+            >
+                Browse products
+            </a>
+        </div>
+
+        {% endfor %}
+
+    </div>
+</section>
+
+{% endblock %}

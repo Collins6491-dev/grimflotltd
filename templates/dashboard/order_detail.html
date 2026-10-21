@@ -1,0 +1,129 @@
+{% extends "dashboard/base.html" %}
+
+{% block dashboard_content %}
+
+<div class="dashboard-columns">
+
+    <!-- ORDER DETAILS -->
+    <section class="dashboard-panel">
+
+        <h2>Order {{ order.reference }}</h2>
+
+        <p>
+            {{ order.email }}
+            ·
+            {{ order.created_at|date:"j F Y, H:i" }}
+        </p>
+
+        <!-- ORDER ITEMS -->
+        <ul class="summary-lines">
+
+            {% for item in order.items.all %}
+
+                <li>
+                    <span>
+                        {{ item.quantity }} × {{ item.product_name }}
+
+                        <small>{{ item.sku }}</small>
+                    </span>
+
+                    <strong>
+                        {{ order.currency }} {{ item.line_total|floatformat:2 }}
+                    </strong>
+                </li>
+
+            {% empty %}
+
+                <li>No items found for this order.</li>
+
+            {% endfor %}
+
+        </ul>
+
+        <!-- DELIVERY INFORMATION -->
+        <h3>Delivery</h3>
+
+        <address>
+            {{ order.recipient_name }}<br>
+
+            {{ order.address_line_1 }}
+
+            {% if order.address_line_2 %}
+                <br>{{ order.address_line_2 }}
+            {% endif %}
+
+            <br>
+            {{ order.city }}, {{ order.state }}
+
+            <br>
+            {{ order.recipient_phone }}
+        </address>
+
+    </section>
+
+
+    <!-- ORDER STATUS AND PAYMENT MANAGEMENT -->
+    <section class="dashboard-panel dashboard-panel--form">
+
+        <form
+            method="post"
+            class="form-shell"
+        >
+            {% csrf_token %}
+
+            <h2>Update status</h2>
+
+            {% include "includes/form_fields.html" with form=form %}
+
+            <p class="muted-copy">
+                Paid status can only be set after provider verification.
+                A refund status requires a verified refund reference in the note.
+            </p>
+
+            <button
+                class="button button--solid"
+                type="submit"
+            >
+                Record update
+            </button>
+
+        </form>
+
+
+        <!-- PAYMENT RECORDS -->
+        <h3>Payment records</h3>
+
+        {% for payment in order.payments.all %}
+
+            <div class="payment-record">
+
+                <p>
+                    <strong>Provider:</strong>
+                    {{ payment.provider }}
+                </p>
+
+                <p>
+                    <strong>Reference:</strong>
+                    {{ payment.reference }}
+                </p>
+
+                <p>
+                    <strong>Status:</strong>
+                    {{ payment.get_status_display }}
+                </p>
+
+            </div>
+
+        {% empty %}
+
+            <p class="muted-copy">
+                No payment records.
+            </p>
+
+        {% endfor %}
+
+    </section>
+
+</div>
+
+{% endblock %}

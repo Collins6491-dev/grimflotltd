@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% load static %}
+{% block page_styles %}<link rel="stylesheet" href="{% static 'css/pages/orders.css' %}">{% endblock %}
+{% block content %}<section class="page-hero page-hero--compact page-hero--ink">
+    <div class="site-container">
+        <p class="eyebrow">Order / {{ order.reference }}</p>
+        <h1>{{ order.get_status_display }}</h1>
+        <p>Placed {{ order.created_at|date:"j F Y, H:i" }} · {{ order.currency }} {{ order.total }}</p>
+    </div>
+</section>
+<section class="content-section content-section--white">
+    <div class="site-container order-detail-grid">
+        <div>
+            <h2>Items</h2>
+            <ul class="summary-lines summary-lines--large">{% for item in order.items.all %}<li><span>{{ item.quantity
+                        }} × {{ item.product_name }}<small>{{ item.sku }} · {{ item.unit_price }}
+                            each</small></span><strong>{{ order.currency }} {{ item.line_total }}</strong></li>{% endfor
+                %}</ul>
+            <h2>Order progress</h2>
+            <ol class="order-timeline">{% for event in order.status_events.all %}<li><strong>{{ event.get_status_display
+                        }}</strong><span>{{ event.created_at|date:"j M Y, H:i" }}{% if event.note %} · {{ event.note
+                        }}{% endif %}</span></li>{% endfor %}</ol>
+        </div>
+        <aside class="order-summary">
+            <p class="eyebrow">Delivery</p>
+            <address>{{ order.recipient_name }}<br>{{ order.address_line_1 }}{% if order.address_line_2 %}<br>{{
+                order.address_line_2 }}{% endif %}<br>{{ order.city }}, {{ order.state }}<br>{{ order.country }}<br>{{
+                order.recipient_phone }}</address>
+            <dl>
+                <div>
+                    <dt>Subtotal</dt>
+                    <dd>{{ order.currency }} {{ order.subtotal }}</dd>
+                </div>
+                <div>
+                    <dt>Delivery</dt>
+                    <dd>{{ order.currency }} {{ order.delivery_fee }}</dd>
+                </div>
+            </dl>
+            <p class="order-summary__total">Total <strong>{{ order.currency }} {{ order.total }}</strong></p>{% if
+            order.status == 'pending_payment' %}<a class="button button--solid"
+                href="{% url 'orders:begin-payment' order.reference %}">Continue payment</a>{% endif %}
+        </aside>
+    </div>
+</section>{% endblock %}

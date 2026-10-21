@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+{% load static %}
+{% block page_styles %}<link rel="stylesheet" href="{% static 'css/pages/accounts/account.css' %}">{% endblock %}
+
+{% block content %}
+
+<!-- Account Header -->
+<section class="page-hero page-hero--compact page-hero--ink">
+    <div class="site-container">
+        <p class="eyebrow">Customer account</p>
+
+        <h1>
+            {% if user.get_full_name %}
+                {{ user.get_full_name }}
+            {% else %}
+                Your account
+            {% endif %}
+        </h1>
+
+        <p>
+            {% if user.is_email_verified %}
+                Your email address is verified.
+            {% else %}
+                Your email is not yet verified; checkout is unavailable
+                until verification is complete.
+            {% endif %}
+        </p>
+    </div>
+</section>
+
+<!-- Account Details -->
+<section class="content-section content-section--mist">
+    <div class="site-container account-grid">
+
+        <form method="post" class="form-shell">
+            {% csrf_token %}
+
+            <h2>Personal details</h2>
+
+            {% include "includes/form_fields.html" with form=form %}
+
+            <button class="button button--solid" type="submit">
+                Save changes
+            </button>
+        </form>
+
+        <!-- Account Navigation -->
+        <aside class="account-navigation">
+            <p class="eyebrow">Quick links</p>
+
+            <a href="{% url 'orders:list' %}">
+                Order history
+            </a>
+
+            <a href="{% url 'accounts:wishlist' %}">
+                Saved products
+            </a>
+
+            <form method="post" action="{% url 'accounts:logout' %}">
+                {% csrf_token %}
+
+                <button type="submit" class="text-button">
+                    Sign out
+                </button>
+            </form>
+        </aside>
+
+    </div>
+</section>
+
+<!-- Recent Orders -->
+{% if recent_orders %}
+<section class="content-section content-section--white">
+    <div class="site-container">
+
+        <div class="section-heading section-heading--split">
+            <div>
+                <p class="eyebrow">Recent activity</p>
+                <h2>Orders</h2>
+            </div>
+
+            <a class="text-link text-link--dark" href="{% url 'orders:list' %}">
+                All orders
+                <span aria-hidden="true">↗</span>
+            </a>
+        </div>
+
+        <div class="table-wrap">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th scope="col">Order</th>
+                        <th scope="col">Placed</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Total</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for order in recent_orders %}
+                    <tr>
+                        <td>
+                            <a href="{% url 'orders:detail' order.reference %}">
+                                {{ order.reference }}
+                            </a>
+                        </td>
+
+                        <td>
+                            {{ order.created_at|date:"j M Y" }}
+                        </td>
+
+                        <td>
+                            {{ order.get_status_display }}
+                        </td>
+
+                        <td>
+                            {{ order.currency }} {{ order.total }}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</section>
+{% endif %}
+
+{% endblock %}

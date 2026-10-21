@@ -1,0 +1,147 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block page_styles %}
+<link rel="stylesheet" href="{% static 'css/pages/catalog.css' %}">
+{% endblock %}o
+
+{% block title %}{{ product.meta_title|default:product.name }} | GRIMFLOT LTD{% endblock %}
+{% block body_class %}product-detail-page{% endblock %}
+
+{% block content %}
+<section class="product-detail">
+    <div class="site-container product-detail__breadcrumb">
+        <a href="{% url 'catalogue:product-list' %}">Products</a><span aria-hidden="true">/</span><span>{{
+            product.category.name }}</span>
+    </div>
+    <div class="site-container product-detail__grid">
+        <div class="product-detail__media">
+            {% if product.primary_image %}
+            <img src="{{ product.primary_image.image.url }}" alt="{{ product.primary_image.alt_text }}"
+                fetchpriority="high">
+            {% else %}
+            <div class="product-detail__placeholder" aria-hidden="true">G</div>
+            {% endif %}
+        </div>
+        <div class="product-detail__summary">
+            <p class="eyebrow">{{ product.category.name }} / {{ product.sku }}</p>
+            <h1>{{ product.name }}</h1>
+            <p class="product-detail__lead">{{ product.short_description }}</p>
+            <div class="product-detail__commercial">
+                <p>{{ product.currency }} {{ product.price }}</p>
+                {% if product.compare_at_price %}<s>{{ product.currency }} {{ product.compare_at_price }}</s>{% endif %}
+            </div>
+            <p class="stock-label {% if product.is_available_for_sale %}stock-label--available{% endif %}">{{
+                product.stock_status }}</p>
+            {% if product.installation_available %}<p class="installation-note">Professional installation can be planned
+                with this product.</p>{% endif %}
+            {% if product.is_available_for_sale %}
+            <form class="purchase-form" method="post" action="{% url 'cart:add' product.slug %}">
+                {% csrf_token %}
+                <label for="quantity">Quantity</label>
+                <input id="quantity" name="quantity" type="number" min="1" max="99" value="1">
+                <input name="next" type="hidden" value="{{ request.path }}">
+                <button class="button button--solid" type="submit">Add to cart</button>
+            </form>
+            {% else %}
+            <div class="product-detail__stage-note" role="note">
+                <span aria-hidden="true">+</span>
+                <p>Availability is being confirmed. Contact our team for an installation-ready recommendation.</p>
+            </div>
+            {% endif %}
+            {% if request.user.is_authenticated %}
+            <form class="wishlist-form" method="post" action="{% url 'accounts:toggle-wishlist' product.slug %}">
+                {% csrf_token %}<input type="hidden" name="next" value="{{ request.path }}">
+                <button class="text-link text-link--dark" type="submit">{% if is_wishlisted %}Remove from saved
+                    products{% else %}Save for later{% endif %}</button>
+            </form>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+<section class="product-description">
+    <div class="site-container product-description__grid">
+        <div>
+            <p class="eyebrow">Product overview</p>
+            <h2>Built for a system, not a shelf.</h2>
+        </div>
+        <div>
+            <div class="rich-copy">{{ product.description|linebreaks }}</div>
+            {% if product.specifications.all %}
+            <dl class="specification-list">
+                {% for specification in product.specifications.all %}
+                <div>
+                    <dt>{{ specification.label }}</dt>
+                    <dd>{{ specification.value }}</dd>
+                </div>
+                {% endfor %}
+            </dl>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+<section class="content-section content-section--white" id="reviews" aria-labelledby="reviews-title">
+    <div class="site-container review-layout">
+        <div>
+            <p class="eyebrow">Verified customers</p>
+            <h2 id="reviews-title">Practical feedback, moderated before publication.</h2>
+        </div>
+        <div class="review-list">
+            {% for review in approved_reviews %}
+            <article class="review">
+                <p class="review__rating" aria-label="{{ review.rating }} out of 5 stars">{% for star in "12345" %}{% if forloop.counter <= review.rating %}★{% else %}☆{% endif %}{% endfor %}</p>
+                        <h3>{{ review.title }}</h3>
+                        <p>{{ review.body|linebreaksbr }}</p>
+                        <footer>{{ review.user.get_full_name|default:review.user.email }}</footer>
+            </article>
+            {% empty %}<p class="muted-copy">There are no approved customer reviews for this product yet.</p>
+            {% endfor %}
+            {% if user.is_authenticated and can_review %}
+            <form class="form-shell form-shell--inline" method="post"
+                action="{% url 'reviews:submit-product-review' product.slug %}">
+                {% csrf_token %}<h3>Share your experience</h3>{% include "includes/form_fields.html" with
+                form=review_form %}<button class="button button--solid" type="submit">Submit for review</button>
+            </form>
+            {% elif not user.is_authenticated %}<p class="muted-copy"><a
+                    href="{% url 'accounts:login' %}?next={{ request.path|urlencode }}">Sign in</a> to share a
+                verified-purchase review.</p>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+{% if related_products %}
+<section class="related-products" aria-labelledby="related-products-title">
+    <div class="site-container">
+        <div class="related-products__heading">
+            <div>
+                <p class="eyebrow">Continue exploring</p>
+                <h2 id="related-products-title">More in {{ product.category.name }}.</h2>
+            </div>
+            <a class="text-link text-link--dark"
+                href="{% url 'catalogue:product-list' %}?category={{ product.category.pk }}">View all <span
+                    aria-hidden="true">↗</span></a>
+        </div>
+        <div class="product-grid product-grid--related">
+            {% for related_product in related_products %}
+            <article class="product-card">
+                <a class="product-card__media" href="{{ related_product.get_absolute_url }}">
+                    {% if related_product.primary_image %}
+                    <img src="{{ related_product.primary_image.image.url }}"
+                        alt="{{ related_product.primary_image.alt_text }}" loading="lazy">
+                    {% else %}<span class="product-card__placeholder" aria-hidden="true">G</span>{% endif %}
+                </a>
+                <div class="product-card__content">
+                    <p class="product-card__category">{{ related_product.category.name }}</p>
+                    <h3><a href="{{ related_product.get_absolute_url }}">{{ related_product.name }}</a></h3>
+                    <p class="product-card__price">{{ related_product.currency }} {{ related_product.price }}</p>
+                </div>
+            </article>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+{% endblock %}

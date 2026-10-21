@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+.venv/
+venv/
+
+# Django and local configuration
+db.sqlite3
+media/*
+!media/.gitkeep
+staticfiles/
+.env
+.env.*
+!.env.example
+
+# Tooling and operating systems
+.coverage
+coverage.xml
+htmlcov/
+.ruff_cache/
+.pytest_cache/
+.mypy_cache/
+.idea/
+.vscode/
+Thumbs.db
+Desktop.ini

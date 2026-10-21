@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block page_styles %}
+<link rel="stylesheet" href="{% static 'css/pages/projects.css' %}">
+{% endblock %}
+{% block content %}<section class="page-hero page-hero--ink">
+    <div class="site-container">
+        <p class="eyebrow">Gallery</p>
+        <h1>Details from the work.</h1>
+        <p>Published imagery is selected to show the craft and context of a system without overstating a project.</p>
+    </div>
+</section>
+<section class="content-section content-section--white">
+    <div class="site-container image-gallery">{% for item in items %}<figure><img src="{{ item.image.url }}"
+                alt="{{ item.alt_text }}" loading="lazy">{% if item.caption %}<figcaption>{{ item.caption }}{% if
+                item.project %} · <a href="{% url 'projects:detail' item.project.slug %}">{{ item.project.title }}</a>{%
+                endif %}</figcaption>{% endif %}</figure>{% empty %}<div class="empty-state">
+            <h2>Gallery content is being curated.</h2>
+        </div>{% endfor %}</div>
+</section>{% endblock %}

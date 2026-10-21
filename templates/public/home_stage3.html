@@ -1,0 +1,903 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Smart Energy, Smart Homes & Security | GRIMFLOT LTD{% endblock %}
+
+{% block meta_description %}
+GRIMFLOT LTD delivers premium solar energy systems, inverter and battery
+solutions, smart home automation, electrical installations and advanced
+security systems for residential and commercial properties.
+{% endblock %}
+
+{% block body_class %}home-page{% endblock %}
+
+{% block extra_head %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static 'css/pages/home.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<!-- =====================================================
+     HERO SLIDER
+===================================================== -->
+
+<section class="gf-hero gf-hero--slider" data-gf-hero aria-label="GRIMFLOT featured solutions">
+  <div class="gf-hero__slides" aria-live="off">
+
+    {% if hero_slides %}
+      {% for slide in hero_slides %}
+      <article class="gf-hero__slide{% if forloop.first %} is-active{% endif %}"
+               data-gf-slide
+               aria-hidden="{% if forloop.first %}false{% else %}true{% endif %}">
+        <div class="gf-hero__slide-image">
+          {% if slide.image %}
+            <img src="{{ slide.image }}" alt="{{ slide.alt|default:slide.title|default:'GRIMFLOT solution' }}" {% if forloop.first %}fetchpriority="high"{% else %}loading="lazy"{% endif %}>
+          {% else %}
+            <img src="{% static 'images/hero/smart-home-hero.jpg' %}" alt="{{ slide.alt|default:'Premium smart home exterior' }}" {% if forloop.first %}fetchpriority="high"{% else %}loading="lazy"{% endif %}>
+          {% endif %}
+        </div>
+        <div class="gf-hero__overlay"></div>
+        <div class="gf-container gf-hero__content">
+          <div class="gf-hero__text">
+            {% if slide.eyebrow %}<span class="gf-eyebrow gf-eyebrow--light">{{ slide.eyebrow }}</span>{% else %}<span class="gf-eyebrow gf-eyebrow--light">ENGINEERED FOR MODERN LIVING</span>{% endif %}
+            <h1>{{ slide.title|default:"Intelligent energy." }}</h1>
+            <p>{{ slide.summary|default:"Power your world with reliable energy solutions, intelligent home automation, and advanced security systems designed around the way you live and work." }}</p>
+            <div class="gf-hero__actions">
+              {% if slide.primary_target %}
+                <a href="{{ slide.primary_target }}" class="gf-button gf-button--red">{{ slide.primary_label|default:"Request a Quote" }} <span aria-hidden="true">↗</span></a>
+              {% else %}
+                <a href="{% url 'enquiries:quote' %}" class="gf-button gf-button--red">Request a Quote <span aria-hidden="true">↗</span></a>
+              {% endif %}
+              {% if slide.secondary_target %}
+                <a href="{{ slide.secondary_target }}" class="gf-button gf-button--glass">{{ slide.secondary_label|default:"Explore Our Solutions" }} <span aria-hidden="true">↓</span></a>
+              {% else %}
+                <a href="#solutions" class="gf-button gf-button--glass">Explore Our Solutions <span aria-hidden="true">↓</span></a>
+              {% endif %}
+            </div>
+            <div class="gf-hero__trust">
+              <span class="gf-hero__trust-mark" aria-hidden="true">✓</span>
+              <p><strong>One trusted partner.</strong>Energy, technology and security.</p>
+            </div>
+          </div>
+          <div class="gf-hero__side-label"><span></span>SMARTER SPACES. BETTER LIVING.</div>
+        </div>
+      </article>
+      {% endfor %}
+    {% else %}
+      <article class="gf-hero__slide is-active" data-gf-slide aria-hidden="false">
+        <div class="gf-hero__slide-image"><img src="{% static 'images/hero/smart-home-hero.jpg' %}" alt="Premium smart home exterior" fetchpriority="high"></div>
+        <div class="gf-hero__overlay"></div>
+        <div class="gf-container gf-hero__content">
+          <div class="gf-hero__text">
+            <span class="gf-eyebrow gf-eyebrow--light">ENGINEERED FOR MODERN LIVING</span>
+            <h1>Intelligent energy.<span>Exceptional living.</span></h1>
+            <p>Power your world with reliable energy solutions, intelligent home automation, and advanced security systems designed around the way you live and work.</p>
+            <div class="gf-hero__actions">
+              <a href="{% url 'enquiries:quote' %}" class="gf-button gf-button--red">Request a Quote <span aria-hidden="true">↗</span></a>
+              <a href="#solutions" class="gf-button gf-button--glass">Explore Our Solutions <span aria-hidden="true">↓</span></a>
+            </div>
+            <div class="gf-hero__trust"><span class="gf-hero__trust-mark" aria-hidden="true">✓</span><p><strong>One trusted partner.</strong>Energy, technology and security.</p></div>
+          </div>
+          <div class="gf-hero__side-label"><span></span>SMARTER SPACES. BETTER LIVING.</div>
+        </div>
+      </article>
+      <article class="gf-hero__slide" data-gf-slide aria-hidden="true">
+        <div class="gf-hero__slide-image"><img src="{% static 'images/services/smart-home.jpg' %}" alt="Contemporary smart home interior" loading="lazy"></div>
+        <div class="gf-hero__overlay"></div>
+        <div class="gf-container gf-hero__content">
+          <div class="gf-hero__text">
+            <span class="gf-eyebrow gf-eyebrow--light">INTELLIGENCE IN EVERY DETAIL</span>
+            <h2>Smarter spaces.<span>Effortless living.</span></h2>
+            <p>Bring lighting, comfort and connected technology together with thoughtfully designed smart-home solutions.</p>
+            <div class="gf-hero__actions"><a href="{% url 'services:list' %}" class="gf-button gf-button--red">Explore Smart Solutions <span aria-hidden="true">↗</span></a><a href="#solutions" class="gf-button gf-button--glass">Discover What We Do <span aria-hidden="true">↓</span></a></div>
+            <div class="gf-hero__trust"><span class="gf-hero__trust-mark" aria-hidden="true">✓</span><p><strong>Designed around you.</strong>Comfort, control and convenience.</p></div>
+          </div>
+          <div class="gf-hero__side-label"><span></span>SMARTER SPACES. BETTER LIVING.</div>
+        </div>
+      </article>
+      <article class="gf-hero__slide" data-gf-slide aria-hidden="true">
+        <div class="gf-hero__slide-image"><img src="{% static 'images/services/cctv-security.jpg' %}" alt="Security camera installation" loading="lazy"></div>
+        <div class="gf-hero__overlay"></div>
+        <div class="gf-container gf-hero__content">
+          <div class="gf-hero__text">
+            <span class="gf-eyebrow gf-eyebrow--light">PROTECTION WITH PURPOSE</span>
+            <h2>Confidence in every corner.<span>Security you can trust.</span></h2>
+            <p>Protect the people and property that matter with CCTV, access control, smart locks and integrated security systems.</p>
+            <div class="gf-hero__actions"><a href="{% url 'services:list' %}" class="gf-button gf-button--red">Explore Security <span aria-hidden="true">↗</span></a><a href="{% url 'enquiries:quote' %}" class="gf-button gf-button--glass">Discuss Your Project <span aria-hidden="true">↗</span></a></div>
+            <div class="gf-hero__trust"><span class="gf-hero__trust-mark" aria-hidden="true">✓</span><p><strong>One trusted partner.</strong>Energy, technology and security.</p></div>
+          </div>
+          <div class="gf-hero__side-label"><span></span>SMARTER SPACES. BETTER LIVING.</div>
+        </div>
+      </article>
+    {% endif %}
+  </div>
+
+  <div class="gf-hero__bottom">
+    <span>RESIDENTIAL</span><span>COMMERCIAL</span><span>INDUSTRIAL</span>
+  </div>
+
+  <div class="gf-hero__controls" aria-label="Hero slider controls">
+    <button type="button" class="gf-hero__control gf-hero__prev" data-gf-prev aria-label="Previous slide">←</button>
+    <div class="gf-hero__dots" data-gf-dots></div>
+    <button type="button" class="gf-hero__control gf-hero__next" data-gf-next aria-label="Next slide">→</button>
+  </div>
+</section>
+
+
+<!-- =====================================================
+     INTRODUCTION
+===================================================== -->
+
+<section class="gf-intro">
+
+  <div class="gf-container gf-intro__grid">
+
+    <div class="gf-intro__label">
+
+      <span class="gf-eyebrow">
+        ABOUT GRIMFLOT
+      </span>
+
+      <div class="gf-intro__number">
+        01 <span>/ OUR APPROACH</span>
+      </div>
+
+    </div>
+
+    <div class="gf-intro__main">
+
+      <h2>
+        Technology that works.
+        <span>Comfort you can feel.</span>
+      </h2>
+
+      <p>
+        Your property deserves more than disconnected solutions.
+        GRIMFLOT LTD brings together dependable power systems,
+        smart technology and professional security to create
+        spaces that work better every day.
+      </p>
+
+      <p>
+        From planning and installation to maintenance and ongoing
+        support, we help homeowners and businesses build
+        dependable, efficient and intelligent environments.
+      </p>
+      
+      
+      <a href="{% url 'about'%}" class="gf-text-link">
+        Discover GRIMFLOT
+        <span aria-hidden="true">↗</span>
+      </a>
+    </div>
+
+    <div class="gf-intro__visual">
+
+      <div class="gf-intro__image"></div>
+
+      <div class="gf-intro__image-caption">
+        <span class="gf-status-dot"></span>
+        <span>BUILT AROUND YOUR NEEDS</span>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =====================================================
+     SOLUTIONS
+===================================================== -->
+
+<section class="gf-solutions" id="solutions">
+
+  <div class="gf-container">
+
+    <div class="gf-section-heading">
+
+      <div>
+
+        <span class="gf-eyebrow">
+          WHAT WE DO
+        </span>
+
+        <h2>
+          Everything connected.
+          <span>Nothing overlooked.</span>
+        </h2>
+
+      </div>
+
+      <p>
+        Integrated solutions for dependable power,
+        intelligent spaces and peace of mind.
+      </p>
+
+    </div>
+
+
+    <div class="gf-solutions__grid">
+
+      <!-- SOLAR ENERGY -->
+
+      <article class="gf-solution-card gf-solution-card--energy" id="energy">
+
+        <div class="gf-solution-card__image">
+          {% if homepage.energy_image %}
+          <img src="{{ homepage.energy_image.url }}" alt="{{ homepage.energy_image_alt|default:'Solar energy installation' }}" loading="lazy">
+          {% endif %}
+        </div>
+
+        <div class="gf-solution-card__content">
+
+          <span class="gf-solution-card__number">01</span>
+
+          <div class="gf-solution-card__icon" aria-hidden="true">↗</div>
+
+          <span class="gf-eyebrow gf-eyebrow--light">
+            ENERGY SYSTEMS
+          </span>
+
+          <h3>Power without compromise.</h3>
+
+          <p>
+            Solar installations, inverter systems and
+            battery storage engineered around your
+            property's energy requirements.
+          </p>
+
+          <a href="{% url 'services:list' %}" class="gf-card-link">
+            Explore energy solutions
+            <span aria-hidden="true">↗</span>
+          </a>
+
+        </div>
+
+      </article>
+
+
+      <!-- SMART HOME -->
+
+      <article class="gf-solution-card gf-solution-card--smart">
+
+        <div class="gf-solution-card__image">
+          {% if homepage.smart_image %}
+          <img src="{{ homepage.smart_image.url }}" alt="{{ homepage.smart_image_alt|default:'Smart home installation' }}" loading="lazy">
+          {% endif %}
+        </div>
+
+        <div class="gf-solution-card__content">
+
+          <span class="gf-solution-card__number">02</span>
+
+          <div class="gf-solution-card__icon" aria-hidden="true">↗</div>
+
+          <span class="gf-eyebrow gf-eyebrow--light">
+            SMART TECHNOLOGY
+          </span>
+
+          <h3>Your home. Your intelligence.</h3>
+
+          <p>
+            Smart lighting, automated controls and
+            connected technologies designed to make
+            everyday living more convenient.
+          </p>
+
+          <a href="{% url 'services:list' %}" class="gf-card-link">
+            Explore smart solutions
+            <span aria-hidden="true">↗</span>
+          </a>
+
+        </div>
+
+      </article>
+
+
+      <!-- SECURITY -->
+
+      <article class="gf-solution-card gf-solution-card--security" id="security">
+
+        <div class="gf-solution-card__image">
+          {% if homepage.security_image %}
+          <img src="{{ homepage.security_image.url }}" alt="{{ homepage.security_image_alt|default:'Security installation' }}" loading="lazy">
+          {% endif %}
+        </div>
+
+        <div class="gf-solution-card__content">
+
+          <span class="gf-solution-card__number">03</span>
+
+          <div class="gf-solution-card__icon" aria-hidden="true">↗</div>
+
+          <span class="gf-eyebrow gf-eyebrow--light">
+            SECURITY SYSTEMS
+          </span>
+
+          <h3>Confidence in every corner.</h3>
+
+          <p>
+            CCTV, access control, electric fencing
+            and smart locks to help protect the
+            people and property that matter.
+          </p>
+
+          <a href="{% url 'services:list' %}" class="gf-card-link">
+            Explore security solutions
+            <span aria-hidden="true">↗</span>
+          </a>
+
+        </div>
+
+      </article>
+
+
+      <!-- ELECTRICAL -->
+
+      <article class="gf-solution-card gf-solution-card--electrical">
+
+        <div class="gf-solution-card__image">
+          {% if homepage.electrical_image %}
+          <img src="{{ homepage.electrical_image.url }}" alt="{{ homepage.electrical_image_alt|default:'Electrical installation' }}" loading="lazy">
+          {% endif %}
+        </div>
+
+        <div class="gf-solution-card__content">
+
+          <span class="gf-solution-card__number">04</span>
+
+          <div class="gf-solution-card__icon" aria-hidden="true">↗</div>
+
+          <span class="gf-eyebrow gf-eyebrow--light">
+            ELECTRICAL SERVICES
+          </span>
+
+          <h3>Built on a solid connection.</h3>
+
+          <p>
+            Professional electrical installations,
+            fittings, maintenance and supporting
+            infrastructure for your property.
+          </p>
+
+          <a href="{% url 'services:list' %}" class="gf-card-link">
+            Explore electrical services
+            <span aria-hidden="true">↗</span>
+          </a>
+
+        </div>
+
+      </article>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =====================================================
+     FEATURED SERVICES FROM DJANGO
+===================================================== -->
+
+{% if featured_services %}
+
+<section class="gf-services">
+
+  <div class="gf-container">
+
+    <div class="gf-section-heading">
+
+      <div>
+
+        <span class="gf-eyebrow">
+          OUR SERVICES
+        </span>
+
+        <h2>
+          Expertise you can
+          <span>build on.</span>
+        </h2>
+
+      </div>
+
+      <a href="{% url 'services:list' %}" class="gf-text-link">
+        View all services
+        <span aria-hidden="true">↗</span>
+      </a>
+
+    </div>
+
+
+    <div class="gf-services__grid">
+
+      {% for service in featured_services %}
+
+      <article class="gf-service-item">
+
+        <span class="gf-service-item__number">
+          {{ forloop.counter|stringformat:"02d" }}
+        </span>
+
+        <div class="gf-service-item__body">
+
+          <h3>{{ service.title }}</h3>
+
+          {% if service.short_description %}
+          <p>{{ service.short_description|truncatewords:24 }}</p>
+          {% elif service.description %}
+          <p>{{ service.description|striptags|truncatewords:24 }}</p>
+          {% endif %}
+
+          {% if service.get_absolute_url %}
+          <a href="{{ service.get_absolute_url }}" class="gf-text-link">
+            Learn more
+            <span aria-hidden="true">↗</span>
+          </a>
+          {% else %}
+          <a href="{% url 'services:list' %}" class="gf-text-link">
+            Explore services
+            <span aria-hidden="true">↗</span>
+          </a>
+          {% endif %}
+
+        </div>
+
+        <span class="gf-service-item__arrow" aria-hidden="true">↗</span>
+
+      </article>
+
+      {% endfor %}
+
+    </div>
+
+  </div>
+
+</section>
+
+{% endif %}
+
+
+<!-- =====================================================
+     WHY GRIMFLOT
+===================================================== -->
+
+<section class="gf-why">
+
+  <div class="gf-container gf-why__grid">
+
+    <div class="gf-why__visual">
+
+      <div class="gf-why__image">
+        {% if homepage.difference_image %}
+          <img src="{{ homepage.difference_image.url }}" alt="{{ homepage.difference_image_alt|default:'Featured smart-home project' }}" loading="lazy">
+        {% else %}
+          <img src="{% static 'images/projects/featured-project.jpg' %}" alt="Featured smart-home project" loading="lazy">
+        {% endif %}
+      </div>
+
+      <div class="gf-why__image-note">
+        <span class="gf-status-dot"></span>
+        ENGINEERED WITH PURPOSE
+      </div>
+
+    </div>
+
+
+    <div class="gf-why__content">
+
+      <span class="gf-eyebrow gf-eyebrow--light">
+        THE GRIMFLOT DIFFERENCE
+      </span>
+
+      <h2>
+        Better systems.
+        <span>Smarter decisions.</span>
+      </h2>
+
+      <p>
+        Choosing the right technology is only part of the
+        equation. The right planning, installation and
+        ongoing support make the difference.
+      </p>
+
+
+      <div class="gf-benefit">
+
+        <span class="gf-benefit__number">01</span>
+
+        <div>
+          <h3>Solutions designed around you</h3>
+          <p>
+            We consider your property, requirements
+            and priorities before recommending a solution.
+          </p>
+        </div>
+
+      </div>
+
+
+      <div class="gf-benefit">
+
+        <span class="gf-benefit__number">02</span>
+
+        <div>
+          <h3>Integrated technology</h3>
+          <p>
+            Energy, automation and security solutions
+            planned to work together wherever appropriate.
+          </p>
+        </div>
+
+      </div>
+
+
+      <div class="gf-benefit">
+
+        <span class="gf-benefit__number">03</span>
+
+        <div>
+          <h3>Support beyond installation</h3>
+          <p>
+            Maintenance and professional guidance to
+            help keep your systems working as intended.
+          </p>
+        </div>
+
+      </div>
+
+
+      <a href="{% url 'enquiries:quote' %}" class="gf-button gf-button--red">
+        Discuss Your Project
+        <span aria-hidden="true">↗</span>
+      </a>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =====================================================
+     FEATURED PRODUCTS FROM DJANGO
+===================================================== -->
+
+{% if featured_products %}
+
+<section class="gf-products">
+
+  <div class="gf-container">
+
+    <div class="gf-section-heading">
+
+      <div>
+
+        <span class="gf-eyebrow">
+          OUR CATALOGUE
+        </span>
+
+        <h2>
+          Technology for
+          <span>everyday living.</span>
+        </h2>
+
+      </div>
+
+      <a href="{% url 'catalogue:product-list' %}" class="gf-text-link">
+        Explore catalogue
+        <span aria-hidden="true">↗</span>
+      </a>
+
+    </div>
+
+
+    <div class="gf-products__grid">
+
+      {% for product in featured_products %}
+
+      <article class="gf-product-card">
+
+        <a href="{{ product.get_absolute_url }}" class="gf-product-card__image">
+
+          {% if product.image %}
+          <img src="{{ product.image.url }}" alt="{{ product.name }}" loading="lazy">
+          {% else %}
+          <div class="gf-product-card__placeholder">
+            <span>GRIMFLOT</span>
+          </div>
+          {% endif %}
+
+          <span class="gf-product-card__view">
+            View product ↗
+          </span>
+
+        </a>
+
+        <div class="gf-product-card__details">
+
+          <span class="gf-eyebrow">
+            FEATURED PRODUCT
+          </span>
+
+          <h3>
+            <a href="{{ product.get_absolute_url }}">
+              {{ product.name }}
+            </a>
+          </h3>
+
+          {% if product.price %}
+          <p class="gf-product-card__price">
+            {{ product.price }}
+          </p>
+          {% endif %}
+
+        </div>
+
+      </article>
+
+      {% endfor %}
+
+    </div>
+
+  </div>
+
+</section>
+
+{% endif %}
+
+
+<!-- =====================================================
+     OUR PROCESS
+===================================================== -->
+
+<section class="gf-process" id="delivery">
+
+  <div class="gf-container">
+
+    <div class="gf-section-heading">
+
+      <div>
+
+        <span class="gf-eyebrow">
+          HOW WE WORK
+        </span>
+
+        <h2>
+          From your idea
+          <span>to a working solution.</span>
+        </h2>
+
+      </div>
+
+      <p>
+        A straightforward approach that puts your
+        requirements at the centre of every decision.
+      </p>
+
+    </div>
+
+
+    <div class="gf-process__grid">
+
+      <article class="gf-process-step">
+
+        <span class="gf-process-step__number">01</span>
+
+        <div class="gf-process-step__line"></div>
+
+        <h3>Tell us what you need</h3>
+
+        <p>
+          Share your property requirements,
+          challenges and project goals.
+        </p>
+
+      </article>
+
+
+      <article class="gf-process-step">
+
+        <span class="gf-process-step__number">02</span>
+
+        <div class="gf-process-step__line"></div>
+
+        <h3>Plan your solution</h3>
+
+        <p>
+          We help identify suitable systems and
+          outline the next steps for your project.
+        </p>
+
+      </article>
+
+
+      <article class="gf-process-step">
+
+        <span class="gf-process-step__number">03</span>
+
+        <div class="gf-process-step__line"></div>
+
+        <h3>Installation and delivery</h3>
+
+        <p>
+          Your project moves from planning to
+          implementation with attention to detail.
+        </p>
+
+      </article>
+
+
+      <article class="gf-process-step">
+
+        <span class="gf-process-step__number">04</span>
+
+        <div class="gf-process-step__line"></div>
+
+        <h3>Ongoing support</h3>
+
+        <p>
+          Get assistance with maintenance and
+          the continued operation of your systems.
+        </p>
+
+      </article>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =====================================================
+     FINAL CALL TO ACTION
+===================================================== -->
+
+<section class="gf-cta" id="consultation">
+
+  <div class="gf-cta__background"></div>
+
+  <div class="gf-container gf-cta__inner">
+
+    <div class="gf-cta__content">
+
+      <span class="gf-eyebrow gf-eyebrow--light">
+        LET'S BUILD SOMETHING BETTER
+      </span>
+
+      <h2>
+        Your next project
+        <span>starts with a conversation.</span>
+      </h2>
+
+      <p>
+        Tell us about your energy, electrical, automation
+        or security requirements. Let's explore the right
+        solution for your property.
+      </p>
+
+      <div class="gf-cta__actions">
+
+        <a href="{% url 'enquiries:quote' %}" class="gf-button gf-button--white">
+          Request a Quote
+          <span aria-hidden="true">↗</span>
+        </a>
+
+        <a href="{% url 'bookings:consultation' %}" class="gf-button gf-button--outline">
+          Book a Consultation
+        </a>
+
+      </div>
+
+    </div>
+
+    <div class="gf-cta__mark" aria-hidden="true">
+      GF<span>.</span>
+    </div>
+
+  </div>
+
+</section>
+
+
+{% endblock %}
+
+
+{% block extra_scripts %}
+{{ block.super }}
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  // Hero slider: only one slide is visible at a time.
+  document.querySelectorAll("[data-gf-hero]").forEach(function (hero) {
+    const slides = Array.from(hero.querySelectorAll("[data-gf-slide]"));
+    const dotsContainer = hero.querySelector("[data-gf-dots]");
+    const previousButton = hero.querySelector("[data-gf-prev]");
+    const nextButton = hero.querySelector("[data-gf-next]");
+    if (!slides.length) return;
+
+    let activeIndex = Math.max(0, slides.findIndex(function (slide) {
+      return slide.classList.contains("is-active");
+    }));
+    let timer = null;
+    const interval = 6000;
+
+    if (slides.length <= 1) {
+      const controls = hero.querySelector(".gf-hero__controls");
+      if (controls) controls.hidden = true;
+      return;
+    }
+
+    slides.forEach(function (slide, index) {
+      const dot = document.createElement("button");
+      dot.type = "button";
+      dot.className = "gf-hero__dot" + (index === activeIndex ? " is-active" : "");
+      dot.setAttribute("aria-label", "Go to slide " + (index + 1));
+      dot.setAttribute("aria-current", index === activeIndex ? "true" : "false");
+      dot.addEventListener("click", function () { showSlide(index); restartTimer(); });
+      dotsContainer.appendChild(dot);
+    });
+
+    function showSlide(index) {
+      activeIndex = (index + slides.length) % slides.length;
+      slides.forEach(function (slide, slideIndex) {
+        const active = slideIndex === activeIndex;
+        slide.classList.toggle("is-active", active);
+        slide.setAttribute("aria-hidden", active ? "false" : "true");
+      });
+      Array.from(dotsContainer.children).forEach(function (dot, dotIndex) {
+        const active = dotIndex === activeIndex;
+        dot.classList.toggle("is-active", active);
+        dot.setAttribute("aria-current", active ? "true" : "false");
+      });
+    }
+
+    function stopTimer() {
+      if (timer) window.clearInterval(timer);
+      timer = null;
+    }
+    function startTimer() {
+      stopTimer();
+      if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        timer = window.setInterval(function () { showSlide(activeIndex + 1); }, interval);
+      }
+    }
+    function restartTimer() { startTimer(); }
+
+    if (previousButton) previousButton.addEventListener("click", function () { showSlide(activeIndex - 1); restartTimer(); });
+    if (nextButton) nextButton.addEventListener("click", function () { showSlide(activeIndex + 1); restartTimer(); });
+    hero.addEventListener("mouseenter", stopTimer);
+    hero.addEventListener("mouseleave", startTimer);
+    hero.addEventListener("focusin", stopTimer);
+    hero.addEventListener("focusout", startTimer);
+    document.addEventListener("visibilitychange", function () {
+      if (document.hidden) stopTimer(); else startTimer();
+    });
+    showSlide(activeIndex);
+    startTimer();
+  });
+
+  // Scroll reveal for the remaining homepage sections.
+  const sections = document.querySelectorAll(
+    ".gf-intro, .gf-solutions, .gf-services, .gf-why, .gf-products, .gf-process, .gf-cta"
+  );
+  if (!("IntersectionObserver" in window)) {
+    sections.forEach(function (section) { section.classList.add("gf-visible"); });
+    return;
+  }
+  const observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("gf-visible");
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  sections.forEach(function (section) { observer.observe(section); });
+});
+</script>
+{% endblock %}

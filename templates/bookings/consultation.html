@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Book a Consultation | GRIMFLOT LTD{% endblock %}
+
+{% block body_class %}consultation-page{% endblock %}
+
+{% block page_styles %}
+<link rel="stylesheet" href="{% static 'css/pages/consultation.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<section class="page-hero page-hero--ink consultation-hero">
+    <div class="site-container consultation-hero__inner">
+        <p class="eyebrow">Initial consultation</p>
+
+        <h1>Start with the right questions.</h1>
+
+        <p class="consultation-hero__description">
+            Every great installation begins with a conversation.
+            Tell us what you have in mind, and our team will help you
+            explore the right solution for your property or business.
+        </p>
+
+        <div class="consultation-hero__note">
+            <span class="consultation-hero__indicator"></span>
+            Your appointment is confirmed after our team reviews your request.
+        </div>
+    </div>
+</section>
+
+<section class="content-section content-section--mist consultation-section">
+    <div class="site-container consultation-layout">
+
+        <aside class="consultation-intro">
+            <p class="eyebrow">Let's plan your project</p>
+
+            <h2>Good solutions begin with a clear understanding.</h2>
+
+            <p>
+                Whether you're planning a solar installation, smart home
+                upgrade, security system, or electrical project, a
+                consultation helps us understand your requirements.
+            </p>
+
+            <div class="consultation-benefits">
+
+                <div class="consultation-benefit">
+                    <span class="consultation-benefit__number">01</span>
+                    <div>
+                        <h3>Tell us what you need</h3>
+                        <p>Share your project goals and requirements.</p>
+                    </div>
+                </div>
+
+                <div class="consultation-benefit">
+                    <span class="consultation-benefit__number">02</span>
+                    <div>
+                        <h3>Choose a preferred time</h3>
+                        <p>Let us know when you'd like to speak with our team.</p>
+                    </div>
+                </div>
+
+                <div class="consultation-benefit">
+                    <span class="consultation-benefit__number">03</span>
+                    <div>
+                        <h3>Receive confirmation</h3>
+                        <p>We'll review your request and confirm the appointment.</p>
+                    </div>
+                </div>
+
+            </div>
+        </aside>
+
+        <div class="consultation-form-card">
+            <div class="consultation-form-card__heading">
+                <p class="eyebrow">Appointment request</p>
+                <h2>Request a consultation</h2>
+                <p>
+                    Complete the form below. Fields marked as required
+                    must be filled in before submission.
+                </p>
+            </div>
+
+            <form method="post" class="form-shell consultation-form">
+                {% csrf_token %}
+
+                {% include "includes/form_fields.html" with form=form %}
+
+                <button class="button button--solid consultation-submit" type="submit">
+                    Request consultation
+                    <span aria-hidden="true">↗</span>
+                </button>
+
+                <p class="consultation-form__disclaimer">
+                    Submitting this form does not automatically confirm
+                    your appointment.
+                </p>
+            </form>
+        </div>
+
+    </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,94 @@
+{% extends "dashboard/base.html" %}
+
+{% block dashboard_content %}
+
+<section class="dashboard-panel">
+
+    <div class="operations-list">
+
+        {% for enquiry in enquiries %}
+
+            <article class="operation-card">
+
+                <div class="operation-card__details">
+
+                    <p class="eyebrow">
+                        {{ enquiry.get_enquiry_type_display }}
+                        ·
+                        {{ enquiry.created_at|date:"j M, H:i" }}
+                    </p>
+
+                    <h2>{{ enquiry.name }}</h2>
+
+                    <p>
+                        {{ enquiry.email }}
+
+                        {% if enquiry.phone %}
+                            · {{ enquiry.phone }}
+                        {% endif %}
+                    </p>
+
+                    <p>{{ enquiry.message }}</p>
+
+                </div>
+
+                <form method="post" class="compact-form">
+
+                    {% csrf_token %}
+
+                    <input
+                        type="hidden"
+                        name="enquiry_id"
+                        value="{{ enquiry.pk }}"
+                    >
+
+                    <label for="enquiry-{{ enquiry.pk }}">
+                        Status
+                    </label>
+
+                    <select
+                        id="enquiry-{{ enquiry.pk }}"
+                        name="status"
+                    >
+                        {% for value, label in enquiry.STATUS_CHOICES %}
+
+                            <option
+                                value="{{ value }}"
+                                {% if enquiry.status == value %}selected{% endif %}
+                            >
+                                {{ label }}
+                            </option>
+
+                        {% endfor %}
+                    </select>
+
+                    <button class="button button--quiet button--small" type="submit">
+                        Save
+                    </button>
+
+                </form>
+
+                {% if perms.enquiries.delete_enquiry %}
+                    <a
+                        class="enquiry-delete-action"
+                        href="{% url 'dashboard:enquiry-delete' enquiry.pk %}"
+                    >
+                        Delete enquiry
+                    </a>
+                {% endif %}
+
+            </article>
+
+        {% empty %}
+
+            <p class="muted-copy">
+                No enquiries yet.
+            </p>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+{% endblock %}

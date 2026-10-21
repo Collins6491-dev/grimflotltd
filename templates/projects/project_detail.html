@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block page_styles %}
+<link rel="stylesheet" href="{% static 'css/pages/projects.css' %}">
+{% endblock %}
+{% block content %}<section class="detail-hero {% if project.cover_image %}detail-hero--image{% endif %}">{% if
+    project.cover_image %}<img src="{{ project.cover_image.url }}" alt="" fetchpriority="high">{% endif %}<div
+        class="site-container">
+        <p class="eyebrow">{% if project.location_label %}{{ project.location_label }}{% else %}Project case study{%
+            endif %}</p>
+        <h1>{{ project.title }}</h1>
+        <p>{{ project.excerpt }}</p>
+    </div>
+</section>
+<section class="content-section content-section--white">
+    <div class="site-container editorial-grid">
+        <div>
+            <p class="eyebrow">Project context</p>
+            <h2>{% if project.client_type %}{{ project.client_type }}{% else %}A considered technical response.{% endif
+                %}</h2>
+        </div>
+        <div class="rich-copy">{{ project.narrative|linebreaks }}{% if project.related_services.all %}<ul
+                class="tag-list">{% for service in project.related_services.all %}<li>{{ service.title }}</li>{% endfor
+                %}</ul>{% endif %}</div>
+    </div>
+</section>{% if project.images.all %}<section class="content-section content-section--mist">
+    <div class="site-container image-gallery">{% for image in project.images.all %}<figure><img
+                src="{{ image.image.url }}" alt="{{ image.alt_text }}" loading="lazy">{% if image.caption %}<figcaption>
+                {{ image.caption }}</figcaption>{% endif %}</figure>{% endfor %}</div>
+</section>{% endif %}{% endblock %}

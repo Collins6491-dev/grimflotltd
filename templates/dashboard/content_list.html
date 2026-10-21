@@ -1,0 +1,94 @@
+{% extends "dashboard/base.html" %}
+
+{% block dashboard_content %}
+
+<div class="dashboard-actions">
+
+    {% if kind == 'service' %}
+        {% if perms.services.add_service %}<a class="button button--solid" href="{% url 'dashboard:service-new' %}">Add service</a>{% endif %}
+    {% else %}
+        <a
+            class="button button--solid"
+            href="{% url 'dashboard:project-new' %}"
+        >
+            Add project
+        </a>
+    {% endif %}
+
+</div>
+
+<section class="dashboard-panel table-wrap">
+
+    <table class="data-table">
+
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Order</th>
+                <th>Published</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            {% for item in items %}
+
+                <tr>
+                    <td>
+                        <strong>{{ item.title }}</strong>
+
+                        {% if item.short_description %}
+                            <small>{{ item.short_description }}</small>
+                        {% else %}
+                            <small>{{ item.excerpt|default:"No description available." }}</small>
+                        {% endif %}
+                    </td>
+
+                    <td>
+                        {{ item.order }}
+                    </td>
+
+                    <td>
+                        {% if item.is_published %}
+                            <span class="status-badge status-badge--published">
+                                Published
+                            </span>
+                        {% else %}
+                            <span class="status-badge status-badge--draft">
+                                Draft
+                            </span>
+                        {% endif %}
+                    </td>
+
+                    <td>
+                        {% if kind == 'service' %}
+                            {% if perms.services.change_service %}<a href="{% url 'dashboard:service-edit' item.pk %}">Edit</a>{% endif %}
+                            {% if perms.services.delete_service %}
+                                <a class="delete-link" href="{% url 'dashboard:service-delete' item.pk %}">Delete</a>
+                            {% endif %}
+                        {% else %}
+                            <a href="{% url 'dashboard:project-edit' item.pk %}">
+                                Edit
+                            </a>
+                        {% endif %}
+                    </td>
+                </tr>
+
+            {% empty %}
+
+                <tr>
+                    <td colspan="4">
+                        No {{ kind }} content yet.
+                    </td>
+                </tr>
+
+            {% endfor %}
+
+        </tbody>
+
+    </table>
+
+</section>
+
+{% endblock %}

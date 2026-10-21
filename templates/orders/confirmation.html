@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load static %}
+{% block page_styles %}<link rel="stylesheet" href="{% static 'css/pages/orders.css' %}">{% endblock %}
+{% block content %}<section class="confirmation">
+    <div class="site-container narrow-content">
+        <p class="eyebrow">Order received</p>
+        <h1>{% if order.status == 'paid' or order.status == 'processing' or order.status == 'shipped' or order.status ==
+            'completed' %}Payment verified.{% else %}Your order is awaiting payment.{% endif %}</h1>
+        <p>Your reference is <strong>{{ order.reference }}</strong>. Keep it with your delivery information.</p>
+        <div class="confirmation__facts"><span>Status <strong>{{ order.get_status_display }}</strong></span><span>Total
+                <strong>{{ order.currency }} {{ order.total }}</strong></span></div>
+        <div class="button-row"><a class="button button--solid" href="{% url 'orders:detail' order.reference %}">View
+                order</a><a class="button button--quiet" href="{% url 'catalogue:product-list' %}">Continue browsing</a>
+        </div>
+    </div>
+</section>{% endblock %}

@@ -1,0 +1,102 @@
+{% extends "dashboard/base.html" %}
+
+{% block dashboard_content %}
+
+<!-- Product Actions -->
+<div class="dashboard-actions">
+    <a
+        class="button button--solid"
+        href="{% url 'dashboard:product-new' %}"
+    >
+        + Add product
+    </a>
+</div>
+
+<!-- Products Table -->
+<section class="dashboard-panel table-wrap">
+
+    <table class="data-table">
+
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>SKU</th>
+                <th>Category</th>
+                <th>Price</th>
+                <th>Stock</th>
+                <th>Visibility</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for product in products %}
+                <tr>
+                    <!-- Product Details -->
+                    <td>
+                        <strong>{{ product.name }}</strong>
+                        <small>{{ product.sku|default:"No SKU" }}</small>
+                    </td>
+
+                    <td><code>{{ product.sku }}</code></td>
+
+                    <!-- Category -->
+                    <td>
+                        {{ product.category.name|default:"Uncategorized" }}
+                        {% if not product.category.is_published %}
+                            <small>Category draft — hidden publicly</small>
+                        {% endif %}
+                    </td>
+
+                    <!-- Price -->
+                    <td>
+                        {{ product.currency }} {{ product.price|floatformat:2 }}
+                    </td>
+
+                    <!-- Inventory -->
+                    <td>
+                        {% if product.inventory %}
+                            {{ product.inventory.available_quantity }} available
+                        {% else %}
+                            Not configured
+                        {% endif %}
+                    </td>
+
+                    <!-- Publication Status -->
+                    <td>
+                        {% if product.is_published %}
+                            <span class="status-chip status-chip--published">
+                                Published
+                            </span>
+                        {% else %}
+                            <span class="status-chip status-chip--draft">
+                                Draft
+                            </span>
+                        {% endif %}
+                    </td>
+
+                    <!-- Actions -->
+                    <td>
+                        <a
+                            href="{% url 'dashboard:product-edit' product.pk %}"
+                            aria-label="Edit {{ product.name }}"
+                        >
+                            Edit
+                        </a>
+                    </td>
+                </tr>
+
+            {% empty %}
+                <tr>
+                    <td colspan="7">
+                        No products yet. Add your first product to get started.
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+
+    </table>
+
+</section>
+
+{% endblock %}

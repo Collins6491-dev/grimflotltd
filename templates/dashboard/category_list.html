@@ -1,0 +1,28 @@
+{% extends "dashboard/base.html" %}
+
+{% block dashboard_content %}
+<div class="dashboard-actions">
+    {% if perms.catalog.add_category %}<a class="button button--solid" href="{% url 'dashboard:category-new' %}">Add category</a>{% endif %}
+</div>
+<section class="dashboard-panel table-wrap">
+    <table class="data-table">
+        <thead><tr><th>Category</th><th>Slug</th><th>Products</th><th>Visibility</th><th>Actions</th></tr></thead>
+        <tbody>
+            {% for category in categories %}
+                <tr>
+                    <td><strong>{{ category.name }}</strong></td>
+                    <td><code>{{ category.slug }}</code></td>
+                    <td>{{ category.product_count }}</td>
+                    <td>{% if category.is_published %}<span class="status-chip status-chip--published">Published</span>{% else %}<span class="status-chip status-chip--draft">Draft — hidden publicly</span>{% endif %}</td>
+                    <td class="table-actions">
+                        {% if perms.catalog.change_category %}<a class="button button--quiet button--small" href="{% url 'dashboard:category-edit' category.pk %}">Edit</a>{% endif %}
+                        {% if perms.catalog.delete_category %}<a class="button button--danger button--small" href="{% url 'dashboard:category-delete' category.pk %}">Delete</a>{% endif %}
+                    </td>
+                </tr>
+            {% empty %}
+                <tr><td colspan="5">No categories yet. Add one before creating products.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</section>
+{% endblock %}

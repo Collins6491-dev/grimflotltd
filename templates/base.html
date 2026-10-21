@@ -1,0 +1,264 @@
+{% load static %}
+<!doctype html>
+<html class="no-js" lang="en-GB">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#07101f">
+
+    <meta
+        name="description"
+        content="{% block meta_description %}{{ meta_description|default:'GRIMFLOT LTD — smart technology, energy and electrical solutions.' }}{% endblock %}"
+    >
+
+    <title>{% block title %}{{ page_title|default:'GRIMFLOT LTD' }} | GRIMFLOT LTD{% endblock %}</title>
+
+    {% if canonical_url %}
+        <link rel="canonical" href="{{ canonical_url }}">
+    {% endif %}
+
+    {% if og_image %}
+        <meta property="og:image" content="{{ og_image }}">
+    {% endif %}
+
+    <link rel="icon" type="image/png" href="{% static 'images/logo.png' %}">
+    <link rel="apple-touch-icon" href="{% static 'images/logo.png' %}">
+    {% if site_branding.favicon %}
+        <link rel="alternate icon" href="{{ site_branding.favicon.url }}">
+    {% endif %}
+
+    <script>
+        document.documentElement.classList.replace('no-js', 'js');
+    </script>
+    <link rel="stylesheet" href="{% static 'css/site.css' %}">
+    <link rel="stylesheet" href="{% static 'css/pages/base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/components/forms.css' %}">
+    <link rel="stylesheet" href="{% static 'css/navbar_premium.css' %}">
+
+    {% block page_styles %}{% endblock %}
+    {% block extra_head %}{% endblock %}
+</head>
+<body class="{% block body_class %}{% endblock %}">
+
+    <div class="site-loader" id="site-loader" aria-hidden="true">
+        <div class="site-loader__mark">
+            <img class="site-loader__logo" src="{% static 'images/logo.png' %}" alt="">
+            <span class="site-loader__rule" aria-hidden="true"></span>
+        </div>
+        <p>GRIMFLOT LTD</p>
+        <span class="site-loader__caption">{{ site_company.tagline }}</span>
+    </div>
+
+    {# Keep public-site elements out of dashboard pages. #}
+    {% if request.resolver_match.namespace != "dashboard" %}
+
+        <a class="skip-link" href="#main-content">Skip to main content</a>
+
+        <header class="site-header" data-site-header>
+            <div class="utility-bar">
+                <div class="site-container utility-bar__inner">
+                    <p class="utility-bar__tagline">{{ site_company.tagline }}</p>
+
+                    <div class="utility-bar__actions">
+                        {% if site_company.email %}
+                            <a class="utility-link" href="mailto:{{ site_company.email }}">
+                                {{ site_company.email }}
+                            </a>
+                        {% else %}
+                            <a class="utility-link" href="{% url 'enquiries:contact' %}">
+                                Corporate enquiries
+                            </a>
+                        {% endif %}
+
+                        {% if site_social_links %}
+                            <div class="utility-bar__social" aria-label="Social channels">
+                                <span aria-hidden="true">Follow</span>
+                                {% for social_link in site_social_links %}
+                                    <a href="{{ social_link.url }}" target="_blank" rel="noopener noreferrer" aria-label="{{ site_company.name }} on {{ social_link.label }}">
+                                        {% if social_link.label|lower == "tiktok" %}
+                                            <svg class="social-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M16.7 5.2a5.2 5.2 0 0 1-1.3-3.1h-3.1v13a2.35 2.35 0 1 1-1.65-2.25V9.7a5.5 5.5 0 1 0 4.8 5.45V8.56a8.25 8.25 0 0 0 4.83 1.55V7a5.15 5.15 0 0 1-3.56-1.8Z"/></svg>
+                                            <span class="visually-hidden">{{ social_link.label }}</span>
+                                        {% else %}
+                                            {{ social_link.label }}
+                                        {% endif %}
+                                    </a>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+
+                        <form class="site-search" action="{% url 'catalogue:product-list' %}" method="get" role="search">
+                            <label class="visually-hidden" for="site-search">Search products</label>
+                            <input
+                                id="site-search"
+                                name="q"
+                                type="search"
+                                maxlength="100"
+                                placeholder="Search products"
+                                value="{{ request.GET.q|default:'' }}"
+                            >
+                            <button type="submit" aria-label="Submit site search">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true" focusable="false">
+                                    <circle cx="10.8" cy="10.8" r="6.8"></circle>
+                                    <path d="m16 16 4.2 4.2"></path>
+                                </svg>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="primary-nav">
+                <div class="site-container primary-nav__inner">
+                    <a class="wordmark" href="{% url 'home' %}" aria-label="GRIMFLOT LTD home">
+                        {% if site_branding.logo %}
+                            <img class="wordmark__logo" src="{{ site_branding.logo.url }}" alt="{{ site_company.name }}">
+                        {% else %}
+                            <img class="wordmark__logo" src="{% static 'images/logo.png' %}" alt="{{ site_company.name }}">
+                        {% endif %}
+                        <span class="wordmark__name">{{ site_company.name }}</span>
+                    </a>
+
+                    <button
+                        class="menu-toggle"
+                        type="button"
+                        data-menu-toggle
+                        aria-expanded="false"
+                        aria-controls="primary-menu"
+                    >
+                        <span class="visually-hidden">Toggle navigation</span>
+                        <span></span><span></span><span></span>
+                    </button>
+
+                    <nav class="primary-menu" id="primary-menu" data-primary-menu aria-label="Primary navigation">
+                        <a href="{% url 'home' %}">Home</a>
+                        <a href="{% url 'about' %}">About</a>
+                        <a href="{% url 'services:list' %}">Services</a>
+                        <a href="{% url 'projects:list' %}">Projects</a>
+                        <a href="{% url 'catalogue:product-list' %}">Products</a>
+                        <a href="{% url 'enquiries:contact' %}">Contact</a>
+
+                        <div class="primary-menu__utilities">
+                            {% if request.user.is_authenticated %}
+                                <a
+                                    class="nav-icon nav-icon--account"
+                                    href="{% url 'accounts:account' %}"
+                                    aria-label="Your account"
+                                    title="My account"
+                                >
+                            {% else %}
+                                <a
+                                    class="nav-icon nav-icon--account"
+                                    href="{% url 'accounts:login' %}"
+                                    aria-label="Sign in to your account"
+                                    title="Sign in"
+                                >
+                            {% endif %}
+                                    <svg class="nav-icon__svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                                        <circle cx="12" cy="8" r="4"></circle>
+                                        <path d="M5 21v-2a7 7 0 0 1 14 0v2"></path>
+                                    </svg>
+                                </a>
+
+                            <a
+                                class="nav-icon nav-icon--cart"
+                                href="{% url 'cart:detail' %}"
+                                aria-label="Your shopping cart, {{ cart_item_count|default:0 }} items"
+                                title="Shopping cart"
+                            >
+                                <svg class="nav-icon__svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                                    <path d="M3 3h2l2.4 11.4a2 2 0 0 0 2 1.6h8.8a2 2 0 0 0 2-1.6L22 7H6"></path>
+                                    <circle cx="10" cy="20" r="1"></circle>
+                                    <circle cx="18" cy="20" r="1"></circle>
+                                </svg>
+                                <span class="nav-icon__badge">{{ cart_item_count|default:0 }}</span>
+                            </a>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </header>
+    {% endif %}
+
+    <main id="main-content" class="site-main" tabindex="-1">
+        {% if messages %}
+            <div class="site-container message-stack" aria-live="polite">
+                {% for message in messages %}
+                    <div class="message message--{{ message.tags|default:'info' }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        {% block content %}{% endblock %}
+    </main>
+
+    {% if request.resolver_match.namespace != "dashboard" %}
+        <footer class="site-footer" id="footer-contact">
+            <div class="site-container site-footer__grid">
+                <div>
+                    <a class="wordmark wordmark--footer" href="{% url 'home' %}">
+                        {% if site_branding.logo %}
+                            <img class="wordmark__logo" src="{{ site_branding.logo.url }}" alt="{{ site_company.name }}">
+                        {% else %}
+                            <img class="wordmark__logo" src="{% static 'images/logo.png' %}" alt="{{ site_company.name }}">
+                        {% endif %}
+                        <span class="wordmark__name">{{ site_company.name }}</span>
+                    </a>
+                    <p class="site-footer__statement">
+                        {{ site_company.description|default:"Smart technology, energy, security, and electrical systems engineered around the way people live and work." }}
+                    </p>
+                    {% if site_company.service_area %}
+                        <p class="site-footer__service-area">{{ site_company.service_area }}</p>
+                    {% endif %}
+                </div>
+
+                <div class="site-footer__column">
+                    <p class="site-footer__eyebrow">Platform</p>
+                    <a href="{% url 'home' %}">Home</a>
+                    <a href="{% url 'catalogue:product-list' %}">Products</a>
+                    <a href="{% url 'accounts:account' %}">Customer account</a>
+                    <a href="{% url 'solar-estimator' %}">Solar estimator</a>
+                </div>
+
+                <div class="site-footer__column">
+                    <p class="site-footer__eyebrow">Contact</p>
+                    {% if site_company.email %}<a href="mailto:{{ site_company.email }}">{{ site_company.email }}</a>{% endif %}
+                    {% if site_company.phone %}<a href="{{ site_company.phone_url }}">{{ site_company.phone }}</a>{% endif %}
+                    {% if site_company.secondary_phone %}<a href="{{ site_company.secondary_phone_url }}">{{ site_company.secondary_phone }}</a>{% endif %}
+                    {% if site_company.whatsapp_number %}<a href="{{ site_company.whatsapp_url }}" target="_blank" rel="noopener noreferrer">WhatsApp: {{ site_company.whatsapp_number }}</a>{% endif %}
+                    {% if site_company.address %}<p class="site-footer__address">{{ site_company.address }}</p>{% endif %}
+                    {% if site_company.business_hours %}<p class="site-footer__hours">{{ site_company.business_hours }}</p>{% endif %}
+                    <a href="{% url 'enquiries:contact' %}">Contact the team</a>
+                </div>
+            </div>
+
+            <div class="site-container site-footer__bottom">
+                <p>© {% now "Y" %} GRIMFLOT LTD.</p>
+                <p>
+                    <a href="{% url 'privacy' %}">Privacy</a>
+                    · <a href="{% url 'terms' %}">Terms</a>
+                    · <a href="{% url 'shipping' %}">Shipping</a>
+                    · <a href="{% url 'returns' %}">Returns</a>
+                </p>
+            </div>
+        </footer>
+    {% endif %}
+
+    {% if request.resolver_match.namespace != "dashboard" and request.resolver_match.namespace != "accounts" %}
+        <a class="whatsapp-float" href="{{ site_company.whatsapp_url }}" target="_blank" rel="noopener noreferrer" aria-label="Chat with {{ site_company.name }} on WhatsApp">
+            <svg viewBox="0 0 32 32" aria-hidden="true" focusable="false"><path fill="currentColor" d="M27.2 4.7A15.35 15.35 0 0 0 16.15.1C7.68.1.78 7 .78 15.47c0 2.7.71 5.34 2.05 7.66L.65 31.1l8.16-2.14a15.3 15.3 0 0 0 7.32 1.86h.01c8.46 0 15.35-6.9 15.35-15.36 0-4.1-1.6-7.95-4.29-10.76ZM16.14 28.22h-.01a12.7 12.7 0 0 1-6.47-1.77l-.46-.27-4.84 1.27 1.29-4.72-.3-.49a12.7 12.7 0 1 1 10.8 5.98Zm6.96-9.48c-.38-.19-2.24-1.1-2.59-1.23-.35-.12-.61-.19-.86.19-.25.37-.97 1.22-1.19 1.47-.22.25-.44.28-.82.1-.38-.19-1.6-.59-3.05-1.88-1.13-1-1.89-2.24-2.11-2.62-.22-.38-.02-.58.17-.77.17-.17.38-.44.57-.66.19-.22.25-.38.38-.63.12-.25.06-.47-.03-.66-.1-.19-.86-2.07-1.18-2.83-.31-.74-.63-.64-.86-.65h-.73c-.25 0-.66.1-1 .47-.35.38-1.32 1.29-1.32 3.14s1.35 3.63 1.54 3.88c.19.25 2.66 4.06 6.44 5.7.9.39 1.6.62 2.15.8.91.29 1.74.25 2.4.15.73-.11 2.24-.92 2.56-1.8.31-.88.31-1.64.22-1.8-.1-.16-.35-.25-.73-.44Z"/></svg>
+            <span class="whatsapp-float__tooltip" role="tooltip">Chat with us on WhatsApp</span>
+        </a>
+    {% endif %}
+
+    {% if request.resolver_match.namespace != "dashboard" %}
+        <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+        <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+    {% endif %}
+    <script defer src="{% static 'js/site.js' %}"></script>
+    <script defer src="{% static 'js/forms.js' %}"></script>
+
+    {% block extra_scripts %}{% endblock %}
+</body>
+</html>

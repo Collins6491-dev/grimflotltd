@@ -1,0 +1,115 @@
+{% extends "dashboard/base.html" %}
+{% load static %}
+
+{% block extra_head %}
+    {{ block.super }}
+    <link
+        rel="stylesheet"
+        href="{% static 'css/pages/dashboard/staff_profile.css' %}?v=3"
+    >
+{% endblock %}
+
+{% block dashboard_content %}
+<section class="profile-page">
+
+    <!-- Profile introduction -->
+    <div class="profile-heading">
+        <div>
+            <p class="profile-eyebrow">ACCOUNT SETTINGS</p>
+            <p>View your personal information and dashboard access.</p>
+        </div>
+
+        <div class="profile-avatar">
+            {{ profile_user.email|first|upper }}
+        </div>
+    </div>
+
+    <!-- Personal information -->
+    <div class="profile-card">
+        <h2>Personal Information</h2>
+
+        <div class="profile-details">
+
+            <div class="profile-field">
+                <span>Full name</span>
+                <strong>
+                    {{ profile_user.get_full_name|default:"Not provided" }}
+                </strong>
+            </div>
+
+            <div class="profile-field">
+                <span>Email address</span>
+                <strong>{{ profile_user.email|default:"Not provided" }}</strong>
+            </div>
+
+            <div class="profile-field">
+                <span>Username</span>
+                <strong>{{ profile_user.get_username }}</strong>
+            </div>
+
+            <div class="profile-field">
+                <span>Account status</span>
+
+                {% if profile_user.is_active %}
+                    <strong class="status-active">Active</strong>
+                {% else %}
+                    <strong class="status-inactive">Inactive</strong>
+                {% endif %}
+            </div>
+
+            <div class="profile-field">
+                <span>Staff access</span>
+
+                <strong>
+                    {% if profile_user.is_superuser %}
+                        Superuser
+                    {% elif profile_user.is_staff %}
+                        Staff member
+                    {% else %}
+                        No staff access
+                    {% endif %}
+                </strong>
+            </div>
+
+            <div class="profile-field">
+                <span>Date joined</span>
+                <strong>
+                    {{ profile_user.date_joined|date:"F j, Y" }}
+                </strong>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Assigned roles -->
+    <div class="profile-card">
+        <h2>Assigned Roles</h2>
+
+        <div class="profile-tags">
+            {% for group in staff_groups %}
+                <span class="profile-tag">{{ group.name }}</span>
+            {% empty %}
+                <p>No specific role groups assigned.</p>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Permissions -->
+    <div class="profile-card">
+        <h2>Dashboard Permissions</h2>
+
+        {% if staff_permissions %}
+            <div class="permission-list">
+                {% for permission in staff_permissions %}
+                    <div class="permission-item">
+                        <span>{{ permission }}</span>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>No explicit permissions are assigned to this account.</p>
+        {% endif %}
+    </div>
+
+</section>
+{% endblock %}

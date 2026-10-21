@@ -1,0 +1,482 @@
+/* =========================================================
+   GRIMFLOT LTD — Consultation Page
+   Brand direction: Dark blue, red, black and white
+   ========================================================= */
+
+.consultation-page {
+    --consultation-navy: #101c35;
+    --consultation-navy-light: #192a49;
+    --consultation-red: #d92735;
+    --consultation-ink: #171c27;
+    --consultation-muted: #687184;
+    --consultation-white: #ffffff;
+    --consultation-border: rgba(16, 28, 53, 0.12);
+    --consultation-surface: #f4f6f9;
+}
+
+/* Hero
+   --------------------------------------------------------- */
+
+.consultation-hero {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+    background:
+        radial-gradient(
+            circle at 85% 20%,
+            rgba(217, 39, 53, 0.18),
+            transparent 28rem
+        ),
+        linear-gradient(
+            125deg,
+            #0b1427 0%,
+            var(--consultation-navy) 58%,
+            #172746 100%
+        );
+    color: var(--consultation-white);
+}
+
+.consultation-hero::after {
+    position: absolute;
+    z-index: -1;
+    top: -8rem;
+    right: -5rem;
+    width: 25rem;
+    height: 25rem;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 50%;
+    content: "";
+    box-shadow:
+        0 0 0 3rem rgba(255, 255, 255, 0.018),
+        0 0 0 6rem rgba(255, 255, 255, 0.015);
+    pointer-events: none;
+}
+
+.consultation-hero__inner {
+    position: relative;
+    z-index: 1;
+    max-width: 900px;
+    padding-top: clamp(4rem, 8vw, 7.5rem);
+    padding-bottom: clamp(4rem, 7vw, 6.5rem);
+}
+
+.consultation-hero .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.65rem;
+    color: #ff727b;
+    font-size: 0.75rem;
+    font-weight: 750;
+    letter-spacing: 0.17em;
+    text-transform: uppercase;
+}
+
+.consultation-hero .eyebrow::before {
+    width: 1.65rem;
+    height: 2px;
+    background: var(--consultation-red);
+    content: "";
+}
+
+.consultation-hero h1 {
+    max-width: 760px;
+    margin: 1.25rem 0 1.4rem;
+    color: var(--consultation-white);
+    font-size: clamp(2.6rem, 6vw, 5.1rem);
+    font-weight: 750;
+    letter-spacing: -0.065em;
+    line-height: 1.04;
+    text-wrap: balance;
+}
+
+.consultation-hero__description {
+    max-width: 650px;
+    margin: 0;
+    color: rgba(255, 255, 255, 0.76);
+    font-size: clamp(1rem, 1.6vw, 1.15rem);
+    line-height: 1.85;
+}
+
+.consultation-hero__note {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    width: fit-content;
+    max-width: 100%;
+    margin-top: 2rem;
+    padding: 0.85rem 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.13);
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.045);
+    color: rgba(255, 255, 255, 0.86);
+    font-size: 0.84rem;
+    line-height: 1.6;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+.consultation-hero__indicator {
+    flex: 0 0 8px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #f05260;
+    box-shadow: 0 0 0 4px rgba(240, 82, 96, 0.12);
+}
+
+/* Main layout
+   --------------------------------------------------------- */
+
+.consultation-section {
+    padding-top: clamp(3.5rem, 7vw, 6rem);
+    padding-bottom: clamp(4rem, 8vw, 7rem);
+}
+
+.consultation-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+    align-items: start;
+    gap: clamp(2.5rem, 6vw, 6rem);
+}
+
+/* Left introduction
+   --------------------------------------------------------- */
+
+.consultation-intro {
+    padding-top: 0.75rem;
+}
+
+.consultation-intro > .eyebrow,
+.consultation-form-card__heading > .eyebrow {
+    margin: 0 0 1rem;
+    color: var(--consultation-red);
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+}
+
+.consultation-intro h2 {
+    max-width: 480px;
+    margin: 0 0 1.25rem;
+    color: var(--consultation-navy);
+    font-size: clamp(1.9rem, 3.5vw, 3rem);
+    font-weight: 750;
+    letter-spacing: -0.045em;
+    line-height: 1.15;
+    text-wrap: balance;
+}
+
+.consultation-intro > p:not(.eyebrow) {
+    max-width: 480px;
+    margin: 0;
+    color: var(--consultation-muted);
+    font-size: 0.98rem;
+    line-height: 1.9;
+}
+
+/* Consultation benefits
+   --------------------------------------------------------- */
+
+.consultation-benefits {
+    display: grid;
+    gap: 0;
+    margin-top: 2.25rem;
+}
+
+.consultation-benefit {
+    display: grid;
+    grid-template-columns: 44px minmax(0, 1fr);
+    align-items: start;
+    gap: 1rem;
+    padding: 1.3rem 0;
+    border-top: 1px solid var(--consultation-border);
+}
+
+.consultation-benefit:last-child {
+    border-bottom: 1px solid var(--consultation-border);
+}
+
+.consultation-benefit__number {
+    display: grid;
+    width: 42px;
+    height: 42px;
+    place-items: center;
+    border: 1px solid rgba(217, 39, 53, 0.22);
+    border-radius: 4px;
+    background: rgba(217, 39, 53, 0.055);
+    color: var(--consultation-red);
+    font-size: 0.8rem;
+    font-weight: 800;
+}
+
+.consultation-benefit h3 {
+    margin: 0 0 0.4rem;
+    color: var(--consultation-ink);
+    font-size: 1rem;
+    font-weight: 750;
+}
+
+.consultation-benefit p {
+    margin: 0;
+    color: var(--consultation-muted);
+    font-size: 0.9rem;
+    line-height: 1.7;
+}
+
+/* Form card
+   --------------------------------------------------------- */
+
+.consultation-form-card {
+    min-width: 0;
+    padding: clamp(1.5rem, 4vw, 2.75rem);
+    border: 1px solid rgba(16, 28, 53, 0.08);
+    border-radius: 8px;
+    background: var(--consultation-white);
+    box-shadow:
+        0 20px 70px rgba(16, 28, 53, 0.07),
+        0 2px 8px rgba(16, 28, 53, 0.025);
+}
+
+.consultation-form-card__heading {
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--consultation-border);
+}
+
+.consultation-form-card__heading h2 {
+    margin: 0 0 0.75rem;
+    color: var(--consultation-navy);
+    font-size: clamp(1.65rem, 3vw, 2.2rem);
+    font-weight: 750;
+    letter-spacing: -0.045em;
+    line-height: 1.2;
+}
+
+.consultation-form-card__heading > p:last-child {
+    margin: 0;
+    color: var(--consultation-muted);
+    font-size: 0.9rem;
+    line-height: 1.8;
+}
+
+/* Form fields
+   --------------------------------------------------------- */
+
+.consultation-form {
+    display: grid;
+    gap: 1.35rem;
+}
+
+.consultation-form p {
+    margin-top: 0;
+}
+
+.consultation-form label {
+    display: block;
+    margin-bottom: 0.55rem;
+    color: var(--consultation-ink);
+    font-size: 0.88rem;
+    font-weight: 700;
+}
+
+.consultation-form input:not([type="checkbox"]):not([type="radio"]):not([type="submit"]),
+.consultation-form select,
+.consultation-form textarea {
+    display: block;
+    width: 100%;
+    min-height: 49px;
+    padding: 0.8rem 0.95rem;
+    border: 1px solid #dce1e9;
+    border-radius: 4px;
+    outline: none;
+    background: #fff;
+    color: var(--consultation-ink);
+    font: inherit;
+    font-size: 0.94rem;
+    transition:
+        border-color 180ms ease,
+        box-shadow 180ms ease,
+        background-color 180ms ease;
+}
+
+.consultation-form textarea {
+    min-height: 130px;
+    resize: vertical;
+}
+
+.consultation-form input:focus,
+.consultation-form select:focus,
+.consultation-form textarea:focus {
+    border-color: var(--consultation-navy);
+    background: #fff;
+    box-shadow: 0 0 0 3px rgba(16, 28, 53, 0.08);
+}
+
+.consultation-form input::placeholder,
+.consultation-form textarea::placeholder {
+    color: #9aa2b0;
+}
+
+.consultation-form input[type="checkbox"],
+.consultation-form input[type="radio"] {
+    accent-color: var(--consultation-red);
+}
+
+.consultation-form .helptext,
+.consultation-form .help-text {
+    display: block;
+    margin-top: 0.45rem;
+    color: var(--consultation-muted);
+    font-size: 0.8rem;
+    line-height: 1.6;
+}
+
+.consultation-form .errorlist {
+    margin: 0.45rem 0 0;
+    padding-left: 1.15rem;
+    color: #bd202e;
+    font-size: 0.83rem;
+    line-height: 1.6;
+}
+
+.consultation-form .button {
+    justify-self: start;
+}
+
+/* Submit button
+   --------------------------------------------------------- */
+
+.consultation-submit {
+    display: inline-flex;
+    min-height: 54px;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    padding: 0.9rem 1.4rem;
+    border: 1px solid var(--consultation-red);
+    border-radius: 4px;
+    background: var(--consultation-red);
+    color: #fff;
+    font-size: 0.9rem;
+    font-weight: 750;
+    transition:
+        background-color 180ms ease,
+        border-color 180ms ease,
+        transform 180ms ease,
+        box-shadow 180ms ease;
+}
+
+.consultation-submit span {
+    font-size: 1.15rem;
+    transition: transform 180ms ease;
+}
+
+.consultation-submit:hover {
+    transform: translateY(-2px);
+    border-color: #b91f2b;
+    background: #b91f2b;
+    box-shadow: 0 9px 24px rgba(217, 39, 53, 0.2);
+}
+
+.consultation-submit:hover span {
+    transform: translate(2px, -2px);
+}
+
+.consultation-submit:focus-visible {
+    outline: 3px solid rgba(217, 39, 53, 0.35);
+    outline-offset: 3px;
+}
+
+.consultation-form__disclaimer {
+    margin: 0;
+    color: var(--consultation-muted);
+    font-size: 0.78rem;
+    line-height: 1.7;
+}
+
+/* Responsive
+   --------------------------------------------------------- */
+
+@media (max-width: 900px) {
+    .consultation-layout {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 3rem;
+    }
+
+    .consultation-intro {
+        max-width: 700px;
+    }
+
+    .consultation-benefits {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 1rem;
+    }
+
+    .consultation-benefit {
+        grid-template-columns: 1fr;
+        align-content: start;
+        gap: 0.85rem;
+        border-bottom: 1px solid var(--consultation-border);
+    }
+
+    .consultation-benefit:last-child {
+        border-bottom: 1px solid var(--consultation-border);
+    }
+}
+
+@media (max-width: 600px) {
+    .consultation-hero__inner {
+        padding-top: 3.5rem;
+        padding-bottom: 3.5rem;
+    }
+
+    .consultation-hero h1 {
+        font-size: clamp(2.4rem, 10vw, 3.5rem);
+    }
+
+    .consultation-hero__note {
+        align-items: flex-start;
+        font-size: 0.78rem;
+    }
+
+    .consultation-section {
+        padding-top: 3rem;
+        padding-bottom: 3.5rem;
+    }
+
+    .consultation-benefits {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .consultation-benefit {
+        grid-template-columns: 42px minmax(0, 1fr);
+    }
+
+    .consultation-form-card {
+        padding: 1.35rem;
+        border-radius: 6px;
+    }
+
+    .consultation-form {
+        gap: 1.1rem;
+    }
+
+    .consultation-submit {
+        width: 100%;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .consultation-form input,
+    .consultation-form select,
+    .consultation-form textarea,
+    .consultation-submit,
+    .consultation-submit span {
+        transition: none;
+    }
+
+    .consultation-submit:hover {
+        transform: none;
+    }
+}

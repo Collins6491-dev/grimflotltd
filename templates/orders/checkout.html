@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% load static %}
+{% block page_styles %}<link rel="stylesheet" href="{% static 'css/pages/orders.css' %}">{% endblock %}
+{% block content %}<section class="page-hero page-hero--compact page-hero--ink">
+    <div class="site-container">
+        <p class="eyebrow">Secure checkout</p>
+        <h1>Delivery and payment</h1>
+        <p>Your order is reserved only after the delivery details are validated. Payment is verified directly with the
+            provider.</p>
+    </div>
+</section>
+<section class="content-section content-section--mist">
+    <div class="site-container checkout-layout">
+        <form method="post" class="form-shell">{% csrf_token %}<h2>Delivery details</h2>{% if addresses %}<div
+                class="saved-addresses">
+                <p>Use a saved address</p>{% for address in addresses %}<a href="?address={{ address.pk }}">{{
+                    address.recipient_name }} · {{ address.address_line_1 }}, {{ address.city }}</a>{% endfor %}
+            </div>{% endif %}{% include "includes/form_fields.html" with form=form %}<button
+                class="button button--solid" type="submit">Continue to secure payment</button></form>
+        <aside class="order-summary">
+            <p class="eyebrow">Order summary</p>
+            <ul class="summary-lines">{% for item in cart.items.all %}<li><span>{{ item.quantity }} × {{
+                        item.product.name }}</span><strong>{{ item.product.currency }} {{ item.line_total }}</strong>
+                </li>{% endfor %}</ul>
+            <dl>
+                <div>
+                    <dt>Subtotal</dt>
+                    <dd>{{ cart.currency }} {{ cart_totals.subtotal }}</dd>
+                </div>
+                <div>
+                    <dt>Delivery</dt>
+                    <dd>Confirmed at payment</dd>
+                </div>
+            </dl>
+            <p class="order-summary__total">Estimated total <strong>{{ cart.currency }} {{ cart_totals.subtotal
+                    }}</strong></p>
+        </aside>
+    </div>
+</section>{% endblock %}

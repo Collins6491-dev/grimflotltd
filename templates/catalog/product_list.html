@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block page_styles %}
+<link rel="stylesheet" href="{% static 'css/pages/catalog.css' %}">
+{% endblock %}
+
+{% block title %}Products | GRIMFLOT LTD{% endblock %}
+{% block body_class %}catalogue-page{% endblock %}
+
+{% block content %}
+<section class="catalogue-hero" aria-labelledby="catalogue-title">
+    <div class="site-container catalogue-hero__inner">
+        <p class="eyebrow">Products / Stage 05</p>
+        <h1 id="catalogue-title">Technology selected for systems that have to work.</h1>
+        <p>Browse current catalogue entries across connected living, energy resilience, security, and dependable infrastructure.</p>
+    </div>
+</section>
+
+<section class="catalogue-content">
+    <div class="site-container catalogue-layout">
+        <aside class="catalogue-filter" aria-label="Filter products">
+            <form method="get" novalidate>
+                <div class="catalogue-filter__heading">
+                    <p class="eyebrow">Refine</p>
+                    <a href="{% url 'catalogue:product-list' %}">Clear all</a>
+                </div>
+                {% if filter_form.non_field_errors %}
+                <div class="form-errors" role="alert">{{ filter_form.non_field_errors }}</div>
+                {% endif %}
+                <div class="filter-field">
+                    <label for="{{ filter_form.q.id_for_label }}">Search</label>
+                    <input id="{{ filter_form.q.id_for_label }}" name="q" type="search" value="{{ filter_form.q.value|default_if_none:'' }}" maxlength="100" placeholder="Name, SKU, category">
+                    {% for error in filter_form.q.errors %}<p class="field-error">{{ error }}</p>{% endfor %}
+                </div>
+                <div class="filter-field">
+                    <label for="{{ filter_form.category.id_for_label }}">Category</label>
+                    {{ filter_form.category }}
+                    {% for error in filter_form.category.errors %}<p class="field-error">{{ error }}</p>{% endfor %}
+                </div>
+                <fieldset class="filter-price">
+                    <legend>Price range</legend>
+                    <div>
+                        <label for="{{ filter_form.min_price.id_for_label }}">Minimum</label>
+                        {{ filter_form.min_price }}
+                    </div>
+                    <div>
+                        <label for="{{ filter_form.max_price.id_for_label }}">Maximum</label>
+                        {{ filter_form.max_price }}
+                    </div>
+                    {% for error in filter_form.min_price.errors %}<p class="field-error">{{ error }}</p>{% endfor %}
+                    {% for error in filter_form.max_price.errors %}<p class="field-error">{{ error }}</p>{% endfor %}
+                </fieldset>
+                <div class="filter-field filter-field--checkbox">
+                    {{ filter_form.availability }}
+                    <label for="{{ filter_form.availability.id_for_label }}">Available to order</label>
+                </div>
+                <div class="filter-field">
+                    <label for="{{ filter_form.sort.id_for_label }}">Sort by</label>
+                    {{ filter_form.sort }}
+                </div>
+                <button class="button button--solid" type="submit">Apply filters</button>
+            </form>
+        </aside>
+
+        <div class="catalogue-results">
+            <div class="catalogue-results__meta" aria-live="polite">
+                <p><strong>{{ page_obj.paginator.count }}</strong> product{{ page_obj.paginator.count|pluralize }} found</p>
+                {% if filter_form.cleaned_data.q %}<p>Results for “{{ filter_form.cleaned_data.q }}”</p>{% endif %}
+            </div>
+
+            {% if products %}
+            <div class="product-grid">
+                {% for product in products %}
+                <article class="product-card">
+                    <a class="product-card__media" href="{{ product.get_absolute_url }}">
+                        {% if product.primary_image %}
+                        <img src="{{ product.primary_image.image.url }}" alt="{{ product.primary_image.alt_text }}" loading="lazy">
+                        {% else %}
+                        <span class="product-card__placeholder" aria-hidden="true">G</span>
+                        <span class="visually-hidden">No product image available</span>
+                        {% endif %}
+                        {% if product.is_featured %}<span class="product-card__tag">Featured</span>{% endif %}
+                    </a>
+                    <div class="product-card__content">
+                        <p class="product-card__category">{{ product.category.name }}</p>
+                        <h2><a href="{{ product.get_absolute_url }}">{{ product.name }}</a></h2>
+                        <p class="product-card__summary">{{ product.short_description }}</p>
+                        <div class="product-card__purchase">
+                            <p class="product-card__price">{{ product.currency }} {{ product.price }}</p>
+                            {% if product.compare_at_price %}<s>{{ product.currency }} {{ product.compare_at_price }}</s>{% endif %}
+                        </div>
+                        <p class="stock-label {% if product.is_available_for_sale %}stock-label--available{% endif %}">{{ product.stock_status }}</p>
+                    </div>
+                </article>
+                {% endfor %}
+            </div>
+
+            {% if is_paginated %}
+            <nav class="pagination" aria-label="Products pagination">
+                {% if page_obj.has_previous %}<a href="?{% if active_query %}{{ active_query }}&amp;{% endif %}page={{ page_obj.previous_page_number }}">Previous</a>{% endif %}
+                <span>Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+                {% if page_obj.has_next %}<a href="?{% if active_query %}{{ active_query }}&amp;{% endif %}page={{ page_obj.next_page_number }}">Next</a>{% endif %}
+            </nav>
+            {% endif %}
+            {% else %}
+            <div class="catalogue-empty">
+                <p class="eyebrow">No matching products</p>
+                <h2>Try a wider search or reset the filters.</h2>
+                <p>The catalogue only displays products that staff have approved for publication.</p>
+                <a class="button button--outline" href="{% url 'catalogue:product-list' %}">View all products</a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endblock %}

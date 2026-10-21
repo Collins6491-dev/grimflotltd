@@ -1,0 +1,34 @@
+{% extends "dashboard/base.html" %}
+{% block page_styles %}
+<link rel="stylesheet" href="{% static 'css/pages/accounts/staff_profile.css' %}">
+{% endblock %}
+{% block dashboard_content %}
+<div class="dashboard-actions"><a class="button button--solid" href="{% url 'dashboard:staff-new' %}">Add staff</a>
+</div>
+<section class="dashboard-panel table-wrap">
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Status</th>
+                <th>Joined</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for member in staff %}<tr>
+                <td>{{ member.get_full_name|default:"—" }}</td>
+                <td>{{ member.email }}</td>
+                <td>{% for group in member.groups.all %}{{ group.name }}{% empty %}No role{% endfor %}</td>
+                <td>{{ member.is_active|yesno:"Active,Inactive" }}</td>
+                <td>{{ member.date_joined|date:"j M Y" }}</td>
+                <td><a href="{% url 'dashboard:staff-edit' member.pk %}">Edit</a></td>
+            </tr>{% empty %}<tr>
+                <td colspan="6">No staff accounts found.</td>
+            </tr>{% endfor %}
+        </tbody>
+    </table>
+</section>
+{% endblock %}

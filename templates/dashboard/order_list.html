@@ -1,0 +1,66 @@
+{% extends "dashboard/base.html" %}
+
+{% block dashboard_content %}
+
+<section class="dashboard-panel table-wrap">
+
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th>Reference</th>
+                <th>Customer</th>
+                <th>Placed</th>
+                <th>Status</th>
+                <th>Total</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for order in orders %}
+                <tr>
+                    <td>
+                        <strong>{{ order.reference }}</strong>
+                    </td>
+
+                    <td>
+                        {{ order.email }}
+                    </td>
+
+                    <td>
+                        {{ order.created_at|date:"j M Y" }}
+                    </td>
+
+                    <td>
+                        <span class="status-chip status-chip--{{ order.status }}">
+                            {{ order.get_status_display }}
+                        </span>
+                    </td>
+
+                    <td>
+                        {{ order.currency }} {{ order.total|floatformat:2 }}
+                    </td>
+
+                    <td>
+                        <a
+                            href="{% url 'dashboard:order-detail' order.reference %}"
+                            aria-label="View order {{ order.reference }}"
+                        >
+                            Open
+                        </a>
+                    </td>
+                </tr>
+
+            {% empty %}
+                <tr>
+                    <td colspan="6">
+                        No orders yet.
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</section>
+
+{% endblock %}

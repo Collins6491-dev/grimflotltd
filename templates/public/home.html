@@ -1,0 +1,674 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Smart Energy, Smart Homes & Security{% endblock %}
+
+{% block meta_description %}
+GRIMFLOT LTD delivers solar energy solutions, inverter systems, smart home
+automation, electrical installations, CCTV and security solutions for
+residential and commercial properties.
+{% endblock %}
+
+{% block body_class %}home-page{% endblock %}
+
+{% block extra_head %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static 'css/pages/home.css' %}">
+{% endblock %}
+
+{% block content %}
+
+
+<!-- =====================================================
+     HERO
+===================================================== -->
+
+<section class="gf-hero" aria-labelledby="gf-hero-title">
+
+    <div class="gf-hero__image" aria-hidden="true">
+        <img
+            src="{% static 'images/hero/smart-home-hero.jpg' %}"
+            alt=""
+            fetchpriority="high"
+        >
+    </div>
+
+    <div class="gf-hero__overlay" aria-hidden="true"></div>
+
+    <div class="site-container gf-hero__container">
+
+        <div class="gf-hero__content">
+
+            <div class="gf-eyebrow gf-hero__eyebrow">
+                <span class="gf-eyebrow__line"></span>
+                POWERING A SMARTER FUTURE
+            </div>
+
+            <h1 id="gf-hero-title">
+                Intelligent living.
+                <span>Reliable power.</span>
+                <strong>Greater peace of mind.</strong>
+            </h1>
+
+            <p class="gf-hero__description">
+                From solar energy and backup power to smart home technology
+                and advanced security, GRIMFLOT LTD brings the systems that
+                power modern living together.
+            </p>
+
+            <div class="gf-hero__actions">
+
+                <a
+                    class="gf-button gf-button--primary"
+                    href="{% url 'services:list' %}"
+                >
+                    Explore our services
+                    <span aria-hidden="true">↗</span>
+                </a>
+
+                <a
+                    class="gf-button gf-button--outline"
+                    href="{% url 'enquiries:contact' %}"
+                >
+                    Request a consultation
+                    <span aria-hidden="true">→</span>
+                </a>
+
+            </div>
+
+            <div class="gf-hero__footnote">
+                <span class="gf-hero__footnote-dot"></span>
+                <span>
+                    Energy. Technology. Security. One connected vision.
+                </span>
+            </div>
+
+        </div>
+
+        <div class="gf-hero__side-label" aria-hidden="true">
+            ENGINEERED FOR MODERN LIVING
+        </div>
+
+    </div>
+
+    <div class="gf-hero__bottom">
+
+        <div class="site-container gf-hero__bottom-inner">
+
+            <span>01 / SMARTER SPACES</span>
+
+            <span class="gf-hero__scroll">
+                SCROLL TO EXPLORE
+                <span aria-hidden="true">↓</span>
+            </span>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     INTRODUCTION
+===================================================== -->
+
+<section class="gf-intro section-spacing">
+
+    <div class="site-container gf-intro__grid">
+
+        <div class="gf-intro__label">
+
+            <span class="gf-section-number">01</span>
+
+            <p class="gf-eyebrow">
+                WHO WE ARE
+            </p>
+
+        </div>
+
+        <div class="gf-intro__main">
+
+            <h2 class="gf-heading">
+                Better spaces begin with
+                <span>better systems.</span>
+            </h2>
+
+            <div class="gf-intro__bottom">
+
+                <p class="gf-intro__description">
+                    The right technology should make everyday life easier,
+                    safer and more dependable. We focus on practical energy,
+                    electrical and smart technology solutions designed around
+                    the needs of homes, businesses and modern facilities.
+                </p>
+
+                <a
+                    class="gf-text-link"
+                    href="{% url 'about' %}"
+                >
+                    Discover GRIMFLOT
+                    <span aria-hidden="true">↗</span>
+                </a>
+
+            </div>
+
+        </div>
+
+        <div class="gf-intro__accent" aria-hidden="true">
+            <span>G</span>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     SERVICES
+===================================================== -->
+
+<section class="gf-services section-spacing">
+
+    <div class="site-container">
+
+        <div class="gf-section-header">
+
+            <div class="gf-section-header__copy">
+
+                <p class="gf-eyebrow">
+                    WHAT WE DO
+                </p>
+
+                <h2 class="gf-heading">
+                    Technology with
+                    <span>a purpose.</span>
+                </h2>
+
+                <p class="gf-section-description">
+                    Integrated solutions for reliable power, intelligent
+                    environments, security and electrical infrastructure.
+                </p>
+
+            </div>
+
+            <a
+                class="gf-button gf-button--dark"
+                href="{% url 'services:list' %}"
+            >
+                View all services
+                <span aria-hidden="true">↗</span>
+            </a>
+
+        </div>
+
+
+        <div class="gf-services__grid">
+
+            <!-- SERVICE 01 -->
+
+            <article class="gf-service-card gf-service-card--featured">
+
+                <div class="gf-service-card__image">
+
+                    <img
+                        src="{% static 'images/services/solar-installation.jpg' %}"
+                        alt="Black Nigerian solar technician inspecting a solar panel installation"
+                        loading="lazy"
+                    >
+
+                    <span class="gf-service-card__number">01</span>
+
+                </div>
+
+                <div class="gf-service-card__content">
+
+                    <p class="gf-service-card__category">
+                        ENERGY SOLUTIONS
+                    </p>
+
+                    <h3>Solar &amp; backup power</h3>
+
+                    <p>
+                        Solar installations, inverter systems and battery
+                        storage solutions designed around your power needs.
+                    </p>
+
+                    <a
+                        href="{% url 'services:list' %}"
+                        aria-label="Explore solar and backup power services"
+                        class="gf-service-card__link"
+                    >
+                        <span>Explore solution</span>
+                        <span aria-hidden="true">↗</span>
+                    </a>
+
+                </div>
+
+            </article>
+
+
+            <!-- SERVICE 02 -->
+
+            <article class="gf-service-card">
+
+                <div class="gf-service-card__image">
+
+                    <img
+                        src="{% static 'images/services/smart-home.jpg' %}"
+                        alt="Modern residential interior designed for smart-home controls"
+                        loading="lazy"
+                    >
+
+                    <span class="gf-service-card__number">02</span>
+
+                </div>
+
+                <div class="gf-service-card__content">
+
+                    <p class="gf-service-card__category">
+                        INTELLIGENT LIVING
+                    </p>
+
+                    <h3>Smart home automation</h3>
+
+                    <p>
+                        Connected lighting, smart controls and home automation
+                        designed to improve comfort and convenience.
+                    </p>
+
+                    <a
+                        href="{% url 'services:list' %}"
+                        aria-label="Explore smart home automation services"
+                        class="gf-service-card__link"
+                    >
+                        <span>Explore solution</span>
+                        <span aria-hidden="true">↗</span>
+                    </a>
+
+                </div>
+
+            </article>
+
+
+            <!-- SERVICE 03 -->
+
+            <article class="gf-service-card">
+
+                <div class="gf-service-card__image">
+
+                    <img
+                        src="{% static 'images/services/cctv-security.jpg' %}"
+                        alt="Security camera equipment"
+                        loading="lazy"
+                    >
+
+                    <span class="gf-service-card__number">03</span>
+
+                </div>
+
+                <div class="gf-service-card__content">
+
+                    <p class="gf-service-card__category">
+                        PROTECTION &amp; CONTROL
+                    </p>
+
+                    <h3>Security systems</h3>
+
+                    <p>
+                        CCTV, access control and security solutions for
+                        residential and commercial environments.
+                    </p>
+
+                    <a
+                        href="{% url 'services:list' %}"
+                        aria-label="Explore security system services"
+                        class="gf-service-card__link"
+                    >
+                        <span>Explore solution</span>
+                        <span aria-hidden="true">↗</span>
+                    </a>
+
+                </div>
+
+            </article>
+
+
+            <!-- SERVICE 04 -->
+
+            <article class="gf-service-card">
+
+                <div class="gf-service-card__image">
+
+                    <img
+                        src="{% static 'images/services/electrical-installation.jpg' %}"
+                        alt="Black African electrical technician working on a distribution panel"
+                        loading="lazy"
+                    >
+
+                    <span class="gf-service-card__number">04</span>
+
+                </div>
+
+                <div class="gf-service-card__content">
+
+                    <p class="gf-service-card__category">
+                        ELECTRICAL INFRASTRUCTURE
+                    </p>
+
+                    <h3>Electrical installations</h3>
+
+                    <p>
+                        Electrical installation, fittings, maintenance
+                        and infrastructure solutions for different spaces.
+                    </p>
+
+                    <a
+                        href="{% url 'services:list' %}"
+                        aria-label="Explore electrical installation services"
+                        class="gf-service-card__link"
+                    >
+                        <span>Explore solution</span>
+                        <span aria-hidden="true">↗</span>
+                    </a>
+
+                </div>
+
+            </article>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     FEATURED STATEMENT
+===================================================== -->
+
+<section class="gf-statement gf-statement--text" aria-labelledby="gf-statement-title">
+
+    <div class="site-container gf-statement__inner">
+
+        <div class="gf-statement__text-card">
+
+            <div class="gf-statement__text-copy">
+
+                <p class="gf-eyebrow">
+                    DESIGNED AROUND YOUR NEEDS
+                </p>
+
+                <h2 id="gf-statement-title">
+                    Your space.
+                    <span>Your needs.</span>
+                    <strong>Smarter possibilities.</strong>
+                </h2>
+
+                <p class="gf-statement__description">
+                    Every home and business is different. We bring together
+                    smart home automation, dependable solar power, electrical
+                    installations and security systems to create practical
+                    solutions that fit your space, priorities and budget.
+                </p>
+
+                <a
+                    class="gf-button gf-button--primary"
+                    href="{% url 'enquiries:contact' %}"
+                >
+                    Talk to our team
+                    <span aria-hidden="true">↗</span>
+                </a>
+
+            </div>
+
+            <div class="gf-statement__text-mark" aria-hidden="true">
+                <span>GF</span><span class="gf-statement__text-mark-dot">.</span>
+                <p>ENERGY. TECHNOLOGY. SECURITY.</p>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     PRODUCTS
+===================================================== -->
+
+<section class="gf-products section-spacing">
+
+    <div class="site-container gf-products__grid">
+
+        <div class="gf-products__copy">
+
+            <p class="gf-eyebrow">
+                OUR PRODUCT COLLECTION
+            </p>
+
+            <h2 class="gf-heading">
+                The right equipment.
+                <span>For the right solution.</span>
+            </h2>
+
+            <p class="gf-section-description">
+                Explore products and equipment for energy systems,
+                electrical installations, smart technology and security.
+            </p>
+
+            <a
+                class="gf-button gf-button--dark"
+                href="{% url 'catalogue:product-list' %}"
+            >
+                Browse products
+                <span aria-hidden="true">↗</span>
+            </a>
+
+        </div>
+
+        <div class="gf-products__visual">
+
+            <div class="gf-products__image">
+
+                <img
+                    src="{% static 'images/products/solar-panels.jpg' %}"
+                    alt="Solar energy equipment"
+                    loading="lazy"
+                >
+
+            </div>
+
+            <div class="gf-products__note">
+
+                <span class="gf-products__note-mark">G</span>
+
+                <div>
+                    <p>GRIMFLOT LTD</p>
+                    <span>Technology for everyday living</span>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     PROJECTS
+===================================================== -->
+
+<section class="gf-projects section-spacing">
+
+    <div class="site-container">
+
+        <div class="gf-section-header">
+
+            <div class="gf-section-header__copy">
+
+                <p class="gf-eyebrow">
+                    OUR WORK
+                </p>
+
+                <h2 class="gf-heading">
+                    Thoughtful work.
+                    <span>Practical outcomes.</span>
+                </h2>
+
+                <p class="gf-section-description">
+                    Every property has different requirements.
+                    Explore our projects to see the types of environments
+                    and solutions our team works with.
+                </p>
+
+            </div>
+
+            <a
+                class="gf-button gf-button--dark"
+                href="{% url 'projects:list' %}"
+            >
+                Explore projects
+                <span aria-hidden="true">↗</span>
+            </a>
+
+        </div>
+
+        <div class="gf-projects__feature">
+
+            <div class="gf-projects__feature-image">
+
+                <img
+                    src="{% static 'images/projects/featured-project.jpg' %}"
+                    alt="Modern residential architecture"
+                    loading="lazy"
+                >
+
+            </div>
+
+            <div class="gf-projects__feature-content">
+
+                <span class="gf-projects__feature-number">01</span>
+
+                <p class="gf-eyebrow">
+                    RESIDENTIAL &amp; COMMERCIAL
+                </p>
+
+                <h3>
+                    Solutions built around
+                    real-world requirements.
+                </h3>
+
+                <p>
+                    From individual installations to integrated building
+                    systems, our focus is on solutions that make sense
+                    for the space, the people and the intended use.
+                </p>
+
+                <a
+                    class="gf-text-link"
+                    href="{% url 'projects:list' %}"
+                >
+                    View project portfolio
+                    <span aria-hidden="true">↗</span>
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     CONTACT CTA
+===================================================== -->
+
+<section class="gf-contact-cta">
+
+    <div class="site-container gf-contact-cta__inner">
+
+        <div class="gf-contact-cta__copy">
+
+            <p class="gf-eyebrow gf-eyebrow--light">
+                LET'S GET STARTED
+            </p>
+
+            <h2>
+                Have a project
+                <span>in mind?</span>
+            </h2>
+
+            <p>
+                Tell us what you need. Let's discuss your energy,
+                electrical, smart home or security requirements.
+            </p>
+
+        </div>
+
+        <div class="gf-contact-cta__action">
+
+            <a
+                class="gf-button gf-button--light"
+                href="{% url 'enquiries:contact' %}"
+            >
+                Discuss your project
+                <span aria-hidden="true">↗</span>
+            </a>
+
+            <span>
+                Start a conversation with GRIMFLOT LTD.
+            </span>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}
+
+{% block extra_scripts %}
+    {{ block.super }}
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const elements = document.querySelectorAll(
+                ".gf-intro__main, .gf-section-header, .gf-service-card, " +
+                ".gf-statement__content, .gf-statement__text-copy, .gf-products__copy, " +
+                ".gf-projects__feature-content"
+            );
+
+            if (!("IntersectionObserver" in window)) {
+                elements.forEach(function (element) {
+                    element.classList.add("gf-is-visible");
+                });
+                return;
+            }
+
+            const observer = new IntersectionObserver(
+                function (entries, currentObserver) {
+                    entries.forEach(function (entry) {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add("gf-is-visible");
+                            currentObserver.unobserve(entry.target);
+                        }
+                    });
+                },
+                {
+                    threshold: 0.12,
+                    rootMargin: "0px 0px -35px 0px"
+                }
+            );
+
+            elements.forEach(function (element) {
+                observer.observe(element);
+            });
+        });
+    </script>
+{% endblock %}

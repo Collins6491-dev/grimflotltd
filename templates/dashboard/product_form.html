@@ -1,0 +1,356 @@
+{% extends "dashboard/base.html" %}
+{% load static %}
+
+{% block extra_head %}
+    {{ block.super }}
+
+    <link
+        rel="stylesheet"
+        href="{% static 'css/pages/dashboard/product_form.css' %}?v=3"
+    />
+{% endblock %}
+
+
+{% block dashboard_content %}
+
+<section class="dashboard-panel dashboard-panel--form product-editor">
+
+    <header class="product-editor__header">
+        <div>
+            <h2>{{ heading }}</h2>
+
+            <p class="product-editor__intro">
+                Add or update products in the GRIMFLOT LTD catalogue.
+                Manage product information, images, prices, publishing,
+                and stock from one place.
+            </p>
+        </div>
+    </header>
+
+
+    <form
+        method="post"
+        enctype="multipart/form-data"
+        class="form-shell"
+        data-product-editor
+    >
+        {% csrf_token %}
+
+        {% if form.non_field_errors or secondary_form.non_field_errors %}
+            <div class="product-editor__errors" role="alert">
+                <strong>Please correct the following errors:</strong>
+
+                {% if form.non_field_errors %}
+                    {{ form.non_field_errors }}
+                {% endif %}
+
+                {% if secondary_form.non_field_errors %}
+                    {{ secondary_form.non_field_errors }}
+                {% endif %}
+            </div>
+        {% endif %}
+
+
+        <div class="product-editor__grid">
+
+            <!-- MAIN PRODUCT INFORMATION -->
+            <div class="product-editor__main">
+
+                <section class="product-card">
+                    <h3 class="product-card__heading">
+                        Product information
+                    </h3>
+
+                    <p class="product-card__description">
+                        Enter the details customers will see in your
+                        online catalogue.
+                    </p>
+
+                    {% if product %}
+                        <div class="product-editor__meta">
+                            <span>
+                                <strong>SKU:</strong>
+                                {{ product.sku }}
+                            </span>
+
+                            {% if product.slug %}
+                                <span>
+                                    <strong>Product URL:</strong>
+                                    /products/{{ product.slug }}/
+                                </span>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+
+                    <div class="product-editor__fields">
+                        {% for field in form %}
+                            {% if field.name != "image" %}
+                                <div class="form-field">
+                                    {{ field.label_tag }}
+
+                                    {{ field }}
+
+                                    {% if field.help_text %}
+                                        <small>{{ field.help_text }}</small>
+                                    {% endif %}
+
+                                    {% if field.errors %}
+                                        <div class="field-errors" role="alert">
+                                            {{ field.errors }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </section>
+
+
+                <!-- INVENTORY -->
+                {% if secondary_form %}
+                    <section class="product-card">
+                        <h3 class="product-card__heading">
+                            Inventory and stock
+                        </h3>
+
+                        <p class="product-card__description">
+                            Manage available stock and reserved quantities.
+                            Inventory changes are recorded in the stock
+                            movement history.
+                        </p>
+
+                        <div class="product-editor__fields">
+                            {% for field in secondary_form %}
+                                <div class="form-field">
+                                    {{ field.label_tag }}
+
+                                    {{ field }}
+
+                                    {% if field.help_text %}
+                                        <small>{{ field.help_text }}</small>
+                                    {% endif %}
+
+                                    {% if field.errors %}
+                                        <div class="field-errors" role="alert">
+                                            {{ field.errors }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </section>
+                {% endif %}
+
+            </div>
+
+
+            <!-- PRODUCT SIDEBAR -->
+            <aside class="product-editor__sidebar">
+
+                <section class="product-card">
+                    <h3 class="product-card__heading">
+                        Product image
+                    </h3>
+
+                    <p class="product-card__description">
+                        Upload a clear photograph of the product.
+                        A landscape or square image works well.
+                    </p>
+
+                    <div class="product-image-upload">
+
+                        <div class="product-image-upload__preview">
+
+                            {% if product and product.primary_image %}
+                                <img
+                                    src="{{ product.primary_image.image.url }}"
+                                    alt="{{ product.primary_image.alt_text|default:product.name }}"
+                                    data-product-image-preview
+                                >
+
+                                <p
+                                    class="product-image-upload__placeholder"
+                                    data-product-image-placeholder
+                                    hidden
+                                >
+                                    Your image preview will appear here.
+                                </p>
+                            {% else %}
+                                <img
+                                    alt="Selected product image preview"
+                                    data-product-image-preview
+                                    hidden
+                                >
+
+                                <p
+                                    class="product-image-upload__placeholder"
+                                    data-product-image-placeholder
+                                >
+                                    No product image uploaded yet.
+                                    <br>
+                                    Select an image below to preview it.
+                                </p>
+                            {% endif %}
+
+                        </div>
+
+
+                        {% for field in form %}
+                            {% if field.name == "image" %}
+                                <div class="form-field">
+                                    {{ field.label_tag }}
+
+                                    {{ field }}
+
+                                    {% if field.help_text %}
+                                        <small>{{ field.help_text }}</small>
+                                    {% endif %}
+
+                                    {% if field.errors %}
+                                        <div class="field-errors" role="alert">
+                                            {{ field.errors }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+
+                        <p class="product-image-upload__help">
+                            Maximum file size: 5 MB. Supported formats
+                            depend on your Django image validation.
+                            Upload an image you own or have permission
+                            to use.
+                        </p>
+
+                    </div>
+                </section>
+
+
+                {% if product %}
+                    <section class="product-card">
+                        <h3 class="product-card__heading">
+                            Product status
+                        </h3>
+
+                        <div class="product-editor__meta">
+                            <span>
+                                <strong>Public catalogue:</strong>
+                                {% if product.is_published and product.category.is_published %}
+                                    <span class="status-chip status-chip--published">Published</span>
+                                {% elif product.is_published %}
+                                    <span class="status-chip status-chip--draft">Category is draft</span>
+                                {% else %}
+                                    <span class="status-chip status-chip--draft">Product is draft</span>
+                                {% endif %}
+                            </span>
+
+                            <span>
+                                <strong>Product:</strong>
+                                {{ product.name }}
+                            </span>
+
+                            <span>
+                                <strong>SKU:</strong>
+                                {{ product.sku }}
+                            </span>
+
+                            <span>
+                                <strong>Price:</strong>
+                                {{ product.currency }}
+                                {{ product.price }}
+                            </span>
+                        </div>
+                    </section>
+                {% endif %}
+
+            </aside>
+
+        </div>
+
+
+        <div class="product-editor__actions">
+            <button class="button button--solid" type="submit">
+                Save Product
+            </button>
+
+            <a
+                class="button button--quiet"
+                href="{% url 'dashboard:products' %}"
+            >
+                Back to Products
+            </a>
+        </div>
+
+    </form>
+
+</section>
+
+{% endblock %}
+
+
+{% block extra_scripts %}
+    {{ block.super }}
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const editor = document.querySelector("[data-product-editor]");
+
+            if (!editor) return;
+
+            const input = editor.querySelector(
+                'input[type="file"][name="image"]'
+            );
+
+            const preview = editor.querySelector(
+                "[data-product-image-preview]"
+            );
+
+            const placeholder = editor.querySelector(
+                "[data-product-image-placeholder]"
+            );
+
+            if (!input || !preview) return;
+
+            let currentObjectUrl = null;
+
+            input.addEventListener("change", function () {
+                const file = input.files && input.files[0];
+
+                if (!file) return;
+
+                if (!file.type.startsWith("image/")) {
+                    alert("Please select a valid image file.");
+                    input.value = "";
+                    return;
+                }
+
+                const maxSize = 5 * 1024 * 1024;
+
+                if (file.size > maxSize) {
+                    alert("The product image must not exceed 5 MB.");
+                    input.value = "";
+                    return;
+                }
+
+                if (currentObjectUrl) {
+                    URL.revokeObjectURL(currentObjectUrl);
+                }
+
+                currentObjectUrl = URL.createObjectURL(file);
+
+                preview.src = currentObjectUrl;
+                preview.hidden = false;
+
+                if (placeholder) {
+                    placeholder.hidden = true;
+                }
+            });
+
+            window.addEventListener("pagehide", function () {
+                if (currentObjectUrl) {
+                    URL.revokeObjectURL(currentObjectUrl);
+                }
+            });
+        });
+    </script>
+{% endblock %}

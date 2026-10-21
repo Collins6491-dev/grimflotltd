@@ -1,0 +1,159 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block page_styles %}
+<link rel="stylesheet" href="{% static 'css/pages/accounts/login.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="customer-login">
+
+    <!-- LEFT: GRIMFLOT BRAND EXPERIENCE -->
+    <aside class="customer-login__visual">
+
+        <div class="customer-login__overlay"></div>
+
+        <a href="/" class="customer-login__brand" aria-label="GRIMFLOT LTD homepage">
+            <img
+                src="{% static 'images/logo.png' %}"
+                alt="GRIMFLOT LTD"
+            >
+        </a>
+
+        <div class="customer-login__intro">
+            <span class="customer-login__eyebrow">
+                BUILDING SMART HOMES
+            </span>
+
+            <h1>
+                A smarter home<br>
+                starts with<br>
+                <span>the right connection.</span>
+            </h1>
+
+            <p>
+                Discover intelligent home automation, dependable solar
+                power, and modern electrical solutions designed around you.
+            </p>
+
+            <div class="customer-login__highlights">
+                <div>
+                    <span class="customer-login__highlight-mark">01</span>
+                    <span>Smart home solutions</span>
+                </div>
+
+                <div>
+                    <span class="customer-login__highlight-mark">02</span>
+                    <span>Reliable energy systems</span>
+                </div>
+
+                <div>
+                    <span class="customer-login__highlight-mark">03</span>
+                    <span>Solutions built around you</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="customer-login__visual-footer">
+            <span>GRIMFLOT LTD</span>
+            <span>SMARTER LIVING. BETTER CONNECTED.</span>
+        </div>
+
+    </aside>
+
+
+    <!-- RIGHT: CUSTOMER SIGN-IN -->
+    <div class="customer-login__panel">
+
+        <div class="customer-login__form-wrap">
+
+            <a href="/" class="customer-login__mobile-brand">
+                <img
+                    src="{% static 'images/logo.png' %}"
+                    alt="GRIMFLOT LTD"
+                >
+            </a>
+
+            <div class="customer-login__heading">
+                <span class="customer-login__eyebrow">
+                    YOUR GRIMFLOT ACCOUNT
+                </span>
+
+                <h2>Welcome back<span>.</span></h2>
+
+                <p>
+                    Sign in to manage your details, saved products,
+                    and orders.
+                </p>
+            </div>
+
+            <!-- Django notifications -->
+            {% if messages %}
+                <div class="customer-login__messages" aria-label="Notifications">
+                    {% for message in messages %}
+                        <div
+                            class="customer-login__message customer-login__message--{{ message.tags|default:'info' }}"
+                            role="{% if 'error' in message.tags %}alert{% else %}status{% endif %}"
+                        >
+                            <span
+                                class="customer-login__message-dot"
+                                aria-hidden="true"
+                            ></span>
+
+                            <p>{{ message }}</p>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <!-- Existing Django authentication -->
+            <form
+                method="post"
+                class="customer-login__form"
+                data-loading-form
+                data-loading-label="Signing in…"
+            >
+                {% csrf_token %}
+
+                {% include "includes/form_fields.html" with form=form %}
+
+                <input
+                    type="hidden"
+                    name="next"
+                    value="{{ request.GET.next|default:'' }}"
+                >
+
+                <div class="customer-login__forgot">
+                    <a href="{% url 'accounts:password_reset' %}">
+                        Forgot your password?
+                    </a>
+                </div>
+
+                <button class="customer-login__submit" type="submit">
+                    <span>Sign in to your account</span>
+                    <span aria-hidden="true">&rarr;</span>
+                </button>
+            </form>
+
+            <div class="customer-login__register">
+                <span>New to GRIMFLOT?</span>
+                <a href="{% url 'accounts:register' %}">
+                    Create an account <span aria-hidden="true">&rarr;</span>
+                </a>
+            </div>
+
+            <div class="customer-login__security">
+                <span aria-hidden="true">&#9670;</span>
+                <p>Your account helps you manage your details and orders.</p>
+            </div>
+
+            <a href="/" class="customer-login__back">
+                &larr; Back to GRIMFLOT LTD
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+{% endblock %}

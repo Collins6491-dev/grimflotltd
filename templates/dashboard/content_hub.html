@@ -1,0 +1,65 @@
+{% extends "dashboard/base.html" %}
+
+{% block dashboard_content %}
+
+<div class="metric-grid">
+
+    <article class="metric-card">
+        <span>Services</span>
+
+        <strong>{{ service_count }}</strong>
+
+        <a href="{% url 'dashboard:services' %}">
+            Manage
+        </a>
+    </article>
+
+    <article class="metric-card">
+        <span>Projects</span>
+
+        <strong>{{ project_count }}</strong>
+
+        <a href="{% url 'dashboard:projects' %}">
+            Manage
+        </a>
+    </article>
+
+    <article class="metric-card">
+        <span>Brand &amp; homepage</span>
+
+        <strong>01</strong>
+
+        <a href="{% url 'dashboard:settings' %}">
+            Manage
+        </a>
+    </article>
+
+    <article class="metric-card">
+        <span>Homepage slides</span>
+
+        <strong>CMS</strong>
+
+        <a href="{% url 'dashboard:editorial-list' 'hero-slides' %}">
+            Manage
+        </a>
+    </article>
+
+</div>
+
+<section class="dashboard-panel">
+
+    <h2>Editorial controls</h2>
+
+    <p>Manage the remaining homepage records from the operations dashboard.</p>
+
+    <div class="button-row">
+        <a class="button button--quiet" href="{% url 'dashboard:editorial-list' 'hero-slides' %}">Hero slides</a>
+        <a class="button button--quiet" href="{% url 'dashboard:editorial-list' 'capabilities' %}">Capabilities</a>
+        <a class="button button--quiet" href="{% url 'dashboard:editorial-list' 'process-steps' %}">Process steps</a>
+        <a class="button button--quiet" href="{% url 'dashboard:editorial-list' 'faqs' %}">FAQs</a>
+        <a class="button button--quiet" href="{% url 'dashboard:editorial-list' 'social-links' %}">Social links</a>
+    </div>
+
+</section>
+
+{% endblock %}

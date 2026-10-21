@@ -1,0 +1,23 @@
+{% extends "dashboard/base.html" %}
+
+{% block dashboard_content %}
+<div class="dashboard-actions">
+    <a class="button button--solid" href="{% url 'dashboard:editorial-new' content_type %}">Add item</a>
+</div>
+<section class="dashboard-panel table-wrap">
+    <table class="data-table">
+        <thead><tr><th>Content</th><th>Order</th><th>Publishing</th><th>Actions</th></tr></thead>
+        <tbody>
+            {% for row in rows %}
+            <tr>
+                <td><strong>{{ row.label }}</strong>{% if row.summary %}<small>{{ row.summary|truncatechars:120 }}</small>{% endif %}</td>
+                <td>{{ row.order|default:"—" }}</td>
+                <td>{% if row.published is None %}—{% elif row.published %}<span class="status-badge status-badge--published">Published</span>{% else %}<span class="status-badge status-badge--draft">Draft</span>{% endif %}</td>
+                <td><a href="{% url 'dashboard:editorial-edit' content_type row.instance.pk %}">Edit</a></td>
+            </tr>
+            {% empty %}<tr><td colspan="4">No content has been added yet.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</section>
+{% endblock %}

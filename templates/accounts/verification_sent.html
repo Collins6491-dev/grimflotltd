@@ -1,0 +1,149 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block body_class %}account-verification-page{% endblock %}
+
+{% block page_styles %}
+<link rel="stylesheet" href="{% static 'css/pages/accounts/verification.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="verification-page">
+    <div class="verification-container">
+
+        <!-- Brand -->
+        <a href="/" class="verification-brand">
+            <span class="verification-brand__mark">G</span>
+            <span class="verification-brand__name">
+                GRIMFLOT
+                <small>BUILDING SMART HOMES</small>
+            </span>
+        </a>
+
+        <!-- Verification Card -->
+        <div class="verification-card">
+
+            <div class="verification-illustration">
+                <div class="verification-illustration__ring"></div>
+
+                <div class="verification-illustration__envelope">
+                    <svg
+                        viewBox="0 0 64 64"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                        aria-hidden="true"
+                    >
+                        <rect
+                            x="7"
+                            y="14"
+                            width="50"
+                            height="36"
+                            rx="5"
+                            stroke="currentColor"
+                            stroke-width="2.5"
+                        />
+
+                        <path
+                            d="M9 18L32 35L55 18"
+                            stroke="currentColor"
+                            stroke-width="2.5"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        />
+
+                        <path
+                            d="M9 46L24 33"
+                            stroke="currentColor"
+                            stroke-width="2.5"
+                            stroke-linecap="round"
+                        />
+
+                        <path
+                            d="M55 46L40 33"
+                            stroke="currentColor"
+                            stroke-width="2.5"
+                            stroke-linecap="round"
+                        />
+                    </svg>
+                </div>
+
+                <span class="verification-illustration__check">✓</span>
+            </div>
+
+            <p class="verification-eyebrow">
+                <span></span>
+                ONE LAST STEP
+            </p>
+
+            <h1>
+                Verify your<br>
+                <span>email address.</span>
+            </h1>
+
+            <p class="verification-description">
+                You're almost there. We've sent a verification link
+                to your registered email address.
+            </p>
+
+            <div class="verification-instructions">
+                <div class="verification-instructions__icon">
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                        aria-hidden="true"
+                    >
+                        <path
+                            d="M12 3L20 6V11C20 16 16.5 19.5 12 21C7.5 19.5 4 16 4 11V6L12 3Z"
+                            stroke="currentColor"
+                            stroke-width="1.7"
+                            stroke-linejoin="round"
+                        />
+                        <path
+                            d="M8.5 12L11 14.5L15.5 10"
+                            stroke="currentColor"
+                            stroke-width="1.7"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        />
+                    </svg>
+                </div>
+
+                <div>
+                    <h2>Check your inbox</h2>
+                    <p>
+                        Open the email from GRIMFLOT LTD and follow
+                        the verification link before making a purchase.
+                    </p>
+                </div>
+            </div>
+
+            <div class="verification-notice">
+                <span class="verification-notice__icon">i</span>
+
+                <p>
+                    Can't find the email? Check your spam or junk folder.
+                    If it still doesn't arrive, contact our team for help.
+                </p>
+            </div>
+
+            <a href="{% url 'accounts:account' %}" class="verification-button">
+                <span>Go to your account</span>
+                <span class="verification-button__arrow">→</span>
+            </a>
+
+            <p class="verification-footnote">
+                Your security matters to us.
+                <span>Thank you for choosing GRIMFLOT.</span>
+            </p>
+
+        </div>
+
+        <footer class="verification-footer">
+            <span>© {% now "Y" %} GRIMFLOT LTD</span>
+            <span>SMARTER SPACES. BETTER LIVING.</span>
+        </footer>
+
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,131 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block body_class %}account-register-page{% endblock %}
+
+{% block page_styles %}
+<link rel="stylesheet" href="{% static 'css/pages/accounts/register.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="register-page">
+
+    <!-- LEFT BRAND PANEL -->
+    <aside class="register-visual">
+
+        <div class="register-visual__image"></div>
+        <div class="register-visual__overlay"></div>
+
+        <div class="register-visual__content">
+
+            <a href="/" class="register-brand">
+                <span class="register-brand__mark">G</span>
+                <span>
+                    <strong>GRIMFLOT</strong>
+                    <small>BUILDING SMART HOMES</small>
+                </span>
+            </a>
+
+            <div class="register-message">
+                <p class="register-eyebrow">
+                    <span></span>
+                    INTELLIGENT LIVING STARTS HERE
+                </p>
+
+                <h2>
+                    Your home.<br>
+                    Your comfort.<br>
+                    <span>Your control.</span>
+                </h2>
+
+                <p class="register-message__description">
+                    Discover smarter ways to manage your energy,
+                    security and everyday living with technology
+                    designed around you.
+                </p>
+            </div>
+
+            <div class="register-visual__footer">
+                <span>SMARTER SPACES. BETTER LIVING.</span>
+                <span>01 — GRIMFLOT</span>
+            </div>
+
+        </div>
+    </aside>
+
+
+    <!-- RIGHT REGISTRATION PANEL -->
+    <div class="register-main">
+
+        <div class="register-topbar">
+            <a href="/" class="register-mobile-brand">
+                <span class="register-brand__mark">G</span>
+                <span>GRIMFLOT</span>
+            </a>
+
+            <p>
+                Already a member?
+                <a href="{% url 'accounts:login' %}">Sign in <span>↗</span></a>
+            </p>
+        </div>
+
+        <div class="register-form-wrap">
+
+            <div class="register-heading">
+                <div class="register-step">
+                    <span class="register-step__dot"></span>
+                    CUSTOMER ACCOUNT
+                </div>
+
+                <h1>Create your <span>account.</span></h1>
+
+                <p>
+                    Join GRIMFLOT and make managing your services
+                    and projects a little easier.
+                </p>
+            </div>
+
+            <form method="post" class="register-form">
+                {% csrf_token %}
+
+                {% if form.non_field_errors %}
+                    <div class="register-errors" role="alert">
+                        {% for error in form.non_field_errors %}
+                            <p>{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                {% include "includes/form_fields.html" with form=form %}
+
+                <button class="register-submit" type="submit">
+                    <span>Create your account</span>
+                    <span class="register-submit__arrow">→</span>
+                </button>
+
+                <p class="register-terms">
+                    By creating an account, you agree to use GRIMFLOT's
+                    services in accordance with our applicable terms
+                    and privacy policy.
+                </p>
+            </form>
+
+            <div class="register-security">
+                <span class="register-security__icon">✓</span>
+                <div>
+                    <strong>Your account, your control.</strong>
+                    <p>Use an email address you can access to verify your account.</p>
+                </div>
+            </div>
+
+        </div>
+
+        <footer class="register-main__footer">
+            <span>© {% now "Y" %} GRIMFLOT LTD</span>
+            <span>DESIGNED FOR SMARTER LIVING</span>
+        </footer>
+
+    </div>
+
+</section>
+{% endblock %}

@@ -1,0 +1,7 @@
+{% extends "dashboard/base.html" %}
+{% block dashboard_content %}
+<div class="dashboard-actions"><a class="button button--solid" href="{% url 'dashboard:role-new' %}">Create role</a></div>
+<section class="dashboard-panel table-wrap"><table class="data-table"><thead><tr><th>Role</th><th>Permissions</th><th>Staff assigned</th><th>Actions</th></tr></thead><tbody>
+{% for role in roles %}<tr><td>{{ role.name }}</td><td>{{ role.permissions.count }}</td><td>{{ role.user_set.count }}</td><td><a href="{% url 'dashboard:role-edit' role.pk %}">Edit</a></td></tr>{% empty %}<tr><td colspan="4">No roles have been created.</td></tr>{% endfor %}
+</tbody></table></section>
+{% endblock %}

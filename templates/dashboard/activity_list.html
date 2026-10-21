@@ -1,0 +1,18 @@
+{% extends "dashboard/base.html" %}
+
+{% block dashboard_content %}
+<section class="dashboard-panel table-wrap">
+    <form method="get" class="dashboard-actions"><label for="activity-search" class="visually-hidden">Search activity</label><input id="activity-search" name="q" value="{{ query }}" placeholder="Search activity"><button class="button button--quiet" type="submit">Search</button></form>
+    <form method="post" action="{% url 'dashboard:activity-clear' %}" onsubmit="return confirm('Permanently remove the selected activity records?');">
+        {% csrf_token %}
+        <table class="data-table"><thead><tr>{% if perms.dashboard.clear_auditevent %}<th>Select</th>{% endif %}<th>Activity</th><th>Category</th><th>Staff member</th><th>Time</th><th>Actions</th></tr></thead>
+        <tbody>{% for event in page_obj %}<tr>
+            {% if perms.dashboard.clear_auditevent %}<td><input type="checkbox" name="event_ids" value="{{ event.pk }}" aria-label="Select activity record"></td>{% endif %}
+            <td><strong>{{ event.summary }}</strong></td><td>{{ event.object_type }}</td><td>{{ event.actor|default:"System" }}</td><td>{{ event.created_at|date:"j M Y, H:i" }}</td>
+            <td>{% if perms.dashboard.delete_auditevent %}<button class="button button--quiet" type="submit" formaction="{% url 'dashboard:activity-delete' event.pk %}" formmethod="post" onclick="return confirm('Permanently remove this activity record?');">Delete</button>{% endif %}</td>
+        </tr>{% empty %}<tr><td colspan="6">No activity records match your search.</td></tr>{% endfor %}</tbody></table>
+        {% if perms.dashboard.clear_auditevent %}<p><button class="button button--quiet" type="submit">Clear selected activity</button></p>{% endif %}
+    </form>
+    {% if page_obj.has_other_pages %}<nav class="pagination" aria-label="Activity pages">{% if page_obj.has_previous %}<a href="?q={{ query|urlencode }}&page={{ page_obj.previous_page_number }}">Previous</a>{% endif %}<span>Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>{% if page_obj.has_next %}<a href="?q={{ query|urlencode }}&page={{ page_obj.next_page_number }}">Next</a>{% endif %}</nav>{% endif %}
+</section>
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load static %}
+{% block body_class %}public-page{% endblock %}
+{% block page_styles %}<link rel="stylesheet" href="{% static 'css/pages/public.css' %}">{% endblock %}
+{% block content %}<section class="page-hero page-hero--ink">
+    <div class="site-container">
+        <p class="eyebrow">Energy planning</p>
+        <h1>Start a solar conversation with a useful indication.</h1>
+        <p>This estimator is not a site survey, system design, quote, or promise of performance. A qualified assessment
+            remains essential.</p>
+    </div>
+</section>
+<section class="content-section content-section--mist">
+    <div class="site-container form-page">
+        <form method="post" class="form-shell">
+            {% csrf_token %}
+            <h2>Your starting point</h2>
+
+            {% include "includes/form_fields.html" with form=form %}
+
+            <button class="button button--solid" type="submit">Estimate a direction</button>
+        </form>
+
+        {% if estimate %}
+        <aside class="estimate-card">
+            <p class="eyebrow">Indicative result</p>
+            <h2>Planning direction</h2>
+            <p>These values are starting points for a professional load assessment, equipment specification, site survey, and quotation.</p>
+            <dl>
+                <div><dt>Indicative solar array</dt><dd>{{ estimate.solar_kw }} kW</dd></div>
+                <div><dt>Indicative inverter</dt><dd>{{ estimate.inverter_kw }} kW</dd></div>
+                <div><dt>Indicative battery storage</dt><dd>{{ estimate.battery_kwh }} kWh</dd></div>
+            </dl>
+            <a class="button button--quiet" href="{% url 'enquiries:quote' %}">Request a technical quote</a>
+        </aside>
+        {% endif %}
+    </div>
+</section>{% endblock %}

@@ -1,0 +1,133 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block body_class %}service-list-page{% endblock %}
+
+{% block page_styles %}
+    <link rel="stylesheet" href="{% static 'css/pages/services.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<!-- Services Hero -->
+<section class="page-hero page-hero--ink">
+    <div class="site-container">
+        <p class="eyebrow">GRIMFLOT LTD / OUR EXPERTISE</p>
+
+        <h1>
+            Systems designed to work together, not merely coexist.
+        </h1>
+
+        <p>
+            From first specification to installation and handover, we shape
+            individual disciplines into one coherent technical environment.
+        </p>
+    </div>
+</section>
+
+<!-- Services Listing -->
+<section class="content-section content-section--white">
+    <div class="site-container">
+
+        <div class="services-intro">
+            <p class="eyebrow">What we do</p>
+            <h2>Technical solutions for modern living.</h2>
+            <p>
+                Explore our specialist services for residential, commercial,
+                and industrial environments.
+            </p>
+        </div>
+
+        <div class="entity-grid entity-grid--three">
+
+            {% for service in services %}
+
+            <article class="entity-card entity-card--image">
+
+                <!-- Service Image -->
+                <a
+                    class="service-card__visual"
+                    href="{% url 'services:detail' service.slug %}"
+                    aria-label="Explore {{ service.title }}"
+                >
+                    {% if service.hero_image %}
+                        <img
+                            src="{{ service.hero_image.url }}"
+                            alt="{{ service.title }} installation by GRIMFLOT LTD"
+                            loading="lazy"
+                            decoding="async"
+                        >
+                    {% else %}
+                        <div class="entity-card__index" aria-hidden="true">
+                            {% if forloop.counter < 10 %}0{% endif %}{{ forloop.counter }}
+                        </div>
+                    {% endif %}
+
+                    <span class="service-card__image-overlay"></span>
+
+                    <span class="service-card__number">
+                        {% if forloop.counter < 10 %}0{% endif %}{{ forloop.counter }}
+                    </span>
+
+                    <span class="service-card__visual-arrow" aria-hidden="true">
+                        ↗
+                    </span>
+                </a>
+
+                <!-- Service Content -->
+                <div class="service-card__content">
+
+                    <p class="eyebrow">Our expertise</p>
+
+                    <h2>
+                        <a href="{% url 'services:detail' service.slug %}">
+                            {{ service.title }}
+                        </a>
+                    </h2>
+
+                    {% if service.short_description %}
+                        <p>{{ service.short_description }}</p>
+                    {% else %}
+                        <p>
+                            Discover how our team can help deliver a reliable,
+                            carefully planned technical solution.
+                        </p>
+                    {% endif %}
+
+                    <a
+                        class="text-link text-link--dark"
+                        href="{% url 'services:detail' service.slug %}"
+                    >
+                        Explore service
+                        <span aria-hidden="true">↗</span>
+                    </a>
+
+                </div>
+
+            </article>
+
+            {% empty %}
+
+            <div class="empty-state">
+                <h2>Services are being prepared.</h2>
+
+                <p>
+                    Tell our team about the system you are planning and we
+                    will direct you to the right starting point.
+                </p>
+
+                <a
+                    class="button button--solid"
+                    href="{% url 'enquiries:contact' %}"
+                >
+                    Contact us
+                </a>
+            </div>
+
+            {% endfor %}
+
+        </div>
+    </div>
+</section>
+
+{% endblock %}

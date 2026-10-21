@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block body_class %}service-detail-page{% endblock %}
+
+{% block page_styles %}
+    <link rel="stylesheet" href="{% static 'css/pages/service-detail.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<!-- Service Detail Hero -->
+<section class="detail-hero{% if service.hero_image %} detail-hero--image{% endif %}">
+
+    {% if service.hero_image %}
+        <img
+            class="detail-hero__image"
+            src="{{ service.hero_image.url }}"
+            alt="{{ service.title }}"
+            fetchpriority="high"
+        >
+    {% endif %}
+
+    <div class="site-container">
+
+        <p class="eyebrow">Service / GRIMFLOT LTD</p>
+
+        <h1>{{ service.title }}</h1>
+
+        {% if service.short_description %}
+            <p>{{ service.short_description }}</p>
+        {% endif %}
+
+    </div>
+</section>
+
+
+<!-- Service Description -->
+<section class="content-section content-section--white">
+
+    <div class="site-container editorial-grid">
+
+        <div>
+            <p class="eyebrow">Scope</p>
+
+            <h2>Technical clarity from the first decision.</h2>
+        </div>
+
+        <div class="rich-copy">
+
+            {% if service.description %}
+                {{ service.description|linebreaks }}
+            {% else %}
+                <p>
+                    Contact our team to learn more about this service and
+                    discuss the right solution for your project.
+                </p>
+            {% endif %}
+
+            <div class="button-row">
+
+                <a
+                    class="button button--solid"
+                    href="{% url 'enquiries:quote' %}?service={{ service.title|urlencode }}"
+                >
+                    Request a quotation
+                </a>
+
+                <a
+                    class="button button--quiet"
+                    href="{% url 'bookings:consultation' %}"
+                >
+                    Book a consultation
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

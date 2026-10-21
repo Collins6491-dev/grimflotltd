@@ -1,0 +1,424 @@
+/* ==========================================
+   GRIMFLOT LTD — EMAIL VERIFICATION
+========================================== */
+
+.account-verification-page {
+    --verify-navy: #101923;
+    --verify-red: #d92832;
+    --verify-muted: #737e8b;
+    --verify-border: #e6e9ee;
+
+    min-height: 100vh;
+    background:
+        radial-gradient(
+            circle at 8% 8%,
+            rgba(217, 40, 50, 0.055),
+            transparent 27%
+        ),
+        radial-gradient(
+            circle at 95% 90%,
+            rgba(16, 25, 35, 0.055),
+            transparent 28%
+        ),
+        #f7f8fa;
+    color: var(--verify-navy);
+}
+
+.account-verification-page *,
+.account-verification-page *::before,
+.account-verification-page *::after {
+    box-sizing: border-box;
+}
+
+.verification-page {
+    min-height: 100vh;
+    min-height: 100svh;
+    padding: 35px 24px 22px;
+}
+
+.verification-container {
+    width: 100%;
+    max-width: 550px;
+    margin: 0 auto;
+}
+
+/* Brand */
+
+.verification-brand {
+    width: fit-content;
+    margin: 0 auto 30px;
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    color: var(--verify-navy);
+    text-decoration: none;
+}
+
+.verification-brand__mark {
+    width: 43px;
+    height: 43px;
+    display: grid;
+    place-items: center;
+    border-radius: 11px;
+    background: var(--verify-red);
+    color: #fff;
+    font-size: 23px;
+    font-weight: 800;
+    box-shadow: 0 7px 20px rgba(217, 40, 50, 0.18);
+}
+
+.verification-brand__name {
+    font-size: 16px;
+    font-weight: 850;
+    letter-spacing: 0.13em;
+}
+
+.verification-brand__name small {
+    display: block;
+    margin-top: 4px;
+    color: var(--verify-muted);
+    font-size: 9px;
+    font-weight: 650;
+    letter-spacing: 0.13em;
+}
+
+/* Main card */
+
+.verification-card {
+    padding: 40px 42px 34px;
+    overflow: hidden;
+    border: 1px solid rgba(226, 230, 236, 0.9);
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.94);
+    box-shadow:
+        0 25px 70px rgba(16, 25, 35, 0.055),
+        0 3px 12px rgba(16, 25, 35, 0.025);
+    text-align: center;
+    animation: verify-appear 0.65s ease both;
+}
+
+/* Envelope illustration */
+
+.verification-illustration {
+    position: relative;
+    width: 104px;
+    height: 104px;
+    margin: 0 auto 25px;
+    display: grid;
+    place-items: center;
+}
+
+.verification-illustration__ring {
+    position: absolute;
+    inset: 0;
+    border: 1px solid rgba(217, 40, 50, 0.18);
+    border-radius: 50%;
+    background: rgba(217, 40, 50, 0.045);
+}
+
+.verification-illustration__envelope {
+    position: relative;
+    z-index: 1;
+    width: 72px;
+    height: 72px;
+    display: grid;
+    place-items: center;
+    border: 1px solid #e9edf2;
+    border-radius: 20px;
+    background: #fff;
+    color: var(--verify-navy);
+    box-shadow: 0 8px 24px rgba(16, 25, 35, 0.07);
+}
+
+.verification-illustration__envelope svg {
+    width: 48px;
+    height: 48px;
+}
+
+.verification-illustration__check {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    z-index: 2;
+    width: 29px;
+    height: 29px;
+    display: grid;
+    place-items: center;
+    border: 3px solid #fff;
+    border-radius: 50%;
+    background: var(--verify-red);
+    color: #fff;
+    font-size: 14px;
+    font-weight: 800;
+}
+
+/* Heading */
+
+.verification-eyebrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin: 0 0 15px;
+    color: var(--verify-muted);
+    font-size: 10px;
+    font-weight: 750;
+    letter-spacing: 0.16em;
+}
+
+.verification-eyebrow > span {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--verify-red);
+}
+
+.verification-card h1 {
+    margin: 0;
+    color: var(--verify-navy);
+    font-size: clamp(33px, 6vw, 43px);
+    font-weight: 780;
+    line-height: 1.13;
+    letter-spacing: -0.055em;
+}
+
+.verification-card h1 span {
+    color: var(--verify-red);
+}
+
+.verification-description {
+    max-width: 370px;
+    margin: 18px auto 27px;
+    color: var(--verify-muted);
+    font-size: 13px;
+    line-height: 1.9;
+}
+
+/* Instructions */
+
+.verification-instructions {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 18px;
+    border: 1px solid var(--verify-border);
+    border-radius: 12px;
+    background: #fbfcfd;
+    text-align: left;
+}
+
+.verification-instructions__icon {
+    width: 38px;
+    height: 38px;
+    flex: 0 0 38px;
+    display: grid;
+    place-items: center;
+    border-radius: 10px;
+    background: #fcebed;
+    color: var(--verify-red);
+}
+
+.verification-instructions__icon svg {
+    width: 22px;
+    height: 22px;
+}
+
+.verification-instructions h2 {
+    margin: 1px 0 7px;
+    color: var(--verify-navy);
+    font-size: 13px;
+    font-weight: 750;
+}
+
+.verification-instructions p {
+    margin: 0;
+    color: var(--verify-muted);
+    font-size: 11px;
+    line-height: 1.85;
+}
+
+/* Notice */
+
+.verification-notice {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-top: 17px;
+    padding: 0 2px;
+    text-align: left;
+}
+
+.verification-notice__icon {
+    width: 17px;
+    height: 17px;
+    flex: 0 0 17px;
+    display: grid;
+    place-items: center;
+    margin-top: 2px;
+    border: 1px solid #c8cfd8;
+    border-radius: 50%;
+    color: var(--verify-muted);
+    font-size: 10px;
+    font-weight: 750;
+}
+
+.verification-notice p {
+    margin: 0;
+    color: var(--verify-muted);
+    font-size: 11px;
+    line-height: 1.8;
+}
+
+/* Account button */
+
+.verification-button {
+    width: 100%;
+    min-height: 53px;
+    margin-top: 25px;
+    padding: 0 17px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    border-radius: 9px;
+    background: var(--verify-red);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 750;
+    text-align: left;
+    text-decoration: none;
+    box-shadow: 0 8px 20px rgba(217, 40, 50, 0.15);
+    transition:
+        transform 0.2s ease,
+        background 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.verification-button:hover {
+    transform: translateY(-2px);
+    background: #bd202a;
+    box-shadow: 0 12px 25px rgba(217, 40, 50, 0.2);
+}
+
+.verification-button:focus-visible {
+    outline: 3px solid rgba(217, 40, 50, 0.3);
+    outline-offset: 4px;
+}
+
+.verification-button__arrow {
+    width: 28px;
+    height: 28px;
+    display: grid;
+    place-items: center;
+    border-radius: 7px;
+    background: rgba(255, 255, 255, 0.17);
+    font-size: 18px;
+    transition: transform 0.2s ease;
+}
+
+.verification-button:hover .verification-button__arrow {
+    transform: translateX(3px);
+}
+
+/* Footer text */
+
+.verification-footnote {
+    margin: 24px 0 0;
+    color: #8a929c;
+    font-size: 10px;
+    line-height: 1.8;
+}
+
+.verification-footnote span {
+    display: block;
+    color: var(--verify-navy);
+    font-weight: 650;
+}
+
+/* Page footer */
+
+.verification-footer {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    padding: 22px 2px 0;
+    color: #929aa5;
+    font-size: 9px;
+    font-weight: 650;
+    letter-spacing: 0.07em;
+}
+
+/* Animation */
+
+@keyframes verify-appear {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Mobile */
+
+@media (max-width: 520px) {
+    .verification-page {
+        padding: 25px 15px 18px;
+    }
+
+    .verification-brand {
+        margin-bottom: 23px;
+    }
+
+    .verification-card {
+        padding: 30px 21px 26px;
+        border-radius: 16px;
+    }
+
+    .verification-illustration {
+        width: 90px;
+        height: 90px;
+        margin-bottom: 23px;
+    }
+
+    .verification-illustration__envelope {
+        width: 64px;
+        height: 64px;
+        border-radius: 17px;
+    }
+
+    .verification-illustration__envelope svg {
+        width: 43px;
+        height: 43px;
+    }
+
+    .verification-description {
+        font-size: 12px;
+    }
+
+    .verification-instructions {
+        gap: 11px;
+        padding: 14px;
+    }
+
+    .verification-footer {
+        font-size: 8px;
+        letter-spacing: 0.025em;
+    }
+}
+
+/* Accessibility */
+
+@media (prefers-reduced-motion: reduce) {
+    .verification-card {
+        animation: none;
+    }
+
+    .verification-button,
+    .verification-button__arrow {
+        transition: none;
+    }
+}

@@ -1,0 +1,70 @@
+{% extends "dashboard/base.html" %}
+
+{% block dashboard_content %}
+
+<section class="dashboard-panel table-wrap">
+
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th>Customer</th>
+                <th>Joined</th>
+                <th>Orders</th>
+                <th>Paid value</th>
+                <th>Verified</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for customer in customers %}
+                <tr>
+                    <td>
+                        <strong>
+                            {{ customer.get_full_name|default:customer.email }}
+                        </strong>
+
+                        <small>{{ customer.email }}</small>
+                    </td>
+
+                    <td>
+                        {{ customer.date_joined|date:"j M Y" }}
+                    </td>
+
+                    <td>
+                        {{ customer.order_total|default:0 }}
+                    </td>
+
+                    <td>
+                        {% if customer.paid_total %}
+                            NGN {{ customer.paid_total|floatformat:2 }}
+                        {% else %}
+                            —
+                        {% endif %}
+                    </td>
+
+                    <td>
+                        {% if customer.is_email_verified %}
+                            <span class="status-badge status-badge--published">
+                                Verified
+                            </span>
+                        {% else %}
+                            <span class="status-badge status-badge--draft">
+                                Not verified
+                            </span>
+                        {% endif %}
+                    </td>
+                </tr>
+
+            {% empty %}
+                <tr>
+                    <td colspan="5">
+                        No customer accounts yet.
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</section>
+
+{% endblock %}

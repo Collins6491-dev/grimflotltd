@@ -1,0 +1,205 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ page_title }} | GRIMFLOT LTD{% endblock %}
+
+{% block body_class %}enquiries-page{% endblock %}
+
+{% block page_styles %}
+<link rel="stylesheet" href="{% static 'css/pages/enquiries.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<section class="page-hero page-hero--ink enquiries-hero">
+    <div class="site-container enquiries-hero__inner">
+
+        <p class="eyebrow">
+            {% if enquiry_type == 'quote' %}
+                Project briefing
+            {% else %}
+                Get in touch
+            {% endif %}
+        </p>
+
+        <h1>{{ page_title }}</h1>
+
+        <p class="enquiries-hero__description">
+            {{ intro }}
+        </p>
+
+        <div class="enquiries-hero__status">
+            <span class="enquiries-hero__status-dot"></span>
+            {% if enquiry_type == 'quote' %}
+                Let's discuss your project requirements.
+            {% else %}
+                We're ready to hear from you.
+            {% endif %}
+        </div>
+
+    </div>
+</section>
+
+<section class="content-section content-section--mist enquiries-section">
+    <div class="site-container enquiries-layout">
+
+        <aside class="enquiries-information">
+
+            <p class="eyebrow">
+                {% if enquiry_type == 'quote' %}
+                    Plan your project
+                {% else %}
+                    Connect with our team
+                {% endif %}
+            </p>
+
+            <h2>
+                {% if enquiry_type == 'quote' %}
+                    Tell us what you want to build.
+                {% else %}
+                    The right conversation starts here.
+                {% endif %}
+            </h2>
+
+            <p class="enquiries-information__description">
+                {% if enquiry_type == 'quote' %}
+                    Share your project details with us. We'll review your
+                    requirements and determine the next steps for your
+                    solar, electrical, security, or smart home project.
+                {% else %}
+                    Have a question about our services? Send us a message
+                    and let our team help you find the right solution.
+                {% endif %}
+            </p>
+
+            <div class="enquiries-contact-list">
+
+                <a
+                    class="enquiries-contact-item"
+                    href="https://wa.me/2348058557947"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    <span class="enquiries-contact-item__icon" aria-hidden="true">
+                        ↗
+                    </span>
+
+                    <span class="enquiries-contact-item__content">
+                        <span class="enquiries-contact-item__label">
+                            WhatsApp
+                        </span>
+                        <span class="enquiries-contact-item__value">
+                            +234 805 855 7947
+                        </span>
+                    </span>
+                </a>
+
+                <a
+                    class="enquiries-contact-item"
+                    href="mailto:grimflotltd@gmail.com"
+                >
+                    <span class="enquiries-contact-item__icon" aria-hidden="true">
+                        @
+                    </span>
+
+                    <span class="enquiries-contact-item__content">
+                        <span class="enquiries-contact-item__label">
+                            Email
+                        </span>
+                        <span class="enquiries-contact-item__value">
+                            grimflotltd@gmail.com
+                        </span>
+                    </span>
+                </a>
+
+                <div class="enquiries-contact-item">
+                    <span class="enquiries-contact-item__icon" aria-hidden="true">
+                        +
+                    </span>
+
+                    <span class="enquiries-contact-item__content">
+                        <span class="enquiries-contact-item__label">
+                            Our location
+                        </span>
+                        <span class="enquiries-contact-item__value">
+                            Otukutu Junction, Delta State, Nigeria
+                        </span>
+                    </span>
+                </div>
+
+            </div>
+
+            <div class="enquiries-assurance">
+                <span class="enquiries-assurance__mark" aria-hidden="true">
+                    ✓
+                </span>
+
+                <p>
+                    Every project starts with understanding your needs.
+                    Tell us what matters most, and we'll take it from there.
+                </p>
+            </div>
+
+        </aside>
+
+        <div class="enquiries-form-card">
+
+            <div class="enquiries-form-card__heading">
+                <p class="eyebrow">
+                    {% if enquiry_type == 'quote' %}
+                        Request a quotation
+                    {% else %}
+                        Send us a message
+                    {% endif %}
+                </p>
+
+                <h2>
+                    {% if enquiry_type == 'quote' %}
+                        Let's discuss your project.
+                    {% else %}
+                        How can we help?
+                    {% endif %}
+                </h2>
+
+                <p>
+                    Complete the form below so our team can understand
+                    your enquiry and respond appropriately.
+                </p>
+            </div>
+
+            <form method="post" class="form-shell enquiries-form">
+                {% csrf_token %}
+
+                <p class="form-shell__intro">
+                    Fields marked as required must be completed.
+                </p>
+
+                {% include "includes/form_fields.html" with form=form %}
+
+                <button class="button button--solid enquiries-submit" type="submit">
+                    {% if enquiry_type == 'quote' %}
+                        Send quote request
+                    {% else %}
+                        Send message
+                    {% endif %}
+
+                    <span aria-hidden="true">↗</span>
+                </button>
+
+                <p class="enquiries-form__disclaimer">
+                    {% if enquiry_type == 'quote' %}
+                        Submitting this form does not constitute a confirmed
+                        quotation or agreement.
+                    {% else %}
+                        Your message will be submitted to our team for review.
+                    {% endif %}
+                </p>
+
+            </form>
+
+        </div>
+
+    </div>
+</section>
+
+{% endblock %}

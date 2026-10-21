@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load static %}
+{% block page_styles %}<link rel="stylesheet" href="{% static 'css/pages/orders.css' %}">{% endblock %}
+{% block content %}<section class="page-hero page-hero--compact page-hero--ink">
+    <div class="site-container">
+        <p class="eyebrow">Customer account</p>
+        <h1>Your orders</h1>
+        <p>Payment and fulfilment progress for your GRIMFLOT LTD purchases.</p>
+    </div>
+</section>
+<section class="content-section content-section--white">
+    <div class="site-container table-wrap">{% if orders %}<table class="data-table">
+            <thead>
+                <tr>
+                    <th>Order</th>
+                    <th>Placed</th>
+                    <th>Status</th>
+                    <th>Total</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>{% for order in orders %}<tr>
+                    <td>{{ order.reference }}</td>
+                    <td>{{ order.created_at|date:"j M Y" }}</td>
+                    <td><span class="status-chip status-chip--{{ order.status }}">{{ order.get_status_display }}</span>
+                    </td>
+                    <td>{{ order.currency }} {{ order.total }}</td>
+                    <td><a href="{% url 'orders:detail' order.reference %}">View</a></td>
+                </tr>{% endfor %}</tbody>
+        </table>{% else %}<div class="empty-state">
+            <h2>No orders yet.</h2>
+            <p>When you purchase through the site, your order history will be available here.</p><a
+                class="button button--solid" href="{% url 'catalogue:product-list' %}">Browse products</a>
+        </div>{% endif %}</div>
+</section>{% endblock %}

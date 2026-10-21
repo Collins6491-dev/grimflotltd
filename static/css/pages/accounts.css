@@ -1,0 +1,167 @@
+.account-page {
+    min-height: calc(100dvh - 126px);
+    padding-block: clamp(56px, 9vw, 108px);
+    background: linear-gradient(135deg, #f4f6f9 0%, #fff 52%, #eef2f7 100%);
+}
+
+.narrow-content {
+    width: min(calc(100% - 48px), 580px);
+    margin-inline: auto;
+}
+
+.account-page .form-shell {
+    border-top: 3px solid #d71920;
+}
+
+.account-page .form-shell h1 {
+    margin: 0;
+    color: #101c35;
+    font-size: clamp(2rem, 5vw, 3.1rem);
+}
+
+.account-page .form-shell>p:not(.eyebrow):not(.form-links) {
+    margin: -8px 0 4px;
+    color: #697386;
+    line-height: 1.75;
+}
+
+.form-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 18px;
+    margin: 0;
+    font-size: .88rem;
+}
+
+.form-links a,
+.text-button {
+    color: #c91825;
+    font-weight: 750;
+}
+
+.account-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(220px, .45fr);
+    align-items: start;
+    gap: clamp(28px, 6vw, 76px);
+}
+
+.account-grid .form-shell h2 {
+    margin: 0;
+    color: #101c35;
+}
+
+.account-navigation {
+    display: grid;
+    gap: 4px;
+    padding: 24px;
+    border-left: 3px solid #d71920;
+    background: #fff;
+    box-shadow: 0 10px 30px rgba(7, 16, 31, .05);
+}
+
+.account-navigation .eyebrow {
+    margin-bottom: 8px;
+}
+
+.account-navigation a,
+.account-navigation .text-button {
+    min-height: 40px;
+    padding: 8px 0;
+    border: 0;
+    background: transparent;
+    text-align: left;
+}
+
+.confirmation {
+    min-height: calc(100dvh - 126px);
+    display: grid;
+    place-items: center;
+    padding-block: clamp(56px, 10vw, 120px);
+    background: #f4f6f9;
+}
+
+.confirmation .narrow-content {
+    padding: clamp(28px, 5vw, 52px);
+    border-top: 3px solid #d71920;
+    background: #fff;
+    box-shadow: 0 18px 54px rgba(7, 16, 31, .08);
+}
+
+.confirmation h1 {
+    color: #101c35;
+    font-size: clamp(2rem, 5vw, 3.2rem);
+}
+
+.confirmation__facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin: 28px 0;
+}
+
+.confirmation__facts span {
+    display: grid;
+    gap: 3px;
+    min-width: 150px;
+    padding: 12px 14px;
+    background: #f4f6f9;
+    color: #697386;
+    font-size: .8rem;
+}
+
+.confirmation__facts strong {
+    color: #101c35;
+    font-size: .95rem;
+}
+
+.button-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.button--quiet {
+    color: #102f67;
+    background: transparent;
+    border: 1px solid rgba(16, 47, 103, .25);
+}
+
+.empty-state {
+    max-width: 620px;
+    padding: clamp(26px, 5vw, 48px);
+    border: 1px solid rgba(16, 47, 103, .1);
+    background: #fff;
+    box-shadow: 0 12px 35px rgba(7, 16, 31, .05);
+}
+
+.empty-state h1,
+.empty-state h2 {
+    color: #101c35;
+}
+
+.empty-state .button {
+    margin-top: 10px;
+}
+
+@media (max-width: 760px) {
+    .narrow-content {
+        width: min(calc(100% - 36px), 580px);
+    }
+
+    .account-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .account-page {
+        padding-block: 42px;
+    }
+
+    .confirmation {
+        min-height: auto;
+    }
+
+    .button-row .button {
+        width: 100%;
+    }
+}

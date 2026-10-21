@@ -1,0 +1,162 @@
+{% extends "dashboard/base.html" %}
+
+{% block dashboard_content %}
+
+<!-- Dashboard Metrics -->
+<div class="metric-grid">
+
+    <article class="metric-card">
+        <span>Orders</span>
+        <strong>{{ order_count }}</strong>
+    </article>
+
+    <article class="metric-card">
+        <span>Awaiting payment</span>
+        <strong>{{ pending_orders }}</strong>
+    </article>
+
+    <article class="metric-card">
+        <span>New enquiries</span>
+        <strong>{{ unread_enquiries }}</strong>
+    </article>
+
+    <article class="metric-card">
+        <span>Pending consultations</span>
+        <strong>{{ pending_bookings }}</strong>
+    </article>
+
+</div>
+
+
+<!-- Dashboard Columns -->
+<div class="dashboard-columns">
+
+    <!-- Recent Orders -->
+    <section class="dashboard-panel">
+
+        <div class="panel-heading">
+            <h2>Recent orders</h2>
+
+            <a href="{% url 'dashboard:orders' %}">
+                All orders
+            </a>
+        </div>
+
+        <div class="dashboard-list">
+
+            {% for order in recent_orders %}
+
+                <a
+                    class="dashboard-row"
+                    href="{% url 'dashboard:order-detail' order.reference %}"
+                >
+                    <span>
+                        <strong>{{ order.reference }}</strong>
+
+                        <small>
+                            {{ order.user.email|default:order.email|default:"Guest customer" }}
+                        </small>
+                    </span>
+
+                    <span>{{ order.get_status_display }}</span>
+
+                    <strong>
+                        {{ order.currency }} {{ order.total|floatformat:2 }}
+                    </strong>
+                </a>
+
+            {% empty %}
+
+                <p class="muted-copy">
+                    No orders have been created.
+                </p>
+
+            {% endfor %}
+
+        </div>
+
+    </section>
+
+
+    <!-- Low Stock -->
+    <section class="dashboard-panel">
+
+        <div class="panel-heading">
+            <h2>Low stock</h2>
+
+            <a href="{% url 'dashboard:products' %}">
+                Products
+            </a>
+        </div>
+
+        <div class="dashboard-list">
+
+            {% for record in low_stock %}
+
+                <a
+                    class="dashboard-row"
+                    href="{% url 'dashboard:product-edit' record.product.pk %}"
+                >
+                    <span>
+                        <strong>{{ record.product.name }}</strong>
+
+                        <small>{{ record.product.sku }}</small>
+                    </span>
+
+                    <strong>
+                        {{ record.available_quantity }} available
+                    </strong>
+                </a>
+
+            {% empty %}
+
+                <p class="muted-copy">
+                    No products are at their reorder level.
+                </p>
+
+            {% endfor %}
+
+        </div>
+
+    </section>
+
+</div>
+
+
+<!-- Staff Activity -->
+<section class="dashboard-panel">
+
+    <div class="panel-heading">
+        <h2>Staff activity</h2>
+            {% if perms.dashboard.view_auditevent %}<a href="{% url 'dashboard:activity' %}">All activity</a>{% endif %}
+    </div>
+
+    <div class="dashboard-list">
+
+        {% for event in recent_events %}
+
+            <div class="dashboard-row">
+                <span>
+                    <strong>{{ event.summary }}</strong>
+
+                    <small>
+                        {{ event.actor|default:"System" }}
+                        ·
+                        {{ event.created_at|date:"j M, H:i" }}
+                    </small>
+                </span>
+            </div>
+
+        {% empty %}
+
+            <p class="muted-copy">
+                Staff actions will be logged here.
+            </p>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+{% endblock %}

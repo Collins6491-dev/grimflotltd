@@ -1,0 +1,527 @@
+/* =========================================================
+   GRIMFLOT LTD — Enquiries & Quote Requests
+   Premium corporate design
+   Brand: Dark blue, red, black and white
+   ========================================================= */
+
+.enquiries-page {
+    --enquiries-navy: #101c35;
+    --enquiries-navy-deep: #0a1223;
+    --enquiries-red: #d92735;
+    --enquiries-ink: #171c27;
+    --enquiries-muted: #697386;
+    --enquiries-border: rgba(16, 28, 53, 0.12);
+    --enquiries-white: #ffffff;
+}
+
+/* Hero
+   ========================================================= */
+
+.enquiries-hero {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    color: var(--enquiries-white);
+    background:
+        radial-gradient(
+            ellipse at 88% 15%,
+            rgba(217, 39, 53, 0.16),
+            transparent 30rem
+        ),
+        linear-gradient(
+            125deg,
+            var(--enquiries-navy-deep),
+            var(--enquiries-navy) 65%,
+            #1a2b49
+        );
+}
+
+.enquiries-hero::after {
+    position: absolute;
+    z-index: -1;
+    top: -11rem;
+    right: -7rem;
+    width: 31rem;
+    height: 31rem;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 50%;
+    content: "";
+    box-shadow:
+        0 0 0 3rem rgba(255, 255, 255, 0.018),
+        0 0 0 6rem rgba(255, 255, 255, 0.012);
+    pointer-events: none;
+}
+
+.enquiries-hero__inner {
+    position: relative;
+    z-index: 1;
+    max-width: 950px;
+    padding-top: clamp(4rem, 8vw, 7rem);
+    padding-bottom: clamp(4rem, 7vw, 6rem);
+}
+
+.enquiries-hero .eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    margin-bottom: 1.25rem;
+    color: #ff737d;
+    font-size: 0.74rem;
+    font-weight: 800;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+}
+
+.enquiries-hero .eyebrow::before {
+    width: 1.6rem;
+    height: 2px;
+    background: var(--enquiries-red);
+    content: "";
+}
+
+.enquiries-hero h1 {
+    max-width: 800px;
+    margin: 0 0 1.4rem;
+    color: #fff;
+    font-size: clamp(2.7rem, 6.5vw, 5.3rem);
+    font-weight: 750;
+    letter-spacing: -0.065em;
+    line-height: 1.03;
+    text-wrap: balance;
+}
+
+.enquiries-hero__description {
+    max-width: 680px;
+    margin: 0;
+    color: rgba(255, 255, 255, 0.76);
+    font-size: clamp(1rem, 1.7vw, 1.16rem);
+    line-height: 1.85;
+}
+
+.enquiries-hero__status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.7rem;
+    max-width: 100%;
+    margin-top: 2rem;
+    padding: 0.8rem 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.13);
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.045);
+    color: rgba(255, 255, 255, 0.88);
+    font-size: 0.83rem;
+    line-height: 1.6;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+.enquiries-hero__status-dot {
+    flex: 0 0 8px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #ff5968;
+    box-shadow: 0 0 0 4px rgba(255, 89, 104, 0.12);
+}
+
+/* Main layout
+   ========================================================= */
+
+.enquiries-section {
+    padding-top: clamp(3.5rem, 7vw, 6.5rem);
+    padding-bottom: clamp(4rem, 8vw, 7rem);
+}
+
+.enquiries-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+    align-items: start;
+    gap: clamp(2.5rem, 6vw, 6rem);
+}
+
+/* Information panel
+   ========================================================= */
+
+.enquiries-information {
+    min-width: 0;
+    padding-top: 0.7rem;
+}
+
+.enquiries-information > .eyebrow,
+.enquiries-form-card__heading > .eyebrow {
+    margin: 0 0 1rem;
+    color: var(--enquiries-red);
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+}
+
+.enquiries-information h2 {
+    max-width: 470px;
+    margin: 0 0 1.2rem;
+    color: var(--enquiries-navy);
+    font-size: clamp(2rem, 3.7vw, 3.15rem);
+    font-weight: 750;
+    letter-spacing: -0.05em;
+    line-height: 1.12;
+    text-wrap: balance;
+}
+
+.enquiries-information__description {
+    max-width: 480px;
+    margin: 0;
+    color: var(--enquiries-muted);
+    font-size: 0.97rem;
+    line-height: 1.9;
+}
+
+/* Contact information
+   ========================================================= */
+
+.enquiries-contact-list {
+    display: grid;
+    margin-top: 2rem;
+    border-top: 1px solid var(--enquiries-border);
+}
+
+.enquiries-contact-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    min-width: 0;
+    padding: 1.2rem 0;
+    border-bottom: 1px solid var(--enquiries-border);
+    color: inherit;
+    text-decoration: none;
+}
+
+.enquiries-contact-item__icon {
+    display: grid;
+    flex: 0 0 46px;
+    width: 46px;
+    height: 46px;
+    place-items: center;
+    border: 1px solid rgba(217, 39, 53, 0.2);
+    border-radius: 4px;
+    background: rgba(217, 39, 53, 0.055);
+    color: var(--enquiries-red);
+    font-size: 1.2rem;
+    font-weight: 700;
+    transition:
+        background-color 180ms ease,
+        color 180ms ease,
+        border-color 180ms ease;
+}
+
+a.enquiries-contact-item:hover .enquiries-contact-item__icon {
+    border-color: var(--enquiries-red);
+    background: var(--enquiries-red);
+    color: #fff;
+}
+
+.enquiries-contact-item__content {
+    display: grid;
+    min-width: 0;
+    gap: 0.35rem;
+}
+
+.enquiries-contact-item__label {
+    color: var(--enquiries-muted);
+    font-size: 0.77rem;
+    font-weight: 650;
+}
+
+.enquiries-contact-item__value {
+    overflow-wrap: anywhere;
+    color: var(--enquiries-ink);
+    font-size: 0.94rem;
+    font-weight: 700;
+    line-height: 1.55;
+}
+
+.enquiries-contact-item:focus-visible {
+    outline: 2px solid var(--enquiries-red);
+    outline-offset: 4px;
+}
+
+/* Assurance note
+   ========================================================= */
+
+.enquiries-assurance {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.9rem;
+    margin-top: 1.8rem;
+    padding: 1.2rem;
+    border-left: 3px solid var(--enquiries-red);
+    background: rgba(16, 28, 53, 0.045);
+}
+
+.enquiries-assurance__mark {
+    display: grid;
+    flex: 0 0 26px;
+    width: 26px;
+    height: 26px;
+    place-items: center;
+    border-radius: 50%;
+    background: var(--enquiries-navy);
+    color: #fff;
+    font-size: 0.78rem;
+    font-weight: 800;
+}
+
+.enquiries-assurance p {
+    margin: 0;
+    color: var(--enquiries-muted);
+    font-size: 0.85rem;
+    line-height: 1.8;
+}
+
+/* Form card
+   ========================================================= */
+
+.enquiries-form-card {
+    min-width: 0;
+    padding: clamp(1.5rem, 4vw, 2.75rem);
+    border: 1px solid rgba(16, 28, 53, 0.08);
+    border-radius: 7px;
+    background: #fff;
+    box-shadow:
+        0 22px 70px rgba(16, 28, 53, 0.07),
+        0 2px 8px rgba(16, 28, 53, 0.025);
+}
+
+.enquiries-form-card__heading {
+    margin-bottom: 1.8rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--enquiries-border);
+}
+
+.enquiries-form-card__heading h2 {
+    margin: 0 0 0.7rem;
+    color: var(--enquiries-navy);
+    font-size: clamp(1.7rem, 3vw, 2.25rem);
+    font-weight: 750;
+    letter-spacing: -0.045em;
+    line-height: 1.2;
+}
+
+.enquiries-form-card__heading > p:last-child {
+    margin: 0;
+    color: var(--enquiries-muted);
+    font-size: 0.89rem;
+    line-height: 1.8;
+}
+
+/* Form elements
+   ========================================================= */
+
+.enquiries-form {
+    display: grid;
+    gap: 1.3rem;
+}
+
+.enquiries-form__disclaimer {
+    margin: 0;
+    color: var(--enquiries-muted);
+    font-size: 0.78rem;
+    line-height: 1.75;
+}
+
+.enquiries-form .form-shell__intro {
+    margin: 0;
+    padding: 0.85rem 1rem;
+    border-left: 3px solid var(--enquiries-red);
+    background: #f5f6f9;
+    color: var(--enquiries-muted);
+    font-size: 0.82rem;
+    line-height: 1.7;
+}
+
+.enquiries-form label {
+    display: block;
+    margin-bottom: 0.55rem;
+    color: var(--enquiries-ink);
+    font-size: 0.87rem;
+    font-weight: 700;
+}
+
+.enquiries-form input:not([type="checkbox"]):not([type="radio"]):not([type="submit"]),
+.enquiries-form select,
+.enquiries-form textarea {
+    display: block;
+    width: 100%;
+    min-height: 49px;
+    padding: 0.8rem 0.95rem;
+    border: 1px solid #dce1e9;
+    border-radius: 4px;
+    outline: none;
+    background: #fff;
+    color: var(--enquiries-ink);
+    font: inherit;
+    font-size: 0.94rem;
+    transition:
+        border-color 180ms ease,
+        box-shadow 180ms ease;
+}
+
+.enquiries-form textarea {
+    min-height: 135px;
+    resize: vertical;
+}
+
+.enquiries-form input:focus,
+.enquiries-form select:focus,
+.enquiries-form textarea:focus {
+    border-color: var(--enquiries-navy);
+    box-shadow: 0 0 0 3px rgba(16, 28, 53, 0.08);
+}
+
+.enquiries-form input::placeholder,
+.enquiries-form textarea::placeholder {
+    color: #9aa2b0;
+}
+
+.enquiries-form input[type="checkbox"],
+.enquiries-form input[type="radio"] {
+    accent-color: var(--enquiries-red);
+}
+
+.enquiries-form .helptext,
+.enquiries-form .help-text {
+    display: block;
+    margin-top: 0.4rem;
+    color: var(--enquiries-muted);
+    font-size: 0.8rem;
+    line-height: 1.6;
+}
+
+.enquiries-form .errorlist {
+    margin: 0.45rem 0 0;
+    padding-left: 1.15rem;
+    color: #bd202e;
+    font-size: 0.83rem;
+    line-height: 1.6;
+}
+
+/* Submit button
+   ========================================================= */
+
+.enquiries-submit {
+    display: inline-flex;
+    min-height: 54px;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    justify-self: start;
+    padding: 0.9rem 1.4rem;
+    border: 1px solid var(--enquiries-red);
+    border-radius: 4px;
+    background: var(--enquiries-red);
+    color: #fff;
+    font-size: 0.9rem;
+    font-weight: 750;
+    transition:
+        transform 180ms ease,
+        background-color 180ms ease,
+        box-shadow 180ms ease;
+}
+
+.enquiries-submit span {
+    font-size: 1.15rem;
+    transition: transform 180ms ease;
+}
+
+.enquiries-submit:hover {
+    transform: translateY(-2px);
+    background: #b91f2b;
+    box-shadow: 0 9px 24px rgba(217, 39, 53, 0.2);
+}
+
+.enquiries-submit:hover span {
+    transform: translate(2px, -2px);
+}
+
+.enquiries-submit:focus-visible {
+    outline: 3px solid rgba(217, 39, 53, 0.35);
+    outline-offset: 3px;
+}
+
+/* Responsive layout
+   ========================================================= */
+
+@media (max-width: 900px) {
+    .enquiries-layout {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 3rem;
+    }
+
+    .enquiries-information {
+        max-width: 700px;
+    }
+
+    .enquiries-information h2 {
+        max-width: 600px;
+    }
+
+    .enquiries-form-card {
+        width: 100%;
+    }
+}
+
+@media (max-width: 600px) {
+    .enquiries-hero__inner {
+        padding-top: 3.5rem;
+        padding-bottom: 3.5rem;
+    }
+
+    .enquiries-hero h1 {
+        font-size: clamp(2.4rem, 10vw, 3.5rem);
+    }
+
+    .enquiries-hero__status {
+        align-items: flex-start;
+        font-size: 0.78rem;
+    }
+
+    .enquiries-section {
+        padding-top: 3rem;
+        padding-bottom: 3.5rem;
+    }
+
+    .enquiries-form-card {
+        padding: 1.3rem;
+        border-radius: 5px;
+    }
+
+    .enquiries-form {
+        gap: 1.1rem;
+    }
+
+    .enquiries-submit {
+        width: 100%;
+        justify-self: stretch;
+    }
+
+    .enquiries-contact-item__icon {
+        flex-basis: 42px;
+        width: 42px;
+        height: 42px;
+    }
+}
+
+/* Reduced motion accessibility
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+    .enquiries-contact-item__icon,
+    .enquiries-submit,
+    .enquiries-submit span {
+        transition: none;
+    }
+
+    .enquiries-submit:hover {
+        transform: none;
+    }
+}

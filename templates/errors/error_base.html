@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block page_styles %}<link rel="stylesheet" href="{% static 'css/pages/errors.css' %}">{% endblock %}
+
+{% block body_class %}error-page{% endblock %}
+
+{% block content %}
+<section class="error-shell" aria-labelledby="error-title">
+    <div class="site-container error-shell__inner">
+        <p class="error-shell__code">{% block error_code %}{% endblock %}</p>
+        <p class="eyebrow">GRIMFLOT LTD</p>
+        <h1 id="error-title">{% block error_title %}{% endblock %}</h1>
+        <p>{% block error_message %}{% endblock %}</p>
+        <a class="button button--solid" href="{% url 'home' %}">Return home</a>
+    </div>
+</section>
+{% endblock %}

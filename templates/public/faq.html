@@ -1,0 +1,381 @@
+{% extends "base.html" %}
+{% load static %}
+{% block page_styles %}<link rel="stylesheet" href="{% static 'css/pages/faq.css' %}">{% endblock %}
+
+{% block content %}
+
+<section class="faq-hero">
+    <div class="faq-hero__glow" aria-hidden="true"></div>
+
+    <div class="site-container faq-hero__inner">
+        <div class="faq-hero__content">
+            <div class="faq-eyebrow">
+                <span class="faq-eyebrow__line"></span>
+                <span>GRIMFLOT LTD / SUPPORT CENTRE</span>
+            </div>
+
+            <h1>
+                Good questions.
+                <span>Smarter decisions.</span>
+            </h1>
+
+            <p class="faq-hero__description">
+                Everything you need to know about solar energy, smart home
+                automation, security systems, and the technology that makes
+                your property work smarter.
+            </p>
+
+            <a href="#faq-questions" class="faq-hero__link">
+                Explore frequently asked questions
+                <span aria-hidden="true">↓</span>
+            </a>
+        </div>
+
+        <div class="faq-hero__visual" aria-hidden="true">
+            <div class="faq-visual-card">
+                <div class="faq-visual-card__top">
+                    <span class="faq-status-dot"></span>
+                    <span>SMART LIVING / 001</span>
+                </div>
+
+                <div class="faq-visual-card__icon">
+                    <svg viewBox="0 0 64 64" fill="none">
+                        <path
+                            d="M32 5L38.5 23.5L57 30L38.5 36.5L32 55L25.5 36.5L7 30L25.5 23.5L32 5Z"
+                            stroke="currentColor"
+                            stroke-width="1.5"
+                        />
+                        <circle
+                            cx="32"
+                            cy="30"
+                            r="7"
+                            stroke="currentColor"
+                            stroke-width="1.5"
+                        />
+                    </svg>
+                </div>
+
+                <p class="faq-visual-card__title">
+                    Technology, made clear.
+                </p>
+
+                <p class="faq-visual-card__description">
+                    Better information. Better systems. Better living.
+                </p>
+
+                <div class="faq-visual-card__footer">
+                    <span>BUILT AROUND YOU</span>
+                    <span>01 — 04</span>
+                </div>
+            </div>
+
+            <div class="faq-floating-note">
+                <span class="faq-floating-note__symbol">+</span>
+                <div>
+                    <strong>Need clarity?</strong>
+                    <span>We're here to help.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="faq-hero__bottom">
+        <span>KNOWLEDGE</span>
+        <span>TECHNOLOGY</span>
+        <span>PEACE OF MIND</span>
+    </div>
+</section>
+
+
+<section class="faq-main content-section" id="faq-questions">
+    <div class="site-container">
+
+        <div class="faq-section-heading">
+            <div>
+                <p class="faq-section-heading__eyebrow">
+                    YOUR QUESTIONS, ANSWERED
+                </p>
+
+                <h2>
+                    Let's clear
+                    <span>things up.</span>
+                </h2>
+            </div>
+
+            <p class="faq-section-heading__description">
+                Explore our answers to common questions about our services,
+                installations, and smart technology solutions.
+            </p>
+        </div>
+
+
+        <div class="faq-layout">
+
+            <aside class="faq-sidebar">
+                <div class="faq-sidebar__number">01 / FAQ</div>
+
+                <h3>Find the information you need.</h3>
+
+                <p>
+                    Every property is different. These answers are a starting
+                    point, and our team can help you determine the right
+                    solution for your specific requirements.
+                </p>
+
+                <div class="faq-sidebar__divider"></div>
+
+                <div class="faq-sidebar__contact">
+                    <span class="faq-sidebar__contact-label">
+                        STILL HAVE QUESTIONS?
+                    </span>
+
+                    <a
+                        href="https://wa.me/2348058557947"
+                        class="faq-support-link"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        Talk to our team
+                        <span aria-hidden="true">↗</span>
+                    </a>
+                </div>
+            </aside>
+
+
+            <div class="faq-content">
+
+                <div class="faq-search">
+                    <svg
+                        class="faq-search__icon"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        aria-hidden="true"
+                    >
+                        <circle
+                            cx="10.8"
+                            cy="10.8"
+                            r="6.8"
+                            stroke="currentColor"
+                            stroke-width="1.7"
+                        />
+                        <path
+                            d="M16 16L21 21"
+                            stroke="currentColor"
+                            stroke-width="1.7"
+                            stroke-linecap="round"
+                        />
+                    </svg>
+
+                    <label class="faq-sr-only" for="faq-search-input">
+                        Search frequently asked questions
+                    </label>
+
+                    <input
+                        type="search"
+                        id="faq-search-input"
+                        placeholder="Search your question..."
+                        autocomplete="off"
+                    />
+
+                    <span class="faq-search__hint">SEARCH</span>
+                </div>
+
+
+                <div class="faq-list" id="faq-list">
+
+                    {% for item in faqs %}
+
+                    <details class="faq-item">
+                        <summary class="faq-item__question">
+                            <span class="faq-item__number">
+                                {% if forloop.counter < 10 %}0{% endif %}{{ forloop.counter }}
+                            </span>
+
+                            <span class="faq-item__text">
+                                {{ item.question }}
+                            </span>
+
+                            <span class="faq-item__toggle" aria-hidden="true">
+                                <span></span>
+                                <span></span>
+                            </span>
+                        </summary>
+
+                        <div class="faq-item__answer">
+                            <div class="faq-item__answer-inner">
+                                {{ item.answer|linebreaksbr }}
+                            </div>
+                        </div>
+                    </details>
+
+                    {% empty %}
+
+                    <div class="faq-empty">
+                        <div class="faq-empty__icon" aria-hidden="true">?</div>
+
+                        <h3>We're preparing the answers.</h3>
+
+                        <p>
+                            Our frequently asked questions will appear here
+                            once published by the GRIMFLOT LTD team.
+                        </p>
+
+                        <a
+                            href="https://wa.me/2348058557947"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            Ask us directly
+                            <span aria-hidden="true">↗</span>
+                        </a>
+                    </div>
+
+                    {% endfor %}
+
+                    <p class="faq-no-results" hidden>
+                        No matching questions found. Try another search
+                        or contact our team for assistance.
+                    </p>
+
+                </div>
+
+                <div class="faq-results-note" aria-live="polite">
+                    <span class="faq-results-note__dot"></span>
+                    <span id="faq-results-text">
+                        Browse our frequently asked questions.
+                    </span>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section class="faq-contact">
+    <div class="site-container">
+        <div class="faq-contact__inner">
+
+            <div class="faq-contact__content">
+                <p class="faq-contact__eyebrow">
+                    PERSONAL GUIDANCE / GRIMFLOT LTD
+                </p>
+
+                <h2>
+                    Your property.
+                    <br>
+                    <span>Your requirements.</span>
+                    Our expertise.
+                </h2>
+
+                <p>
+                    Not every project fits into a standard answer. Tell us
+                    what you're planning, and let's explore the right
+                    technology solution for your space.
+                </p>
+
+                <div class="faq-contact__actions">
+                    <a
+                        href="https://wa.me/2348058557947"
+                        class="faq-contact__button"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        Chat with our team
+                        <span aria-hidden="true">↗</span>
+                    </a>
+
+                    <a href="{% url 'enquiries:quote' %}" class="faq-contact__secondary">
+                        Request a quotation
+                    </a>
+                </div>
+            </div>
+
+            <div class="faq-contact__decoration" aria-hidden="true">
+                <div class="faq-contact__ring faq-contact__ring--one"></div>
+                <div class="faq-contact__ring faq-contact__ring--two"></div>
+                <div class="faq-contact__cross">+</div>
+
+                <span class="faq-contact__label">
+                    SMARTER SPACES
+                    <br>
+                    BETTER LIVING
+                </span>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const searchInput = document.getElementById("faq-search-input");
+    const faqItems = Array.from(document.querySelectorAll(".faq-item"));
+    const noResults = document.querySelector(".faq-no-results");
+    const resultsText = document.getElementById("faq-results-text");
+    const faqList = document.getElementById("faq-list");
+
+    if (!searchInput || !faqList) {
+        return;
+    }
+
+    function updateFAQSearch() {
+        const query = searchInput.value.trim().toLowerCase();
+        let visibleCount = 0;
+
+        faqItems.forEach(function (item) {
+            const question = item.querySelector(".faq-item__text");
+            const answer = item.querySelector(".faq-item__answer-inner");
+
+            const searchableText = (
+                (question ? question.textContent : "") + " " +
+                (answer ? answer.textContent : "")
+            ).toLowerCase();
+
+            const matches = searchableText.includes(query);
+
+            item.hidden = !matches;
+
+            if (matches) {
+                visibleCount++;
+            }
+        });
+
+        if (noResults) {
+            noResults.hidden = visibleCount > 0 || faqItems.length === 0;
+        }
+
+        if (resultsText) {
+            if (query) {
+                resultsText.textContent =
+                    visibleCount + (visibleCount === 1
+                        ? " matching question found."
+                        : " matching questions found.");
+            } else {
+                resultsText.textContent =
+                    "Browse our frequently asked questions.";
+            }
+        }
+    }
+
+    searchInput.addEventListener("input", updateFAQSearch);
+
+    // Keep the FAQ list tidy by allowing one answer to remain open at a time.
+    faqItems.forEach(function (item) {
+        item.addEventListener("toggle", function () {
+            if (!item.open) {
+                return;
+            }
+
+            faqItems.forEach(function (otherItem) {
+                if (otherItem !== item && otherItem.open) {
+                    otherItem.open = false;
+                }
+            });
+        });
+    });
+});
+</script>
+
+{% endblock %}

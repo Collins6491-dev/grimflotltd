@@ -1,0 +1,185 @@
+{% extends "base.html" %}
+{% load static %}
+{% block page_styles %}<link rel="stylesheet" href="{% static 'css/pages/cart.css' %}">{% endblock %}
+
+{% block content %}
+
+<!-- Cart Header -->
+<section class="page-hero page-hero--compact page-hero--ink">
+    <div class="site-container">
+        <p class="eyebrow">Your selection</p>
+        <h1>Cart</h1>
+        <p>
+            Availability and prices are checked again before an order is created.
+        </p>
+    </div>
+</section>
+
+<!-- Shopping Cart -->
+<section class="content-section content-section--white">
+    <div class="site-container cart-layout">
+
+        {% if items %}
+
+        <div class="cart-lines">
+
+            {% for item in items %}
+
+            <article class="cart-line">
+
+                <!-- Product Image -->
+                <a
+                    class="cart-line__image"
+                    href="{{ item.product.get_absolute_url }}"
+                >
+                    {% if item.product.primary_image %}
+                    <img
+                        src="{{ item.product.primary_image.image.url }}"
+                        alt="{{ item.product.primary_image.alt_text|default:item.product.name }}"
+                        loading="lazy"
+                    >
+                    {% else %}
+                    <span aria-hidden="true">G</span>
+                    {% endif %}
+                </a>
+
+                <!-- Product Details -->
+                <div>
+                    <p class="eyebrow">
+                        {{ item.product.category.name }}
+                    </p>
+
+                    <h2>
+                        <a href="{{ item.product.get_absolute_url }}">
+                            {{ item.product.name }}
+                        </a>
+                    </h2>
+
+                    <p>
+                        {{ item.product.currency }} {{ item.product.price }} each
+                    </p>
+                </div>
+
+                <!-- Quantity Controls -->
+                <form
+                    method="post"
+                    action="{% url 'cart:update' item.id %}"
+                    class="cart-line__quantity"
+                >
+                    {% csrf_token %}
+
+                    <label for="quantity-{{ item.id }}">
+                        Quantity
+                    </label>
+
+                    <input
+                        id="quantity-{{ item.id }}"
+                        type="number"
+                        min="0"
+                        max="99"
+                        name="quantity"
+                        value="{{ item.quantity }}"
+                        required
+                    >
+
+                    <button type="submit" class="text-button">
+                        Update
+                    </button>
+
+                    <small>Set to 0 to remove</small>
+                </form>
+
+                <!-- Line Total -->
+                <strong>
+                    {{ item.product.currency }} {{ item.line_total }}
+                </strong>
+
+            </article>
+
+            {% endfor %}
+
+        </div>
+
+        <!-- Order Summary -->
+        <aside class="order-summary">
+
+            <p class="eyebrow">Order summary</p>
+
+            <dl>
+                <div>
+                    <dt>Items ({{ cart_totals.item_count }})</dt>
+                    <dd>
+                        {{ cart.currency }} {{ cart_totals.subtotal }}
+                    </dd>
+                </div>
+
+                <div>
+                    <dt>Delivery</dt>
+                    <dd>Confirmed at checkout</dd>
+                </div>
+            </dl>
+
+            <p class="order-summary__total">
+                Estimated total
+                <strong>
+                    {{ cart.currency }} {{ cart_totals.subtotal }}
+                </strong>
+            </p>
+
+            {% if user.is_authenticated %}
+
+            <a
+                class="button button--solid"
+                href="{% url 'orders:checkout' %}"
+            >
+                Continue to checkout
+            </a>
+
+            {% else %}
+
+            <a
+                class="button button--solid"
+                href="{% url 'accounts:login' %}?next={% url 'orders:checkout' %}"
+            >
+                Sign in to checkout
+            </a>
+
+            {% endif %}
+
+            <a
+                class="text-link text-link--dark"
+                href="{% url 'catalogue:product-list' %}"
+            >
+                Continue browsing
+                <span aria-hidden="true">↗</span>
+            </a>
+
+        </aside>
+
+        {% else %}
+
+        <!-- Empty Cart -->
+        <div class="empty-state">
+            <p class="eyebrow">Nothing selected yet</p>
+
+            <h2>Your cart is ready when you are.</h2>
+
+            <p>
+                Explore equipment selected for connected spaces, energy
+                resilience, security, and infrastructure.
+            </p>
+
+            <a
+                class="button button--solid"
+                href="{% url 'catalogue:product-list' %}"
+            >
+                Browse products
+            </a>
+        </div>
+
+        {% endif %}
+
+    </div>
+</section>
+
+{% endblock %}
